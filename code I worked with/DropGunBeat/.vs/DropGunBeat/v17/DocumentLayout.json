@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\shieldWidget.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\shieldWidget.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\PlayerWidget.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\PlayerWidget.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\GunPlayer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\GunPlayer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\CustomizeActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\CustomizeActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletFXActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\BulletFXActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{5247F26F-EB01-33BF-B356-E3772C8D085D}|Intermediate\\ProjectFiles\\DropGunBeat.vcxproj|solutionrelative:Source\\DropGunBeat\\Private\\BulletActor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "shieldWidget.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\shieldWidget.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\shieldWidget.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\shieldWidget.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\shieldWidget.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:24:29.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerWidget.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\PlayerWidget.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\PlayerWidget.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\PlayerWidget.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\PlayerWidget.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:24:05.006Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GunPlayer.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\GunPlayer.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\GunPlayer.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\GunPlayer.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\GunPlayer.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC4CAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:18:32.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CustomizeActor.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\CustomizeActor.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\CustomizeActor.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\CustomizeActor.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\CustomizeActor.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:16:08.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BulletFXActor.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletFXActor.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\BulletFXActor.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletFXActor.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\BulletFXActor.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:15:54.518Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BulletActor.cpp",
+              "DocumentMoniker": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletActor.cpp",
+              "RelativeDocumentMoniker": "Source\\DropGunBeat\\Private\\BulletActor.cpp",
+              "ToolTip": "D:\\Projects-worked\\code I worked with\\DropGunBeat\\Source\\DropGunBeat\\Private\\BulletActor.cpp",
+              "RelativeToolTip": "Source\\DropGunBeat\\Private\\BulletActor.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADcAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-27T20:13:41.714Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
