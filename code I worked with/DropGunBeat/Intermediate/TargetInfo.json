@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "DropGunBeat",
+			"Path": "..\\Source\\DropGunBeat.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "DropGunBeatEditor",
+			"Path": "..\\Source\\DropGunBeatEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
