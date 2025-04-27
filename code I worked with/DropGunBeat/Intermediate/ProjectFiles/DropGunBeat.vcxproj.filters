@@ -11,6 +11,7 @@
     <None Include="..\..\Source\DropGunBeatEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.vsconfig" />
     <Filter Include="Source\DropGunBeat">
       <UniqueIdentifier>{A001F95A-12FE-372B-9FE0-70D49C973968}</UniqueIdentifier>
     </Filter>

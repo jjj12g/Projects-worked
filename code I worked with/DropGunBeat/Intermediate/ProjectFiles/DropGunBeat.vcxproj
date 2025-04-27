@@ -252,6 +252,7 @@
     <None Include="..\..\DropGunBeat.uproject"/>
     <None Include="..\..\Source\DropGunBeat.Target.cs"/>
     <None Include="..\..\Source\DropGunBeatEditor.Target.cs"/>
+    <None Include="..\..\.vsconfig"/>
     <None Include="..\..\Source\DropGunBeat\DropGunBeat.Build.cs"/>
     <ClCompile Include="..\..\Source\DropGunBeat\DropGunBeat.cpp">
       <AdditionalIncludeDirectories>$(ClCompile_AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
