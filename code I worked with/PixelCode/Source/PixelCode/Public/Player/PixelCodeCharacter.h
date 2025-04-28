@@ -120,9 +120,7 @@ class APixelCodeCharacter : public APlayerOrganism
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* IA_Stat;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* IA_Crafting;
-
+	// Skilll
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* IA_SkillQ;
 
@@ -137,21 +135,6 @@ class APixelCodeCharacter : public APlayerOrganism
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* IA_Skill_RightMouse;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_SetBuildMode;
-  
-  	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_RemoveFoliage;
-
- 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_SpawnBuilding; 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_CycleMesh; 
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_DestroyBuilding; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
 	UInputAction* IA_Weapon; 
@@ -170,13 +153,6 @@ class APixelCodeCharacter : public APlayerOrganism
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
 	UInputAction* IA_StopWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
-	UInputAction* IA_Build;
-
-// 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
- 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true")) 
- 	UInputAction* IA_Cheat;
 
 	
 
@@ -214,8 +190,6 @@ public:
 
 	void DropItem(UItemBase* ItemToDrop, const int32 QuantityToDrop);
 
-	//UFUNCTION(Server, Reliable)
- //	void ServerRPC_DropItem(UItemBase* ItemToDrop, const int32 QuantityToDrop);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void NetMulticastRPC_DropItem(const FTransform ASpawnTransform, UItemBase* ItemToDrop, int32 RemoveQuantity);
@@ -389,8 +363,6 @@ public:
 	void switchWeapon4();
 
 	void StopWidget();
-
-	//void RollCharacterForward(APixelCodeCharacter* PixelCodeCharacter, float RollDistance);
 
 	// 사운드
 	UPROPERTY(EditAnywhere, Category = "Sounds")
@@ -696,24 +668,6 @@ protected:
 	UPROPERTY(Replicated, VisibleAnywhere, Category = "Character | Interaction")
 	TScriptInterface<IInteractionInterface> TargetInteractable;
 
-	// 서휘-----------------------------------------------------------------------------------------------------
-	FHitResult PerformLineTrace(float Distance = 650.0f, bool DrawDebug = false);
-
-	UPROPERTY(BlueprintReadOnly, Category = KSH)
-	bool bInBuildMode;
-
-	UPROPERTY(Replicated,EditDefaultsOnly, Category = KSH)
-	TSubclassOf<ABuildingVisual> BuildingClass;
-
-	UPROPERTY(EditDefaultsOnly, Category = KSH)
-	TSubclassOf<ABuilding> BuildingC;
-
-	UPROPERTY(Replicated,EditDefaultsOnly, BlueprintReadOnly, Category = KSH)
-	ABuildingVisual* Builder;
-	
-	// 서휘-----------------------------------------------------------------------------------------------------끝
-
-
 	float InteractionCheckFrequecy;
 
 	float InteractionCheckDistance; // 추적이 캐릭터에서 얼마나 멀리 발사될지
@@ -736,8 +690,6 @@ protected:
 		
 	UFUNCTION(Server, Reliable)
 	void ServerRPC_Interact();
-
-	//UFUNCTION(NetMulticast, Reliable)
 	
 	UFUNCTION(NetMulticast, Reliable)
 	void NetMulticastRPC_Interact(const TScriptInterface<IInteractionInterface>& Interactable);
@@ -747,264 +699,7 @@ protected:
 	APixelCodeCharacter* self = this;
 
 public:
-
-	// 카메라 조절
-	void CheckObstacles();
-
 	void Interact();
-
-	// 요한
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "camera", meta )
-
-	// 요한
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "camera", meta )
-
-	UFUNCTION()
-	void OnCraftingPressed();
-
-	UFUNCTION()
-	void OnCraftBulkPressed();
-
-	// 아이템 생성 함수
-	UFUNCTION()
-	void CraftItem(const FCraftItem& Item);
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CraftItem(const FCraftItem& Item);
-
-	UFUNCTION(Client, Reliable)
-	void ClientRPC_CraftItem(const FCraftItem& Item);
-
-	UFUNCTION()
-	void DropedItem(const UItemBase* Iteminfo);
-
-	TArray<UItemBase*> GetInventory() const;
-	
-	// 저장 품목
-	AItemStorage* GetItemStorage();
-
-	// 아이템 테스트 들감
-	UPROPERTY(Replicated, EditAnywhere, Category = "KYH")
-	class UItemBase* Iteminfos;
-
-	UPROPERTY(EditAnywhere, Category = "KYH")
-	class APickup* PickupItems;
-
-	UPROPERTY(EditAnywhere, Category = "KYH")
-	TArray<UItemBase*> Inventory;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = KYH)
-	AItemStorage* ItemStorage;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = KYH)
-	TSubclassOf<AActor>	ItemStorageTemplate;
-
-	uint32 GetSpecificItemAmount(EItemName ItemName);
-
-	void ReduceRecipeFromInventory(const TArray<FRecipe>& Recipes);
-
-	UPROPERTY(EditAnywhere, Category = "Inventory")
-	uint8 MaxInventorySlot;
-
-
-
-
-	UPROPERTY(EditAnywhere, Category = "KYH")
-	TArray<UInventoryComponent*> OwningInventoryntory;
-
-	// 크래프팅 아레아 오버랩 되면 bool , 제작아이템 생성
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = KYH)
-	TSet<ECraftArea> CraftAreas;
-
-	// craftareas 세트에 추가
-	void AddCraftArea(ECraftArea Area);
-
-	// craftareas 세트 삭제
-	void RemoveArea(ECraftArea Area);
-
-	// 공간안에서 크래프팅
-	bool IsPlayerInCraftArea(ECraftArea Area);
-
-	// ======== 게임 저장 =============
-
-	UPROPERTY(EditDefaultsOnly,Category = KYH)
-	UPCodeGameInstance* GameInst;
-
-     UFUNCTION(BlueprintCallable)
-	 void UpdateGameInstanceInventory();
-
-
-
-
-	 // ==== 크래프팅 + 빌드 + 인벤토리 함수 Test ======
-	 void AGetSpecificBuildingAmount(EBuildType builds); //const TArray<FBuildingVisualType>& builditem
-
-	 UFUNCTION()
-	 void BuildItem();
-
-	 UPROPERTY(VisibleAnywhere, Category = "CRAFT")
-	 uint8 BuildingIndex;
-
-
-	 UPROPERTY(EditAnywhere, Category = "CRAFT")
-	 FBuildingVisualType Builditems;
-
-	 UPROPERTY(EditAnywhere, Category = "CRAFT")
-	 FCraftItem Crafts;
-
-
-
-
-	// 서휘-----------------------------------------------------------------------------------------------------
-	UPROPERTY(Replicated, EditDefaultsOnly, BlueprintReadOnly, Category = KSH)
-	ABuilding* Building;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = KSH)
-	TArray<ABuilding*> ActorsToSave;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = KSH)
-	TArray<UInstancedStaticMeshComponent*> InstsToSave;
-
-
- 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = KSH)
- 	UInstancedStaticMeshComponent* InstMeshComp;
-
- 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = KSH)
-	bool bBuildCheatMode = false;
-	
-	//------------------------------------------------------------------------------------------
-	UFUNCTION()
-	void OnSetBuildModePressed();  
-
-	UFUNCTION(BlueprintCallable, Category = KSH)
-	void SetBuildMode(bool Enabled);
-
-	UFUNCTION(Server, Reliable)
- 	void ServerRPC_SetBuildMode(bool mode);
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MultiRPC_SetBuildMode(bool mode);
-
-	UFUNCTION(Client, Reliable)
-	void ClientRPC_SetBuildMode(bool mode);
-
-	UFUNCTION(BlueprintCallable, Category = KSH)
-	bool GetBuildMode() const { return bInBuildMode; }
-
-	UFUNCTION()
-	void OnCycleMeshPressed(const FInputActionValue& value);
-
-	float wheelAxis;
-
-	UFUNCTION(BlueprintCallable, Category = KSH)
-	void CycleBuildingMesh();
-
-	UFUNCTION(Server, Reliable)
- 	void ServerRPC_CycleBuildingMesh();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void NetMulticastRPC_CycleBuildingMesh(UStaticMesh* newMesh);
-
-	UFUNCTION(Client, Reliable)
-	void ClientRPC_CycleBuildingMesh();
-
-	//------------------------------------------------------------------------------------------
-	UFUNCTION()
-	void OnSpawnBuildingPressed();
-
-	UFUNCTION(BlueprintCallable, Category = KSH)
-	void SpawnBuilding();
-
- 	UFUNCTION(Server, Reliable)
- 	void ServerRPC_SpawnBuilding();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void NetMulticastRPC_SpawnBuilding(const FBuildingSocketData& BuildingSocketData, EBuildType BuildType, FTransform Transf);
-
-	//------------------------------------------------------------------------------------------
-	UFUNCTION()
-	void OnDestroyBuildingPressed();
-
-	UFUNCTION(BlueprintCallable, Category = KSH)
-	void DestroyBuildingInstance();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_DestroyBuildingInstance();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void NetMulticastRPC_DestroyBuildingInstance(/*const FBuildingSocketData& BuildingSocketData*/);
-
-	//------------------------------------------------------------------------------------------
-	UFUNCTION()
-	void OnRemoveFoliagePressed();  
-
-	UFUNCTION(BlueprintCallable, Category = KSH) 
-	void RemoveFoliage(const FHitResult& HitResult);
-
-	UFUNCTION(Server, Reliable) 
-	void SeverRPC_RemoveFoliage(const FHitResult& HitResult);
-
-	UFUNCTION(NetMulticast, Reliable) 
-	void MultiRPC_RemoveFoliage(const FHitResult& HitResult);
-
-	UPROPERTY(EditAnywhere, Category=KSH)
-	TSubclassOf<class APickup> pickupWood;
-
-	UPROPERTY(EditAnywhere, Category=KSH)
-	TSubclassOf<class APickup> pickupRock;
-
-	UPROPERTY(EditAnywhere, Category=KSH)
-	TSubclassOf<class APickup> pickupMetal;
-
-	UPROPERTY(EditAnywhere, Category=KSH)
-	TSubclassOf<class APickup> pickupStone;
-
-	UPROPERTY(EditAnywhere, Category=KSH)
-	TSubclassOf<class APickup> pickupTwig;
-	//-----------------------------------------------------------------------------------
-
-
-	
-	UFUNCTION()
-	void OnBuildUI();  
-
-	UFUNCTION(Server, Reliable) 
-	void SeverRPC_RemoveRock(const FHitResult& HitResult);
-
-	UFUNCTION(NetMulticast, Reliable) 
-	void MultiRPC_RemoveRock(const FHitResult& HitResult);
-
-	UFUNCTION(Server, Reliable) 
-	void SeverRPC_RemoveMetal(const FHitResult& HitResult);
-
-	UFUNCTION(NetMulticast, Reliable) 
-	void MultiRPC_RemoveMetal(const FHitResult& HitResult);
-
-	UFUNCTION()
-	void OnRemoveStonePressed();  
-
-	UFUNCTION(Server, Reliable) 
-	void SeverRPC_RemoveStone(const FHitResult& HitResult);
-
-	UFUNCTION(NetMulticast, Reliable) 
-	void MultiRPC_RemoveStone(const FHitResult& HitResult);
-
-	UFUNCTION()
-	void OnRemoveBushPressed();  
-
-	UFUNCTION(Server, Reliable) 
-	void SeverRPC_RemoveBush(const FHitResult& HitResult);
-
-	UFUNCTION(NetMulticast, Reliable) 
-	void MultiRPC_RemoveBush(const FHitResult& HitResult);
-
-
- 	UFUNCTION()
- 	void OnCheatMode(const FInputActionValue& value);
-
-	// 서휘-----------------------------------------------------------------------------------------------------끝
-	/*UPROPERTY(EditAnywhere, Category="MySettings")
-	class UAnimMontage* rollMT;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "weapon")
 	TSubclassOf<class ABaseWeapon> defaultWeapon;
@@ -1053,8 +748,6 @@ public:
 	void MultiRPC_Die();
 
 	virtual void DieFunction() override;
-
-	//virtual void PossessedBy(AController* NewController) override;
 
 	virtual void CreateInventory() override;
 

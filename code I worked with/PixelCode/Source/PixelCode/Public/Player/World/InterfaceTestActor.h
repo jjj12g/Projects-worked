@@ -21,22 +21,11 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	class UInteractionWidget* InteractionWidget;
-
-	/*UPROPERTY(EditAnywhere, Category = "Portal")
-	TSubclassOf<class AportalActor> portalActorclass;*/
 	
 
 	bool bportalOnOff = false;
 	float bportalTime = 0.0f;
 
-	/*UPROPERTY(EditAnywhere, Category = "Portal")
-	UWidgetComponent* portalBarWidgetComp;*/
-
-	/*UPROPERTY(EditAnywhere, Category = "Portal")
-	UportalBarWidget* portalBarWidget;*/
-
-	/*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	USoundBase* portalSound;*/
 
 protected:
 	virtual void BeginPlay() override;
@@ -51,9 +40,5 @@ protected:
 	// 인터페이스가 선언하는 함수 재정의
 	virtual void BeginFocus() override;
 	virtual void EndFocus() override;
-	virtual void BeginInteract() override;
-	virtual void EndInteract() override;
-	virtual void Interact(APixelCodeCharacter* PlayerCharacter) override;
-
 
 };

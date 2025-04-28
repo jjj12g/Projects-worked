@@ -23,7 +23,6 @@ enum class ECharacterMotionState : int8
 	ToggleCombat,
 	Attack,
 	Defence,
-	//Hit,
 	Jump,
 	Die
 };
@@ -283,18 +282,8 @@ public:
 
    void SkillZTarget();
 
-   
-	
-	
-
-	// 여기까지 테스트
-
-
 	UPROPERTY(EditAnywhere, Category = "Movement")
     float MoveSpeed;
-
-	// 선형 보간을 사용하여 캐릭터를 목표 위치로 이동시키는 함수
-	//void MoveToTargetLocation();
 
 	// 캐릭터 위치지정
 	void CharcurrentLoc();
@@ -307,20 +296,10 @@ public:
     float CameraMoveTime;
 
 
-	
-	/*UPROPERTY(EditDefaultsOnly, Category = "Widgets")
-	TSubclassOf<ULootPanel> lootPanelWidgetClass;
-		
-	UPROPERTY()
-	ULootPanel* lootPanelWidget;	 */
-
 	FORCEINLINE UInventoryComponent* GetInventory() const { return PlayerInventory; }; // 인벤토리 가져오기
-
-	void LootByOthers(APlayerOrganism* otherCharacter);
 
 	virtual void CreateInventory();
 
-	/*void InitRandomItem();*/
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	USoundBase* DeathSound;

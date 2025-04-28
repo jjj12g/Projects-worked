@@ -27,18 +27,17 @@ public:
 	
 	class APlayerController* PlayerController;
 
-// ������ ---------------------------------------------------------------------
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 
-	// �Է� ��� ����, �Ű����� �������� Ŀ�� ǥ��
+
 	void OpenUI(bool bOpen); 
 
 
 	void SpawnCharacterAtLocation(APixelCodeCharacter* APlayerchar); // 위치에 캐릭터 스폰
 
-	void DeleteCharacter(APixelCodeCharacter* APlayerchar, const FVector& Location); // 위치에 캐릭터 스폰
+	void DeleteCharacter(APixelCodeCharacter* APlayerchar, const FVector& Location);
 
 	void HandleCharacterDeath(); // 캐릭터 사망 처리
 
@@ -52,8 +51,6 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRPC_PlayerSpawnWidget();
 
-	/*UFUNCTION(Server, Reliable)
-	void Server_SpawnCharacterAtLocation(APixelCodeCharacter* CharacterToSpawn, const FVector& Location);*/
 
 	
 	UPROPERTY(Replicated)
@@ -116,138 +113,7 @@ public:
 
 	bool bPlayerState = false;
 
-	//UFUNCTION()
-	//void PlayerRespawn();
-
-	//UFUNCTION(Server, Reliable)
-	//void ServerRPC_PlayerRespawn();
-
-	//UFUNCTION(Client, Reliable)
-	//void ClientRPC_PlayerRespawn();
-
-	/*UFUNCTION(Server, Reliable)
-	void ServerRPC_RespawnPlayer();*/
-
-	//UFUNCTION(Server, Reliable)
-	//void ServerRPC_ChangeSpectator();
-	// 
-// ������ �� ---------------------------------------------------------------------
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UPortalRobbyWidget> portalRobbyWidget;
-
-	class UPortalRobbyWidget* WidgetInstance;
 
 	class AMyGameModeBase* MyGameMode;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class ULoadingWidget1> loadingWidget1;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UBossLoadingWidget> loadingWidgetBoss;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UDamageWidget> damageWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UBossEnterWidget> bossEnterWidget;
-
-	class ULoadingWidget1* loadingWidget01;
-
-	class UBossLoadingWidget* bossLoadingWidget;
-
-	class UDamageWidget* damageWidgets;
-
-	class UBossEnterWidget* bossEnterWidgets;
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CreateWidgetRobbyWidget();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_CreateWidgetRobbyWidget();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HideWidgetRobbyWidget();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HideWidgetRobbyWidget();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CreateWidgetLoading1();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_CreateWidgetLoading1();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HideWidgetLoading1();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HideWidgetLoading1();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CreateWidgetBossLoading();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_CreateWidgetBossLoading();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HideWidgetBossLoading();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HideWidgetBossLoading();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CreateDamageWidget();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_CreateDamageWidget();
-
-	void ChangeRobbyWidgetButtonReady();
-
-	void CreateWidgetBossEnterWidget();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HideLastBossPortal();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HideLastBossPortal();
-
-	// 요한
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_CreateWidgetMyMap();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_CreateWidgetMyMap();
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HideWidgetMyMap();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HideWidgetMyMapLoding();
-
-	void CreateWidgetMyMAPs();
-
-	
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_HidMyMap();
-
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastRPC_HidMyMap();
-
-	
-
-	
-
-	class UMyMapWidget* MyMapEnterWidgets;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UMyMapWidget> MyMapEnterWidget;
-
-	class UMyMapLodingWidget* MyMapLoadingWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
-	TSubclassOf<class UMyMapLodingWidget> LoadingWidgetMyMap;
-
-	bool bPoss = false;
 
 };

@@ -31,20 +31,6 @@ void UCollisionTrace_ANs::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSeq
 					}
 				}
 			}
-
-			//UCombatComponent* combatComp = owenrActor->GetComponentByClass<UCombatComponent>();
-			//if (combatComp != nullptr)
-			//{
-			//	ABaseWeapon* mainWeapon = combatComp->GetMainWeapon();
-			//
-			//	if (IsValid(mainWeapon))
-			//	{
-			//		if (mainWeapon->collisionComponent != nullptr)
-			//		{
-			//			mainWeapon->collisionComponent->SetEnableCollision(true);	// Enable
-			//		}
-			//	}
-			//}
 		}
 	}
 }
@@ -73,21 +59,6 @@ void UCollisionTrace_ANs::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSeque
 					}
 				}
 			}
-
-			//UCombatComponent* combatComp = owenrActor->GetComponentByClass<UCombatComponent>();
-
-			//if (combatComp != nullptr)
-			//{
-			//	ABaseWeapon* mainWeapon = combatComp->GetMainWeapon();
-
-			//	if (IsValid(mainWeapon))
-			//	{
-			//		if (mainWeapon->collisionComponent != nullptr)
-			//		{
-			//			mainWeapon->collisionComponent->SetEnableCollision(false);	// Disable
-			//		}
-			//	}
-			//}
 		}
 	}
 }

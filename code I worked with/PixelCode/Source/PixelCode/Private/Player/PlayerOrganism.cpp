@@ -39,8 +39,8 @@ APlayerOrganism::APlayerOrganism()
 	MoveSpeed = 1000.0f;
 	dashSkillTime = 0.0f;
 
-	CameraMoveSpeed = 5.0f; // 카메라 이동 속도
-	CameraMoveTime = 0.5f;  // 카메라 이동 시간 (초)
+	CameraMoveSpeed = 5.0f; 
+	CameraMoveTime = 0.5f;  
 
 }
 
@@ -49,21 +49,13 @@ void APlayerOrganism::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("characterName : %s"), *characterName));
-
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 
 	stateComp->InitStat();
 	stateComp->UpdateStat();
 	stateComp->dieDelegate.BindUFunction(this, FName("DieFunction"));
-
-	//TargetLoc = GetActorLocation() + GetActorForwardVector() * 700; // 원하는 목표 위치 설정
-	/*MoveToTargetLocation();*/
-
-
 	
-
 }
 
 // Called every frame
@@ -78,13 +70,11 @@ void APlayerOrganism::Tick(float DeltaTime)
 			dashSkillTime += DeltaTime;
 			if (bfirstDash)
 			{
-				//firstDashLoc = GetActorLocation() + ((GetActorForwardVector() + GetActorRightVector() * 0.5f) * 500);
 				NewLocation = FMath::Lerp(VS, firstDashLoc, FMath::Clamp(dashSkillTime*InterpSpeed, 0.0f, 1.0f));
 				SetActorLocation(NewLocation);
 			}
 			else if (bsecendDash)
 			{
-				//secendDashLoc = GetActorLocation() + (GetActorForwardVector() * 500);
 				NewLocation = FMath::Lerp(firstDashLoc, secendDashLoc, FMath::Clamp(dashSkillTime*InterpSpeed, 0.0f, 1.0f));
 				SetActorLocation(NewLocation);
 			}
@@ -110,8 +100,6 @@ void APlayerOrganism::Tick(float DeltaTime)
 		// 이동 속도와 델타 타임을 기반으로 Lerp 알파 값을 증가
 		float LerpDelta = MoveSpeed * DeltaTime / FVector::Dist(CurrentLocation, TargetLoc);
 		dashSkillTime = FMath::Clamp(dashSkillTime + LerpDelta, 0.0f, 1.0f);
-
-		
 
 
 		// 목표 위치에 도달했는지 확인
@@ -146,21 +134,6 @@ void APlayerOrganism::Tick(float DeltaTime)
 
 }
 
-/*if (SkillE)
-{
-	ESkillTime += DeltaTime;
-	FVector Edistance;
-	Edistance = FMath::Lerp(CharLoc,TargetLoc,ESkillTime * 3);
-
-	SetActorLocation(Edistance);
-	if (ESkillTime >= 1.0f)
-	{
-		UE_LOG(LogTemp,Warning,TEXT("ESkill"));
-		ESkillTime = 0.0f;
-		SkillE = false;
-	}
-}*/
-
 
 // Called to bind functionality to input
 void APlayerOrganism::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -179,7 +152,6 @@ float APlayerOrganism::TakeDamage(float DamageAmount, FDamageEvent const& Damage
  		APlayerController* APc = Cast<APlayerController>(this->GetController());
  		if (APc != nullptr)
  		{
- 			//APc->ClientStartCameraShake(PlayerHitShake_bp);
  			SlowDownTime(0.1f, 0.05f, APc);
  		}
 		GetWorldTimerManager().SetTimer(timerhandle_CounterShakeTimer, this, &APlayerOrganism::CounterCameraShake, 0.9, false);
@@ -189,7 +161,6 @@ float APlayerOrganism::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 			AnimInsatnce->Montage_Play(AttackCounter);
 			
 		}
-	//UE_LOG(LogTemp,Warning,TEXT("PlayerCounter"));
 		return 0.0f;
 	}
 
@@ -246,14 +217,14 @@ void APlayerOrganism::GetHit(const FVector& ImpactPoint, bool bFallDown)
 	// |Forward| = 1, |ToHit| = 1, so Forward * ToHit = cos(theta)
 	const double CosTheta = FVector::DotProduct(Forward, ToHit);
 
-	//(세타)의 역코사인(아크 - 코사인)을 취하여 세타를 구합니다.
+	//(세타)의 역코사인(아크 - 코사인)을 취하여 세타를 구하기
 	// 아크 코사인에 코사인 세타전달
 	double Theta = FMath::Acos(CosTheta);
 	// 라디안을 각도로 변환
 	// Theta를 도 단위의 각도로 재지정
 	Theta = FMath::RadiansToDegrees(Theta);
 
-	// 만약 벡터가 아래를 가르키면 세타 포인트는 음수여야함,
+	// 만약 벡터가 아래를 가르키면 세타 포인트는 음수여야함.
 	const FVector CrossProduct = FVector::CrossProduct(Forward, ToHit);
 	if (CrossProduct.Z < 0)
 	{
@@ -264,7 +235,6 @@ void APlayerOrganism::GetHit(const FVector& ImpactPoint, bool bFallDown)
 		{
 			//UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitPaticle, GetActorLocation() + CrossProduct * 100.f);
 		}
-
 		if (bFallDown)
 		{
 			AnimInsatnce = GetMesh()->GetAnimInstance();
@@ -289,11 +259,6 @@ void APlayerOrganism::GetHit(const FVector& ImpactPoint, bool bFallDown)
 					//UE_LOG(LogTemp, Warning, TEXT("Back"));
 					SetActorRotation(GetActorRotation() - FRotator(0, -180, 0));
 				}
-				//if (GEngine)
-				//{
-				//	// 화면 디버그 기능
-				//	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Green, FString::Printf(TEXT("Theta: %f"), Theta));
-				//}
 				
 				AnimInsatnce->Montage_Play(hitFalldownReaction);
 				return;
@@ -326,14 +291,6 @@ void APlayerOrganism::GetHit(const FVector& ImpactPoint, bool bFallDown)
 
 		PlayHitReactMontage(Section);
 		}
-	//if (GEngine)
-	//{
-	//	// 화면 디버그 기능
-	//	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Green, FString::Printf(TEXT("Theta: %f"), Theta));
-	//}
-	//UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + Forward * 60.0f, 5.f, FColor::Red, 5.f);
-	//UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + ToHit * 60.f, 5.f, FColor::Green, 5.f);
-
 }
 
 void APlayerOrganism::PlayHitReactMontage(const FName& SectionName)
@@ -437,27 +394,6 @@ void APlayerOrganism::EnableRagdoll()
 				GetMesh()->SetAllBodiesBelowSimulatePhysics(pelvisBoneName, true, true);
 				GetMesh()->SetAllBodiesBelowPhysicsBlendWeight(pelvisBoneName, 1.0f, false, true);
 			}
-
-			//if (CameraBoom)
-			//{
-			//	if (GetMesh())
-			//	{
-			//		CameraBoom->AttachToComponent(GetMesh(), attachTransformRules, pelvisBoneName);
-			//		CameraBoom->bDoCollisionTest = false;
-
-			//		GetMesh()->SetCollisionProfileName(TEXT("ragdoll"));
-			//		GetMesh()->SetAllBodiesBelowSimulatePhysics(pelvisBoneName, true, true);
-			//		GetMesh()->SetAllBodiesBelowPhysicsBlendWeight(pelvisBoneName, 1.0f, false, true);
-			//	}
-			//	else
-			//	{
-			//		UE_LOG(LogTemp, Warning, TEXT("AEromCharacter : %d"), __LINE__);
-			//	}
-			//}
-			//else
-			//{
-			//	UE_LOG(LogTemp, Warning, TEXT("AEromCharacter : %d"), __LINE__);
-			//}
 		}
 		else
 		{
@@ -478,9 +414,6 @@ void APlayerOrganism::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(APlayerOrganism, combatComponent);
 	DOREPLIFETIME(APlayerOrganism, motionState);
 	DOREPLIFETIME(APlayerOrganism, bDead);
-	//DOREPLIFETIME(APlayerOrganism, itemRandNums);
-	//DOREPLIFETIME(APlayerOrganism, randItemIndex);
-
 }
 
 void APlayerOrganism::ServerRPC_PerformAttack_Implementation(UAnimMontage* useMontage)
@@ -553,7 +486,6 @@ void APlayerOrganism::NetMulticastRPC_AmountDamage_Implementation(float damage)
 
 void APlayerOrganism::DieFunction()
 {
-	//UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Dead : %s"), *GetActorNameOrLabel()));
 
 	bDead = true;
 
@@ -612,9 +544,6 @@ void APlayerOrganism::SkillZTarget()
 		bfirstDash = true;
 		firstDashLoc = GetActorLocation() + ((GetActorForwardVector() + GetActorRightVector() * 0.5f) * 500);
 		
-
-		//TargetLoc = GetActorLocation() + ((GetActorForwardVector() + GetActorRightVector() * 0.5f) * 500);
-
 		FQuat CurrentQuatRotation = FQuat(GetActorRotation()); // 현재 오브젝트의 로테이션을 쿼터니언으로 변환
 		FRotator RelativeRotation(0.f, 250.f, 0.f); // 상대적으로 회전할 양 설정
 
@@ -624,7 +553,6 @@ void APlayerOrganism::SkillZTarget()
 
 		FRotator NewRotation = NewQuatRotation.Rotator();
 		SetActorRotation(NewRotation); // 새로운 회전 설정
-		//SetActorLocation(NewLocation);
 	}
 	else if (CurrentDashIndex == 1)
 	{
@@ -642,74 +570,31 @@ void APlayerOrganism::SkillZTarget()
 
 		FRotator NewRotation = NewQuatRotation.Rotator();
 		SetActorRotation(NewRotation); // 새로운 회전 설정
-		//SetActorLocation(NewLocation);
-		//SetActorLocation(TargetLoc);
 	}
 
 	FVector PlayerLocation = GetActorLocation();
 	FString LocationString = PlayerLocation.ToString();
-	//UE_LOG(LogTemp, Warning, TEXT("SkillZ: %s"), *LocationString);
-
-	//UE_LOG(LogTemp, Warning, TEXT("SkillZ: %d"), CurrentDashIndex);
-
-
 
 	CurrentDashIndex++;
 }
 
 void APlayerOrganism::CharcurrentLoc()
 {
-	//FVector ForwardNomalize = GetActorForwardVector().Normalize();
 	if (SkillZ)
 	{
-		//TargetLoc = ((GetActorForwardVector() + GetActorRightVector()) / 2) * 500;
-		//TargetLoc = GetActorLocation();
 		VS = GetActorLocation();
 		RS = GetActorRotation();
-		//CurrentLocation = GetActorLocation();
-		//firstDashLoc = GetActorLocation() + ((GetActorForwardVector() + GetActorRightVector() * 0.5f) * 500);
 		SkillZTarget();
 	
 		FVector PlayerLocation = GetActorLocation();
 		FString LocationString = PlayerLocation.ToString();
-		//UE_LOG(LogTemp, Warning, TEXT("getLoc: %s"), *LocationString);
-
 	}
 
-	//CharLoc = GetActorLocation();
 	if (SkillE)
 	{ 
 		TargetLoc = GetActorLocation() + GetActorForwardVector() * 700;
 	}
-
-	//TargetrangeLoc = GetActorLocation() + GetActorForwardVector() * 500;
-
 	
-}
-
-//void APlayerOrganism::MoveToTargetLocation()
-//{
-//	if (!SkillE)
-//	{
-//		SkillE = true;
-//		dashSkillTime = 0.0f; // Lerp 알파를 초기화하여 처음부터 보간 시작
-//	}
-//}
-
-void APlayerOrganism::LootByOthers(APlayerOrganism* otherCharacter)
-{
-	//if (motionState != ECharacterMotionState::Die)
-	//	return;
-
-	//otherCharacter->GetController();
-
-	//auto panel = Cast<UInventoryPanel>(otherCharacter->lootPanelWidget->GetWidgetFromName(FName(TEXT("WBP_InventoryPanel"))));
-
-	//if (panel)
-	//{
-	//	panel->SetTargetCharacter(this);
-	//	otherCharacter->lootPanelWidget->AddToViewport();
-	//}
 }
 
 void APlayerOrganism::CreateInventory()
@@ -723,26 +608,6 @@ void APlayerOrganism::CreateInventory()
 	PlayerInventory->SetWeightCapacity(50.0f); // 무게용량 50설정
 }
 
-//void APlayerOrganism::InitRandomItem()
-//{
-//	itemRandNums = FMath::RandRange(5, 10);
-//
-//	ServerRPC_SetItemRandNums(itemRandNums);
-//
-//	UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Init randNums : %d"), itemRandNums));
-//	for (int i = 0; i < itemRandNums; i++)
-//	{
-//		randItemIndex = FMath::RandRange(1, 6);
-//
-//		ServerRPC_SetItemRandIndex(randItemIndex);
-//
-//		UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Add Item : test_%03d"), randItemIndex));
-//
-//		ServerRPC_SpawnItem(randItemIndex);
-//	}
-//
-//	PlayerInventory->RefreshInventory();
-//}
 
 void APlayerOrganism::ServerRPC_SetItemRandNums_Implementation(int32 randNums)
 {

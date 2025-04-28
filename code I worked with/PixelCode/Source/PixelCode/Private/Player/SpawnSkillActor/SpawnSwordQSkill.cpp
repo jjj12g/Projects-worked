@@ -13,7 +13,6 @@
 // Sets default values
 ASpawnSwordQSkill::ASpawnSwordQSkill()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
 	SceneComp = CreateDefaultSubobject<USceneComponent>(TEXT("SceneComp"));
@@ -58,7 +57,6 @@ void ASpawnSwordQSkill::Tick(float DeltaTime)
 
 			Destroy();
 		}
-	
 }
 
 void ASpawnSwordQSkill::DealDamageToActorsInTrace()
@@ -103,10 +101,6 @@ void ASpawnSwordQSkill::DealDamageToActorsInTrace()
                 {
                     // 피해를 입히는 예시: TakeDamage 함수 호출
                     EnemyCharacter->SwordTakeDamage(DamageAmount);
-
-                    // 피해 입힌 액터 로그 출력
-                    //UE_LOG(LogTemp, Warning, TEXT("demonSword: %s"), *HitActor->GetName());
-                   // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceRadius, 32, FColor::Green, false, 2.0f);
                 }
             }
             else if (grux)
@@ -116,10 +110,6 @@ void ASpawnSwordQSkill::DealDamageToActorsInTrace()
                 {
                     // 피해를 입히는 예시: TakeDamage 함수 호출
                     EnemyCharacter->GruxTakeDamage(DamageAmount);
-
-                    // 피해 입힌 액터 로그 출력
-                    //UE_LOG(LogTemp, Warning, TEXT("demonSword: %s"), *HitActor->GetName());
-                   // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceRadius, 32, FColor::Green, false, 2.0f);
                 }
             }
             else if (dogBart)
@@ -129,25 +119,10 @@ void ASpawnSwordQSkill::DealDamageToActorsInTrace()
                 {
                     // 피해를 입히는 예시: TakeDamage 함수 호출
                     EnemyCharacter->DogBartTakeDamage(DamageAmount);
-
-                    // 피해 입힌 액터 로그 출력
-                    //UE_LOG(LogTemp, Warning, TEXT("demonSword: %s"), *HitActor->GetName());
-                   // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceRadius, 32, FColor::Green, false, 2.0f);
                 }
             }
         }
     }
-
-    // 디버깅을 위해 트레이스 결과를 시각적으로 표시할 수 있습니다.
-    /*if (bHit)*/
-   /* {
-        for (const FHitResult& HitResult : HitResults)
-        {
-            DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, TraceRadius, 32, FColor::Green, false, 2.0f);
-        }
-    }*/
-
-
 }
 
 

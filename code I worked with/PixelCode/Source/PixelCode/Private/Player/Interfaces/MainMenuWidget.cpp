@@ -31,7 +31,6 @@ bool UMainMenuWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropE
 		return true;
 	}
 	return false;
-
-	// Cast Operation to item drag drop, ensure player is valid, call drop item on player 플레이어가 플레이어에서 휴효한 호출 드롭항목인지 확인
+	// 플레이어가 플레이어에서 휴효한 호출 드롭항목인지 확인
 
 }

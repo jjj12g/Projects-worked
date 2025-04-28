@@ -47,7 +47,6 @@ void UCharacterAnimInstance::AnimNotify_blockcounter()
 	{
 		myCharacter->SkillE = true;
 		myCharacter->CharcurrentLoc();
-		//myCharacter->MoveToTargetLocation();
 	}
 
 }
@@ -57,7 +56,6 @@ void UCharacterAnimInstance::AnimNotify_bRotation()
 	if (myCharacter != nullptr)
 	{
 			myCharacter->bRotation = true;
-			//UE_LOG(LogTemp,Warning,TEXT("bRotation"));
 			myCharacter->bUseSkill = true;
 	}
 }
@@ -67,7 +65,6 @@ void UCharacterAnimInstance::AnimNotify_bEndRotation()
 	if (myCharacter != nullptr)
 	{
 		myCharacter->bRotation = false;
-		//UE_LOG(LogTemp, Warning, TEXT("!bRotation"));
 		myCharacter->bUseSkill = false;
 	}
 }
@@ -121,7 +118,6 @@ void UCharacterAnimInstance::AnimNotify_FarmFoliage()
 	if (myCharacter != nullptr)
 	{
 		myCharacter->bFarmFoliage = true;
-		/*myCharacter->CharcurrentLoc();*/
 	}
 }
 
@@ -130,7 +126,6 @@ void UCharacterAnimInstance::AnimNotify_Mine()
 	if (myCharacter != nullptr)
 	{
 		myCharacter->bMine = true;
-		/*myCharacter->CharcurrentLoc();*/
 	}
 }
 
@@ -140,9 +135,6 @@ void UCharacterAnimInstance::AnimNotify_IsJump()
 	{
 		
 		myCharacter->bIsJump = true;
-	
-	
-		//UE_LOG(LogTemp, Log, TEXT("bValue is: %s"), myCharacter->bIsJump ? TEXT("true") : TEXT("false"));
 	}
 }
 
@@ -167,9 +159,6 @@ void UCharacterAnimInstance::AnimNotify_AttackBlock()
 		{
 			myCharacter->bAttackBlock = false;
 		}
-			
-		//UE_LOG(LogTemp, Log, TEXT("bValue is: %s"), myCharacter->bAttackBlock ? TEXT("true") : TEXT("false"));
-	
 	}
 }
 

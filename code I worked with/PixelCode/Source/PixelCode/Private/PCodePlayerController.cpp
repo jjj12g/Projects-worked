@@ -43,12 +43,6 @@ void APCodePlayerController::BeginPlay()
 	TArray<AActor*> allActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APixelCodeCharacter::StaticClass(), allActors);
 
-	for(auto Temp : allActors)
-	{
-		//UKismetSystemLibrary::PrintString(GetWorld(), FString::Printf(TEXT("Name : %s"), *Temp->GetActorNameOrLabel()));
-		
-	}
-
 
 	MainPlayer = Cast<APixelCodeCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	StatComponent = Cast<UStateComponent>(MainPlayer->stateComp);
@@ -59,8 +53,6 @@ void APCodePlayerController::BeginPlay()
 	
 	ClientRPC_PlayerStartWidget();
 	
-
-	//PlayerBeginWidget();
 
 
 	if (ValidatePlayerState())
@@ -80,7 +72,7 @@ void APCodePlayerController::BeginPlay()
 		if (!ObjectPoolManager)
 		{
 			// 오브젝트 풀 매니저가 없는 경우 에러 처리
-			//UE_LOG(LogTemp, Error, TEXT("ObjectPoolManager를 찾을 수 없습니다!"));
+			UE_LOG(LogTemp, Error, TEXT("ObjectPoolManager를 찾을 수 없습니다!"));
 		}
 }
 	
@@ -98,8 +90,7 @@ void APCodePlayerController::PlayerLevelUp()
 
 bool APCodePlayerController::ValidatePlayerState()
 {
-	// Ensures that the player state is Valid before we setup the PlayerController
-	// 플레이어 컨트롤러를 설정하기 전에, 플레이어 스테이트가 유효한지 보장한다.
+	// 플레이어 컨트롤러를 설정하기 전에, 플레이어 스테이트가 유효한지 보장.
 	FTimerHandle TimerHandle_PlayerStateCheck;
 
 	if (PlayerState->IsValidLowLevel())
@@ -163,63 +154,6 @@ void APCodePlayerController::ClientRPC_PlayerStartWidget_Implementation()
 
 }
 
-//void APCodePlayerController::PlayerStartWidget()
-//{
-//	
-//	statWidget = Cast<UPlayerStatWidget>(CreateWidget(GetWorld(), StatWidgetClass));
-//
-//	NormallyWidget = Cast<UNormallyWidget>(CreateWidget(GetWorld(), NormallyWidgetClass));
-//
-//	// 시작
-//	if (StatWidgetClass)
-//	{
-//		if (statWidget != nullptr)
-//		{
-//			statWidget->AddToViewport(1);
-//			statWidget->SetVisibility(ESlateVisibility::Collapsed);
-//			UE_LOG(LogTemp, Warning, TEXT("NormalAuth"));
-//		}
-//
-//	}
-//
-//	if (NormallyWidgetClass)
-//	{
-//		if (NormallyWidget != nullptr)
-//		{
-//			NormallyWidget->AddToViewport(-1);
-//			NormallyWidget->SetVisibility(ESlateVisibility::Visible);
-//			UE_LOG(LogTemp, Warning, TEXT("NormalAuth"));
-//		}
-//	}
-//
-//
-//}
-
-//void APCodePlayerController::PlayerBeginWidget()
-//{
-//	// 시작
-//	if (StatWidgetClass)
-//	{
-//		if (statWidget != nullptr)
-//		{
-//			statWidget->AddToViewport(1);
-//			statWidget->SetVisibility(ESlateVisibility::Collapsed);
-//			UE_LOG(LogTemp, Warning, TEXT("NormalAuth"));
-//		}
-//
-//	}
-//
-//	if (NormallyWidgetClass)
-//	{
-//		if (NormallyWidget != nullptr)
-//		{
-//			NormallyWidget->AddToViewport(-1);
-//			NormallyWidget->SetVisibility(ESlateVisibility::Visible);
-//			UE_LOG(LogTemp, Warning, TEXT("NormalAuth"));
-//		}
-//	}
-//}
-
 void APCodePlayerController::PlayerStatWidget()
 {
 	if (!MainPlayer->bIsJump)
@@ -265,32 +199,9 @@ void APCodePlayerController::PlayerDieWidget()
 {
 	if (NormallyWidget)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("RespawnDieWidget"));
 		NormallyWidget->SetActiveGameOverUI(true);
 	}
 }
-
-//void APCodePlayerController::PlayerRespawn()
-//{
-//	MainPlayer->stateComp->InitStat();
-//
-//	ServerRPC_PlayerRespawn();
-//}
-//
-//void APCodePlayerController::ServerRPC_PlayerRespawn_Implementation()
-//{
-//	MainPlayer->SetActorLocation(MainPlayer->GetActorLocation());
-//	MainPlayer->EnableInput(this);	
-//	MainPlayer->bDead = false;
-//	ClientRPC_PlayerRespawn();
-//}
-//
-//void APCodePlayerController::ClientRPC_PlayerRespawn_Implementation()
-//{
-//	SetInputMode(FInputModeGameOnly());
-//}
-
-
 
 
 void APCodePlayerController::Tick(float DeltaSeconds)
@@ -302,7 +213,6 @@ void APCodePlayerController::Tick(float DeltaSeconds)
 		MainPlayer = Cast<APixelCodeCharacter>(GetPawn());
 		if (MainPlayer == nullptr)
 		{
-			//UE_LOG(LogTemp, Warning, TEXT("MainPlayer is still nullptr in Tick!"));
 			return;
 		}
 	}
@@ -340,13 +250,7 @@ void APCodePlayerController::HandleCharacterDeath()
 	{
 		UnPossess(); // 조종 중지
 
-		// 캐릭터 사망 애니메이션 처리
-		// ...
-
-
-		//UE_LOG(LogTemp, Warning, TEXT("UnPossess!"));
 	}
-	//SpawnCharacterAtLocation(MainPlayer->GetActorLocation());
 }
 
 void APCodePlayerController::ClientRPC_PlayerSpawnWidget_Implementation()
@@ -361,10 +265,6 @@ void APCodePlayerController::ServerRPC_SpawnCharacterAtLocation_Implementation()
 
 }
 
-//void APCodePlayerController::Server_SpawnCharacterAtLocation_Implementation(APixelCodeCharacter* CharacterToSpawn, const FVector& Location)
-//{
-//	SpawnCharacterAtLocation(CharacterToSpawn,Location);
-//}
 
 void APCodePlayerController::SpawnCharacterAtLocation(APixelCodeCharacter* PooledCharacter)
 {
@@ -387,9 +287,6 @@ void APCodePlayerController::SpawnCharacterAtLocation(APixelCodeCharacter* Poole
 			NormallyWidget = this->NormallyWidget;
 			NormallyWidget->bPlayerDie = true;
 
-			
-
-			//Possess(PooledCharacter);
 		
 			if (HasAuthority())
 			{
@@ -401,9 +298,6 @@ void APCodePlayerController::SpawnCharacterAtLocation(APixelCodeCharacter* Poole
 				 //서버 권한이 없는 경우에는 서버에 요청
 				Server_SpawnAndPossessCharacter(PooledCharacter);
 			}
-			//Server_SpawnAndPossessCharacter(PooledCharacter, Location);
-			//Possess(PooledCharacter); // 컨트롤러가 캐릭터를 조종
-			//UE_LOG(LogTemp, Warning, TEXT("Possess!"));
 		}
 	}
 }
@@ -418,7 +312,6 @@ void APCodePlayerController::DeleteCharacter(APixelCodeCharacter* APlayerchar, c
 			APlayerchar->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 			APlayerchar->GetMesh()->SetCollisionProfileName("CharacterMesh");
 			APlayerchar->GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			//APlayerchar->GetMesh()->GetAnimInstance()->Montage_Stop(0.2f, APlayerchar->AM_DeathMontage);
 
 			ServerRPC_SpawnCharacterAtLocation();
 			ObjectPoolManager->ReturnPooledCharacter(APlayerchar); // 캐릭터 반환
@@ -430,7 +323,6 @@ void APCodePlayerController::DeleteCharacter(APixelCodeCharacter* APlayerchar, c
 
 void APCodePlayerController::Server_SpawnAndPossessCharacter_Implementation(APixelCodeCharacter* CharacterToSpawn)
 {
-	//SpawnCharacterAtLocation(CharacterToSpawn, Location);
 	Possess(CharacterToSpawn);
 }
 
@@ -438,8 +330,6 @@ void APCodePlayerController::Server_SpawnAndPossessCharacter_Implementation(APix
 void APCodePlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	// PlayerName  Replication 
 	
 	// 오브젝트 풀 관리자 객체를 네트워크로 복제합니다.
 	DOREPLIFETIME(APCodePlayerController, ObjectPoolManager);
@@ -447,410 +337,5 @@ void APCodePlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 }
 
 
-//void APCodePlayerController::ServerRPC_RespawnPlayer_Implementation()
-//{
-//
-//	auto* oldPawn = GetPawn();
-//
-//	UE_LOG(LogTemp, Warning, TEXT("Possess"));
-//
-//	if (IsLocalController())
-//	{
-//		NormallyWidget->RemoveFromParent();
-//		statWidget->RemoveFromParent();
-//	}
-//	
-//	UnPossess();
-//
-//	// 시작
-//	
-//	if (oldPawn)
-//	{
-//		oldPawn->Destroy();
-//	}
-//
-//
-//	GM->RestartPlayer(this);
-//}
 
-void APCodePlayerController::ServerRPC_CreateWidgetRobbyWidget_Implementation()
-{
-	MulticastRPC_CreateWidgetRobbyWidget();
-}
 
-void APCodePlayerController::MulticastRPC_CreateWidgetRobbyWidget_Implementation()
-{
-	if (HasAuthority())
-	{
-		if (portalRobbyWidget)
-		{
-			WidgetInstance = CreateWidget<UPortalRobbyWidget>(this, portalRobbyWidget);
-			if (WidgetInstance)
-			{
-				// 위젯을 화면에 추가
-				WidgetInstance->AddToViewport();
-
-				bShowMouseCursor = true;
-				bEnableClickEvents = true;
-				bEnableMouseOverEvents = true;
-
-				FInputModeUIOnly InputMode;
-				InputMode.SetWidgetToFocus(WidgetInstance->TakeWidget());
-				InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-				SetInputMode(InputMode);
-
-				PlayerController = GetWorld()->GetFirstPlayerController();
-				if (PlayerController)
-				{
-					PlayerController->SetIgnoreLookInput(true);
-					PlayerController->SetIgnoreMoveInput(true);
-				}
-
-			}
-		}
-	}
-	
-}
-
-void APCodePlayerController::ServerRPC_HideWidgetRobbyWidget_Implementation()
-{
-	MulticastRPC_HideWidgetRobbyWidget();
-}
-
-void APCodePlayerController::MulticastRPC_HideWidgetRobbyWidget_Implementation()
-{
-	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
-	{
-		APlayerController* BaseController = It->Get();
-		PlayerController = Cast<APCodePlayerController>(BaseController);
-		if (PlayerController && WidgetInstance)
-		{
-			WidgetInstance->RemoveFromParent();
-			PlayerController->bShowMouseCursor = false;
-			PlayerController->bEnableClickEvents = false;
-			PlayerController->bEnableTouchEvents = false;
-
-			FInputModeGameOnly InputMode;
-			PlayerController->SetInputMode(InputMode);
-
-
-			if (PlayerController)
-			{
-				PlayerController->SetIgnoreLookInput(false);
-				PlayerController->SetIgnoreMoveInput(false);
-			}
-		}
-
-	}
-}
-
-	//void APCodePlayerController::ServerRPC_ChangeSpectator_Implementation()
-	//{
-	//	
-	//	// 재시작요청을 하면 서버RPC로 관전자를 생성해서 빙의하라고한다.
-	//	// 관전자를 생성하고
-	//	auto* oldPawn = GetPawn();
-
-	//	if (oldPawn)
-	//	{
-	//	
-	//		FTransform t = oldPawn->GetActorTransform();
-	//		FActorSpawnParameters params;
-	//		params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	//
-	//		auto* newPawn = GetWorld()->SpawnActor<ASpectatorPawn>(GM->SpectatorClass, t, params);
-	//		
-	//		// 관전자로 빙의
-	//		Possess(newPawn);
-	//		
-	//		oldPawn->Destroy();
-	//
-	//		FTimerHandle handle;
-	//		GetWorld()->GetTimerManager().SetTimer(handle, this, &APCodePlayerController::ServerRPC_RespawnPlayer_Implementation, 5, false);
-	//	}
-	//}
-
-
-
-void APCodePlayerController::ServerRPC_CreateWidgetLoading1_Implementation()
-{
-	MulticastRPC_CreateWidgetLoading1();
-}
-
-void APCodePlayerController::MulticastRPC_CreateWidgetLoading1_Implementation()
-{
-	if (loadingWidget1)
-	{
-		loadingWidget01 = CreateWidget<ULoadingWidget1>(this, loadingWidget1);
-		if (loadingWidget01)
-		{
-			// 위젯을 화면에 추가
-			loadingWidget01->AddToViewport();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ServerRPC_HideWidgetLoading1_Implementation()
-{
-	MulticastRPC_HideWidgetLoading1();
-}
-
-void APCodePlayerController::MulticastRPC_HideWidgetLoading1_Implementation()
-{
-	if (loadingWidget1)
-	{
-		loadingWidget01 = CreateWidget<ULoadingWidget1>(this, loadingWidget1);
-		if (loadingWidget01)
-		{
-			// 위젯을 화면에 추가
-			loadingWidget01->RemoveFromParent();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ServerRPC_CreateWidgetBossLoading_Implementation()
-{
-	MulticastRPC_CreateWidgetBossLoading();
-}
-
-void APCodePlayerController::MulticastRPC_CreateWidgetBossLoading_Implementation()
-{
-	if (loadingWidgetBoss)
-	{
-		bossLoadingWidget = CreateWidget<UBossLoadingWidget>(this, loadingWidgetBoss);
-		if (bossLoadingWidget)
-		{
-			// 위젯을 화면에 추가
-			bossLoadingWidget->AddToViewport();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ServerRPC_HideWidgetBossLoading_Implementation()
-{
-	MulticastRPC_HideWidgetBossLoading();
-}
-
-void APCodePlayerController::MulticastRPC_HideWidgetBossLoading_Implementation()
-{
-	if (loadingWidgetBoss)
-	{
-		bossLoadingWidget = CreateWidget<UBossLoadingWidget>(this, loadingWidgetBoss);
-		if (bossLoadingWidget)
-		{
-			// 위젯을 화면에 추가
-			bossLoadingWidget->RemoveFromParent();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ServerRPC_CreateDamageWidget_Implementation()
-{
-	MulticastRPC_CreateDamageWidget();
-}
-
-void APCodePlayerController::MulticastRPC_CreateDamageWidget_Implementation()
-{
-	if (damageWidget)
-	{
-		damageWidgets = CreateWidget<UDamageWidget>(this, damageWidget);
-		if (damageWidgets)
-		{
-			// 위젯을 화면에 추가
-			damageWidgets->AddToViewport();
-
-
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ChangeRobbyWidgetButtonReady()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("TA66"));
-	WidgetInstance->NormalChangeButton1();
-}
-
-void APCodePlayerController::CreateWidgetBossEnterWidget()
-{
-	if (HasAuthority())
-	{
-		if (bossEnterWidget)
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("CALL4455"));
-			bossEnterWidgets = CreateWidget<UBossEnterWidget>(this, bossEnterWidget);
-			if (bossEnterWidgets)
-			{
-				// 위젯을 화면에 추가
-				bossEnterWidgets->AddToViewport();
-
-				bShowMouseCursor = true;
-				bEnableClickEvents = true;
-				bEnableMouseOverEvents = true;
-
-				PlayerController = GetWorld()->GetFirstPlayerController();
-				if (PlayerController)
-				{
-					PlayerController->SetIgnoreLookInput(true);
-					PlayerController->SetIgnoreMoveInput(true);
-				}
-			}
-		}
-	}
-	
-}
-
-// =========================================== 요한 =========================================================
-
-void APCodePlayerController::ServerRPC_CreateWidgetMyMap_Implementation()
-{
-	MulticastRPC_CreateWidgetMyMap();
-}
-
-void APCodePlayerController::MulticastRPC_CreateWidgetMyMap_Implementation()
-{
-
-	if (LoadingWidgetMyMap)
-	{
-		MyMapLoadingWidget = CreateWidget<UMyMapLodingWidget>(this, LoadingWidgetMyMap);
-		if (MyMapLoadingWidget)
-		{
-			// 위젯을 화면에 추가
-			MyMapLoadingWidget->AddToViewport();
-			//UE_LOG(LogTemp, Warning, TEXT("111112222223333344444555666777888999"));
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::ServerRPC_HideWidgetMyMap_Implementation()
-{
-	MulticastRPC_HideWidgetMyMapLoding();
-}
-
-void APCodePlayerController::MulticastRPC_HideWidgetMyMapLoding_Implementation()
-{
-	if (LoadingWidgetMyMap)
-	{
-		MyMapLoadingWidget = CreateWidget<UMyMapLodingWidget>(this, LoadingWidgetMyMap);
-		if (MyMapLoadingWidget)
-		{
-			// 위젯을 화면에 추가
-			MyMapLoadingWidget->RemoveFromParent();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-			//MyGameMode->bIsReadyToReady=true;
-		}
-	}
-}
-
-void APCodePlayerController::CreateWidgetMyMAPs()
-{
-	if (MyMapEnterWidget)
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("CALL4455"));
-		MyMapEnterWidgets = CreateWidget<UMyMapWidget>(this, MyMapEnterWidget);
-		if (MyMapEnterWidgets)
-		{
-			// 위젯을 화면에 추가
-			MyMapEnterWidgets->AddToViewport();
-
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-
-
-		}
-	}
-
-}
-
-void APCodePlayerController::ServerRPC_HidMyMap_Implementation()
-{
-	MulticastRPC_HidMyMap();
-}
-
-void APCodePlayerController::MulticastRPC_HidMyMap_Implementation()
-{
-	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
-	{
-		APlayerController* BaseController = It->Get();
-		PlayerController = Cast<APCodePlayerController>(BaseController);
-		if (PlayerController && MyMapEnterWidgets)
-		{
-			MyMapEnterWidgets->RemoveFromParent();
-			PlayerController->bShowMouseCursor = false;
-			PlayerController->bEnableClickEvents = false;
-			PlayerController->bEnableTouchEvents = false;
-
-			FInputModeGameOnly InputMode;
-			PlayerController->SetInputMode(InputMode);
-
-			PlayerController->SetIgnoreLookInput(false);
-			PlayerController->SetIgnoreMoveInput(false);
-		}
-
-	}
-}
-
-// ==================== 요한 =====================================
-
-void APCodePlayerController::ServerRPC_HideLastBossPortal_Implementation()
-{
-	MulticastRPC_HideLastBossPortal();
-}
-
-void APCodePlayerController::MulticastRPC_HideLastBossPortal_Implementation()
-{
-	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
-	{
-		APlayerController* BaseController = It->Get();
-		PlayerController = Cast<APCodePlayerController>(BaseController);
-		if (PlayerController && bossEnterWidgets)
-		{
-			bossEnterWidgets->RemoveFromParent();
-			PlayerController->bShowMouseCursor = false;
-			PlayerController->bEnableClickEvents = false;
-			PlayerController->bEnableTouchEvents = false;
-
-			FInputModeGameOnly InputMode;
-			PlayerController->SetInputMode(InputMode);
-
-			PlayerController->SetIgnoreLookInput(false);
-			PlayerController->SetIgnoreMoveInput(false);
-		}
-
-	}
-}

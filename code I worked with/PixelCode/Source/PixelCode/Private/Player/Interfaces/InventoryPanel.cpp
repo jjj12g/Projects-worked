@@ -78,10 +78,8 @@ bool UInventoryPanel::NativeOnDrop(const FGeometry& InGeometry, const FDragDropE
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("Detected an item drop on InventoryPanel."))
 
-		// returning true will stop the drop operation at this widget
 		return true;
 	}
-	// returning false will cause the drop operation to fall throungt to underlying widgets (if any)
 	return false;
 }
 

@@ -71,11 +71,6 @@ void APickup::InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int
 	}
 }
 
-void APickup::ClientRPC_InitializeDrop_Implementation(UItemBase* ItemToDrop, const int32 InQuantity)
-{
-	
-	//NetMulticastRPC_InitializeDrop();
-}
 
 void APickup::NetMulticastRPC_InitializeDrop_Implementation(UItemBase* ItemToDrop, const int32 InQuantity)
 {
@@ -174,25 +169,6 @@ void APickup::TakePickup(const APlayerOrganism* Taker)
 
 }
 
-//void APickup::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
-//{
-//	//Super::PostEditChangeProperty(PropertyChangedEvent);
-//
-//	const FName ChangedPropertyName = PropertyChangedEvent.Property ? PropertyChangedEvent.Property->GetFName() : NAME_None;
-//	// 이름이 유효하면 이름반환, 유효하지않으면 이름없음을 반환
-//
-//	if (ChangedPropertyName == GET_MEMBER_NAME_CHECKED(APickup, DesiredItemID)) // 사물의 유효성을 확인하는 매크로
-//	{
-//		if (ItemDataTable)
-//		{
-//			if (const FItemData* ItemData = ItemDataTable->FindRow<FItemData>(DesiredItemID, DesiredItemID.ToString())) // 유효한 행을 얻으면 즉시 최적화
-//			{
-//				PickupMesh->SetStaticMesh(ItemData->AssetData.Mesh); // 픽업메시를 데이터메시로 설정
-//			}
-//		}
-//	}
-//
-//}
 
 void APickup::SetInput(const APlayerOrganism* Taker)
 {
@@ -200,15 +176,6 @@ void APickup::SetInput(const APlayerOrganism* Taker)
 	{
 		InitializePickup(UItemBase::StaticClass(), ItemQuantity);
 		TakePickup(Taker);
-
-		//if (const FItemData* ItemData = ItemDataTable->FindRow<FItemData>(DesiredItemID, DesiredItemID.ToString())) // 유효한 행을 얻으면 즉시 최적화
-		//{
-		//	PickupMesh->SetStaticMesh(ItemData->AssetData.Mesh); // 픽업메시를 데이터메시로 설정
-
-		//	ItemQuantity = (ItemQuantity == 0) ? 1 : ItemQuantity;
-
-
-		//}
 	}
 }
 

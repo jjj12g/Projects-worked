@@ -22,25 +22,12 @@ class PIXELCODE_API APickup : public AActor, public IInteractionInterface
 	GENERATED_BODY()
 	
 public:	
-	//================================================================================
-	// PROPERTIES & VARIABLES
-	//================================================================================
-	
-
-	//================================================================================
-	// FUNCTIONS
-	//================================================================================
 	APickup();
 
-	void InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int32 InQuantity); // �Ⱦ� �ʱ�ȭ
-
-
-	UFUNCTION(Client, Reliable)
-	void ClientRPC_InitializeDrop(UItemBase* ItemToDrop, const int32 InQuantity); // ��� �ʱ�ȭ
+	void InitializePickup(const TSubclassOf<UItemBase> BaseClass, const int32 InQuantity);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void NetMulticastRPC_InitializeDrop(UItemBase* ItemToDrop, const int32 InQuantity); // ��� �ʱ�ȭ
-
+	void NetMulticastRPC_InitializeDrop(UItemBase* ItemToDrop, const int32 InQuantity);
 	FORCEINLINE UItemBase* GetItemData() { return ItemReference; };
 
 	virtual void BeginFocus() override;
@@ -48,9 +35,6 @@ public:
 	
 
 protected:
-	//================================================================================
-	// PROPERTIES & VARIABLES
-	//================================================================================
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup | Components")
 	UStaticMeshComponent* PickupMesh;
 
@@ -59,17 +43,13 @@ protected:
 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup | Item Reference")
-	UItemBase* ItemReference; // �Ⱦ��� ����Ű�� �׸�
+	UItemBase* ItemReference;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup | Item Initialization")
-	int32 ItemQuantity; // ����
+	int32 ItemQuantity; 
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup | Interaction")
-	FInteractableData InstanceInteractableData; // �ν��Ͻ� ��ȣ�ۿ밡��
-
-	// �׽�Ʈ 
-	/*UPROPERTY(EditAnywhere, Category = "Item")
-	TMap<uint8, TSubclassOf<AActor>> ItemTemplates;*/
+	FInteractableData InstanceInteractableData; 
 
 	UPROPERTY(EditAnywhere, Category = "Item")
 	EItemName ItemName;
@@ -89,13 +69,8 @@ protected:
 	UMaterialInstance* MaterialTrue;
 
 
-	//================================================================================
-	// FUNCTIONS
-	//================================================================================
+#if WITH_EDITOR 
 	
-
-#if WITH_EDITOR // ��ũ��
-	//virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 #endif
 
 public:
@@ -111,7 +86,7 @@ public:
 	virtual void Interact(APixelCodeCharacter* PlayerCharacter) override;
 	void UpdateInteractableData();
 
-	void TakePickup(const APlayerOrganism* Taker); // ĳ������ �κ��丮�� �������̽��ؾ���
+	void TakePickup(const APlayerOrganism* Taker); 
 
 
 	FInteractableData GetItemInfo();

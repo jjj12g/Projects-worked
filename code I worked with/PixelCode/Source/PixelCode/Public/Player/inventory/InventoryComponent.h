@@ -80,22 +80,12 @@ class PIXELCODE_API UInventoryComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	//================================================================================
-	// PROPERTIES & VARIABLES
-	//================================================================================
 	FOnInventoryUpdated OnInventoryUpdated; // 대리인의 인스턴스 만들기
 
 
-	//================================================================================
-	// FUNCTIONS
-	//================================================================================
 	UInventoryComponent();
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	//======요한=============
-	UPROPERTY(VisibleAnywhere, Category = "Inventory")
-	APixelCodeCharacter* Char;
 
 
 	UFUNCTION(Category = "Inventory")
@@ -146,11 +136,6 @@ public:
 	void RefreshInventory();
 
 protected:
-	
-
-	//================================================================================
-	// PROPERTIES & VARIABLES
-	//================================================================================
 	UPROPERTY(VisibleAnywhere, Category = "Inventory")
 	float InventoryTotalWeight; 
 	
@@ -163,12 +148,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	TArray<TObjectPtr<UItemBase>> InventoryContents; // 많은 내부 포인터를 t개체 포인터로 대체
 
-	
-
-	//================================================================================
-	// FUNCTIONS
-	//================================================================================
-
 	virtual void BeginPlay() override;
 
 	FItemAddResult HandleNonStackableItems(UItemBase* ItemIn);
@@ -177,10 +156,6 @@ protected:
 	int32 CalculateNumberForFullStack(UItemBase* StackableItem, int32 InitialRequestedAddAmount); // 초기요청금액
 
 	void AddNewItem(UItemBase* Item, const int32 AmountToAdd);// 새항목추가
-	
-
-
-
 };
 
 

@@ -20,11 +20,6 @@ class PIXELCODE_API UItemBase : public UObject // object로 C++만듬
 	GENERATED_BODY()
 	
  public:
-	//================================================================================
-	// PROPERTIES & VARIABLES
-	//================================================================================
-
-
 	TArray<FCraftItem> GetAllCrafting();
 
 	FCraftItemInfo GetCraftItemInfoBasedOn(EItemName Name);
@@ -75,9 +70,6 @@ class PIXELCODE_API UItemBase : public UObject // object로 C++만듬
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	//================================================================================
-	// FUNCTIONS
-	//================================================================================
 	UItemBase();
 
 	void ResetItemFlags(); // 픽업기능 추가

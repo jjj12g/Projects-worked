@@ -25,39 +25,10 @@ public:
 	float totalEXP = 0;
 	float currentEXP = 0;
 
-
-	
-
-	UPROPERTY()
-    class UPortalRobbyWidget* portalWidget;
-
-	class APortalCollision* portalCollision;
-
 	virtual void BeginPlay() override;
 
 	void EXPmanagement(float EXP, ApixelPlayerState* PlayerState);
-	
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void PostLogin(APlayerController* NewPlayer) override;
-
-	bool bReady1 = false;
-	
-	bool bReady2 = false;
-
-	UPROPERTY()
-    TArray<UPortalRobbyWidget*> PortalRobbyWidgets; 
-
-	bool UICheckReady1 = false;
-
-	bool bIsReadyToReady = false;
 
 	class APCodePlayerController* pc;
-
-	bool onceDo = false;
-
-	UFUNCTION(Server, Reliable)
-	void ServerRPC_ChangeeReadyButtonUI();
-
 	
 };

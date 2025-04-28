@@ -108,13 +108,7 @@ APixelCodeCharacter::APixelCodeCharacter()
 
 	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	//FollowCamera->SetRelativeLocation(FVector(0, 0, 0));
-	//FollowCamera->SetupAttachment(RootComponent);
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	//FollowCamera->bUsePawnControlRotation = true; // Camera does not rotate relative to arm
-
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 
 	characterName = TEXT("Player");
 
@@ -123,17 +117,6 @@ APixelCodeCharacter::APixelCodeCharacter()
 
 	BaseEyeHeight = 74.0f; // 플레이어 눈 높이위로
 
-	//lootPanelWidget = CreateWidget<ULootPanel>(GetWorld(), ConstructorHelpers::FClassFinder<ULootPanel>(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Enemy/UserInterfaces/WBP_LootPanel.WBP_LootPanel_C'")).Class);
-	////lootPanelWidget->SetVisibility(ESlateVisibility::Collapsed);
-
-	int iTemp = 0;
-
-	// 서휘-----------------------------------------------------------------------------------------------------
-	bInBuildMode = false;
-	// 서휘-----------------------------------------------------------------------------------------------------끝
-	
-	// 요한 =======================================================================================================
-	MaxInventorySlot = 30;
 }
 
 void APixelCodeCharacter::BeginPlay()
@@ -170,152 +153,11 @@ void APixelCodeCharacter::BeginPlay()
 	
 	InterfaceActor = Cast<AInterfaceTestActor>(InterfaceActor);
 
-	
 	Pc = Cast<APCodePlayerController>(GetWorld()->GetFirstPlayerController());
 
-	// 서휘-----------------------------------------------------------------------------------------------------
-
-// 	for (TActorIterator<ABuildingVisual> var(GetWorld()); var; ++var)
-// 	{
-// 		Builder = *var;
-// 	}
-// 
-// 	for (TActorIterator<ABuilding> vars(GetWorld()); vars; ++vars)
-// 	{
-// 		Buildings = *vars;
-// 	}
-
-	ACraftingArea* craftingArea = nullptr;
-	for (TActorIterator<ACraftingArea> var(GetWorld()); var; ++var)
-	{
-		craftingArea = *var;
-	}
-
-	if (craftingArea != nullptr)
-	{
-		if (!Builder)
-		{
-			if (BuildingClass)
-			{
-				Builder = GetWorld()->SpawnActor<ABuildingVisual>(BuildingClass, FVector::ZeroVector, FRotator::ZeroRotator);
-			}
-		}
-		if (!Building)
-		{
-			if (BuildingC)
-			{
-				Building = GetWorld()->SpawnActor<ABuilding>(BuildingC, FVector::ZeroVector, FRotator::ZeroRotator);
-			}
-		}
-	}
-
-// 	UPCodeSaveGame* castLoad = Cast<UPCodeSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("BuildingDataStorage"), 0));
-// 
-// 	if (castLoad)
-// 	{
-// 		FBuildingActorData BuildingActorData;
-// 		BuildingActorData.ABuilding = AbuildingClass->GetClass();
-// 		BuildingActorData.BuildingLocation = AbuildingClass->GetActorLocation();
-// 		BuildingActorData.BuildingRotation = AbuildingClass->GetActorRotation();
-// 
-// 		castLoad->SavedActors.Add(BuildingActorData);
-// 		UGameplayStatics::SaveGameToSlot(castLoad, TEXT("BuildingDataStorage"), 0);
-// 	}
-
-	
-
-	// 서휘-----------------------------------------------------------------------------------------------------끝
-
-	// 요한----------------------------------------------------------------------
-
-	ItemStorage = GetWorld()->SpawnActor<AItemStorage>(ItemStorageTemplate, FVector::ZeroVector, FRotator::ZeroRotator);
-
-	GameInst = Cast<UPCodeGameInstance>(UGameplayStatics::GetGameInstance(this));
-	if(GameInst)
-	{
-		OwningInventoryntory = GameInst->LoadInventory();
-		//PlayerInventory = GameInst->LoadInventory();
-	}
-
-	
 
 }
 
-
-
-//void APixelCodeCharacter::ServerRPC_PlayerState_Implementation()
-//{
-//	//PlayerState = Cast<ApixelPlayerState>(GetPlayerState());
-//	//PlayerState = Cast<ApixelPlayerState>(Pc->PlayerState);
-//	NetMulticastRPC_PlayerState();
-//}
-//
-//void APixelCodeCharacter::NetMulticastRPC_PlayerState_Implementation()
-//{
-//	
-//	//AGameStateBase
-//	APlayerState* ps = GetPlayerState();
-//	PlayerState = Cast<ApixelPlayerState>(ps);
-//
-//	if (ps != nullptr)
-//	{
-//		int32 StateIndex = PlayerState->PlayerId;
-//		FString Message = FString::Printf(TEXT("현재 플레이어 상태의 인덱스는 %d 입니다."), StateIndex);
-//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, Message);
-//	}
-//	else
-//	{
-//		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("플레이어 상태(PlayerState)를 찾을 수 없습니다."));
-//	}
-
-	//characterPlayerState();
-
-	//APlayerState* CustomPlayerState = Cast<APlayerState>(this->GetPlayerState());
-	//PlayerState = Cast<ApixelPlayerState>(Pc->PlayerState);
-	//PlayerState = state;
-	//PlayerState = Cast<ApixelPlayerState>(GetPlayerState());
-	//PlayerState = Cast<ApixelPlayerState>(UGameplayStatics::GetPlayerState(GetWorld(),0));
-	
-
-	/*if (PlayerState != nullptr)
-	{
-		int32 StateIndex = PlayerState->PlayerId;
-		FString Message = FString::Printf(TEXT("현재 플레이어 상태의 인덱스는 %d 입니다."), StateIndex);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, Message);
-	}
-	else
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("플레이어 상태(PlayerState)를 찾을 수 없습니다."));
-	}*/
-	
-
-
-// 서휘-----------------------------------------------------------------------------------------------------
-FHitResult APixelCodeCharacter::PerformLineTrace(float Distance , bool DrawDebug)
-{
-	FVector Start = GetPawnViewLocation();
-	FVector End = Start + GetFollowCamera()->GetForwardVector() * Distance;
-
-	FHitResult HitResult;
-	FCollisionQueryParams Params;
-	Params.AddIgnoredActor(this);
-
-	GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params);
-
-	if (DrawDebug)
-	{
-		//DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 1, 0U, 3.f);
-	}
-	return HitResult;
-}
-// 서휘-----------------------------------------------------------------------------------------------------끝
-
-void APixelCodeCharacter::ServerRPC_ToggleCombat_Implementation()
-{
-	motionState = ECharacterMotionState::ToggleCombat;
-
-	NetMulticastRPC_ToggleCombat();
-}
 
 void APixelCodeCharacter::NetMulticastRPC_ToggleCombat_Implementation()
 {
@@ -352,7 +194,6 @@ void APixelCodeCharacter::NetMulticastRPC_ToggleCombat_Implementation()
 		}
 	}
 
-	//<< SSK 이거 먹히는지 테스트는 해봐야 됨
 	FTimerHandle timerHandle;
 
 	GetWorldTimerManager().SetTimer(timerHandle, [&]()
@@ -494,9 +335,6 @@ void APixelCodeCharacter::EndInteract()
 		{
 			TargetInteractable->EndInteract();// 이제 대상 상호작용 가능, 대상 상호작용 종료
 		}
-
-		//lootPanelWidget->SetVisibility(ESlateVisibility::Collapsed);
-		/*lootPanelWidget->RemoveFromParent();*/
 	}
 }
 
@@ -511,853 +349,6 @@ void APixelCodeCharacter::Interact()
 	}
 
 }
-
-
-// ============== 요한 빌드 UI ============================
-void APixelCodeCharacter::OnBuildUI()
-{
-	////bFarmModeOn = true;
-	//SeverRPC_RemoveRock(PerformLineTrace(1000, true));
-	//SeverRPC_RemoveMetal(PerformLineTrace(1000, true));
-	//SeverRPC_RemoveStone(PerformLineTrace(1000, true));
-	//SeverRPC_RemoveBush(PerformLineTrace(1000, true));
-	//UE_LOG(LogTemp, Warning, TEXT("BULIDUI KET"));
-	if (!bIsJump)
-	{
-		if (HUD)
-		{
-			//HUD->ShowOrHideCrafting();
-			HUD->ToggleBuilding();
-		}
-	}
-}
-
-
-
-// 요한 ------------------------------------------------------------------------------------------
-
-void APixelCodeCharacter::OnCraftingPressed()
-{
-	if (!bIsJump)
-	{
-		if (HUD)
-		{
-			//HUD->ShowOrHideCrafting();
-			HUD->ToggleCreate();
-		}
-	}
-}
-
-void APixelCodeCharacter::OnCraftBulkPressed()
-{
-	//UE_LOG(LogTemp,Warning,Text("sdsd"));
-	if (!HUD)
-	{
-		return;
-	}
-	//if(HUD->getopenedwidget() == ::EOW_Crafting)
-	//{
-	//	// uelog
-	//}
-
-}
-
-void APixelCodeCharacter::CraftItem(const FCraftItem& Item)
-{
-	ReduceRecipeFromInventory(Item.CraftRecipes);
-
-	TSubclassOf<AActor> Template = ItemStorage->GetTemplateOfItem(Item.CraftedItem);
-	if (Template)
-	{
-
-		//UInventoryComponent* OwningInventory; // 인벤토리
-		FActorSpawnParameters Params;
-		Params.Owner = this;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		//FVector SpawnLoc = FVector(440.f, 0.f, 0.f);
-
-		FVector SpawnLoc = FVector(6797.037641f, -38828.846065f, 3000.503557f);
-		APickup* CraftedItem = GetWorld()->SpawnActor<APickup>(Template, SpawnLoc, FRotator(0.f), Params);
-		if (CraftedItem)
-		{
-			UItemBase* ItemQuantity = CraftedItem->GetItemData();
-			Iteminfos = CraftedItem->GetItemData();
-
-			PlayerInventory->HandleAddItem(Iteminfos);
-			CraftedItem->Destroy();
-
-			//UE_LOG(LogTemp, Warning, TEXT("Success Spawn"));
-		}
-	}
-}
-
-void APixelCodeCharacter::ServerRPC_CraftItem_Implementation(const FCraftItem& Item)
-{
-	ClientRPC_CraftItem(Item);
-}
-
-void APixelCodeCharacter::ClientRPC_CraftItem_Implementation(const FCraftItem& Item)
-{
-	CraftItem(Item);
-}
-
-void APixelCodeCharacter::DropedItem(const UItemBase* Iteminfo)
-{
-	if (ItemStorage)
-	{
-		TSubclassOf<AActor> Template = ItemStorage->GetTemplateOfItem(Iteminfo->ItemName);
-		if (Template)
-		{
-
-	//		//UInventoryComponent* OwningInventory; // 인벤토리
-	//		FActorSpawnParameters Params;
-	//		Params.Owner = this;
-	//		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-	//		//FVector SpawnLoc = FVector(440.f, 0.f, 0.f);
-
-	//		FVector SpawnLoc = FVector(6797.037641f, -38828.846065f, 3000.503557f);
-	//		APickup* DropItemes = GetWorld()->SpawnActor<APickup>(Template, SpawnLoc, FRotator(0.f), Params);
-	//		if (DropItemes)
-	//		{
-	//			//DropItemes->SetItemAmount(Iteminfo->Quantity);
-	//		}
-	//	}
-	//}
-		}
-	}
-}
-
-
-AItemStorage* APixelCodeCharacter::GetItemStorage()
-{
-	return ItemStorage;
-}
-
-TArray<UItemBase*> APixelCodeCharacter::GetInventory() const
-{
-	return Inventory;
-}
-
-uint32 APixelCodeCharacter::GetSpecificItemAmount(EItemName ItemName)
-{
-	uint32 Amount = 0;
-	TArray<UItemBase*> InventoryContentSArray = PlayerInventory->GetInventoryContents(); // 인벤토리 내용 배열로 가져옴
-
-	for (UItemBase* Item : InventoryContentSArray)
-	{
-		if (Item && Item->ItemName == ItemName)
-		{
-			Amount += Item->Quantity; // 해당 아이템의 수량 누적
-		}
-	}
-	//UE_LOG(LogTemp, Warning, TEXT("amount play"));
-
-	return Amount;
-
-}
-
-
-
-
-void APixelCodeCharacter::BuildItem()
-{
-
-	//AGetSpecificBuildingAmount();
-	//FCraftItem& Item
-	FCraftItem Info = (FCraftItem)Crafts;
-	//FBuildingVisualType BuildDatas = (FBuildingVisualType)Builditem;
-
-	TSubclassOf<AActor> Template = ItemStorage->GetTemplateOfItem(Info.CraftedItem);
-	if (Template)
-	{
-
-		//UInventoryComponent* OwningInventory; // 인벤토리
-		FActorSpawnParameters Params;
-		Params.Owner = this;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		//FVector SpawnLoc = FVector(440.f, 0.f, 0.f);
-
-	//	FVector SpawnLoc = FVector(6797.037641f, -38828.846065f, 3000.503557f);
-	//	APickup* CraftedItem = GetWorld()->SpawnActor<APickup>(Template, SpawnLoc, FRotator(0.f), Params);
-	//	if (CraftedItem)
-	//	{
-	//		UItemBase* ItemQuantity = CraftedItem->GetItemData();
-	//		Iteminfos = CraftedItem->GetItemData();
-
-	//		//CraftedItem->InitializeDrop(Iteminfos, );
-	//		//DropedItem(Iteminfos);
-
-	//		// 수량제거
-	//		const int32 RemoveQuantity = PlayerInventory->RemoveAmountOfItem(Iteminfos, 1);
-
-	//		//APickup* Pickup = GetWorld()->SpawnActor<APickup>(APickup::StaticClass(), SpawnTransform, SpawnParams);
-
-	//		CraftedItem->InitializeDrop(Iteminfos, RemoveQuantity);
-
-	//		UE_LOG(LogTemp, Warning, TEXT("Success Destroy"));
-	//		CraftedItem->Destroy();
-	//	}
-	//}
-	}
-
-}
-
-void APixelCodeCharacter::AGetSpecificBuildingAmount(EBuildType builds)
-{
-	//for (const FRecipe& Recipe : Recipes)
-	{
-		TArray<UItemBase*> InventoryContentSArray = PlayerInventory->GetInventoryContents();
-		//uint8 BulidAmount = Recipe.Amount;
-		uint8 Index = 0;
-		TArray<uint8> RemoveedIndex;
-
-
-		for (UItemBase* Item : InventoryContentSArray)
-		{
-			if (Item && Item->Buildtypes == builds)
-			{
-				if (Item->Quantity -= 1)
-				{
-					RemoveedIndex.Add(Index);
-				}
-				if (Item->Quantity == 0)
-				{
-
-					//InventoryContentSArray.RemoveAt(Index);
-					//PlayerInventory->RemoveAmountOfItem(Item, 1);
-					PlayerInventory->FindMatchingItem(Item);
-					PlayerInventory->RemoveSingleInstanceOfItem(Item);
-					//PickupItems->UpdateInteractableData();
-				}
-
-				// 인벤 아이템 수량 줄여주기
-				//int32 newQuant = Item->Quantity - 1;
-				//Item->SetQuantity(newQuant);
-
-			}
-
-			Index++;
-
-		}
-		for (int8 i = RemoveedIndex.Num() - 1; i > -1; i--)
-		{
-			//재고가 삭제된 인벤토리
-			InventoryContentSArray.RemoveAt(RemoveedIndex[i]);
-
-		}
-	}
-}
-
-
-
-void APixelCodeCharacter::ReduceRecipeFromInventory(const TArray<FRecipe>& Recipes)
-{
-	for (const FRecipe& Recipe : Recipes)
-	{
-		TArray<UItemBase*> InventoryContentSArray = PlayerInventory->GetInventoryContents();
-		uint8 RecipeAmount = Recipe.Amount;
-		uint8 Index = 0;
-		TArray<uint8> RemoveedIndex;
-
-
-		for (UItemBase* Item : InventoryContentSArray)
-		{
-			if (Item && Item->ItemName == Recipe.ItemType)
-			{
-				if (Item->Quantity - Recipe.Amount < 0)
-				{
-					RecipeAmount -= Item->Quantity;
-					RemoveedIndex.Add(Index);
-				}
-				else
-				{
-					Item->Quantity -= RecipeAmount;
-					RecipeAmount -= RecipeAmount;
-					if (Item->Quantity == 0)
-					{
-						InventoryContentSArray.RemoveAt(Index);
-						//PlayerInventory->RemoveAmountOfItem(Item, Index);
-						PlayerInventory->RemoveSingleInstanceOfItem(Item);
-						//PickupItems->UpdateInteractableData();
-					}
-					break;
-				}
-			}
-			Index++;
-
-		}
-		for (int8 i = RemoveedIndex.Num() - 1; i > -1; i--)
-		{
-			//재고가 삭제된 인벤토리
-			InventoryContentSArray.RemoveAt(RemoveedIndex[i]);
-
-		}
-	}
-
-}
-
-void APixelCodeCharacter::AddCraftArea(ECraftArea Area)
-{
-	CraftAreas.Add(Area);
-}
-
-void APixelCodeCharacter::RemoveArea(ECraftArea Area)
-{
-	CraftAreas.Remove(Area);
-}
-
-bool APixelCodeCharacter::IsPlayerInCraftArea(ECraftArea Area)
-{
-	if (Area == ECraftArea::ECA_Anywhere)
-	{
-		return true;
-	}
-	return CraftAreas.Contains(Area);
-}
-
-void APixelCodeCharacter::UpdateGameInstanceInventory()
-{
-	if (!GameInst)
-	{
-		TArray<UItemBase*> InventoryContentSArray = PlayerInventory->GetInventoryContents();
-		return;
-	}
-	GameInst->UpdateInventory(PlayerInventory);
-
-	//TArray<UItemBase*> InventoryContentSArray = PlayerInventory->GetInventoryContents();
-
-}
-
-
-
-//================================요 한 끝 ===================================================
-
-// 서휘-----------------------------------------------------------------------------------------------------
-
-void APixelCodeCharacter::OnSetBuildModePressed()
-{
-	//SetBuildMode(!GetBuildMode());
-
- 		if (HasAuthority())
- 		{
- 			//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode @server player"));
- 
- 			bInBuildMode = !GetBuildMode();
- 			if (Builder)
- 			{
- 				Builder->SetActorHiddenInGame(!bInBuildMode);
- 				//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode @server On"));
- 			}
- 			else
- 			{
- 				//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder nullptr"));
- 			}
- 		}
- 		else
- 		{
- 			//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode @client player"));
- 			ServerRPC_SetBuildMode(!GetBuildMode());
- 		}
-}
-
-
-
-void APixelCodeCharacter::SetBuildMode(bool Enabled)
-{
-	bInBuildMode = Enabled;
-	if (Builder)
-	{
-		Builder->SetActorHiddenInGame(!bInBuildMode);
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder"));
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder nullptr"));
-	}
-
-}
-
-void APixelCodeCharacter::ServerRPC_SetBuildMode_Implementation(bool mode)
-{
-	bInBuildMode = mode;
-	if (Builder)
-	{
-		Builder->SetActorHiddenInGame(!bInBuildMode);
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode ServerRPC On"));
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder nullptr"));
-	}
- 	MultiRPC_SetBuildMode(mode);
-// 	ClientRPC_SetBuildMode(mode);
-}
-
-void APixelCodeCharacter::MultiRPC_SetBuildMode_Implementation(bool mode)
-{
-
-	//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode MultiRPC"));
-
-	bInBuildMode = mode;
-  	if (Builder)
-  	{
-  		Builder->SetActorHiddenInGame(!bInBuildMode);
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode MultiRPC On"));
-
-	}
-  	else
-  	{
-  		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder nullptr"));
-  	}
-}
-
-void APixelCodeCharacter::ClientRPC_SetBuildMode_Implementation(bool mode)
-{
-	
-	//bInBuildMode = mode;
-	if (Builder)
-	{
-		Builder->SetActorHiddenInGame(!bInBuildMode);
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode ClientRPC On"));
-
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SetBuildMode : Builder nullptr"));
-	}
-}
-
-//-----------------------------------Cycle Mesh Network
-
-void APixelCodeCharacter::OnCycleMeshPressed(const FInputActionValue& value)
-{
-	wheelAxis = value.Get<float>();
-	//UE_LOG(LogTemp, Warning, TEXT("------------------CycleMesh Pressed"));
-	
-	if (HasAuthority())
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------CycleMesh : authority"));
-		CycleBuildingMesh();
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------CycleMesh : no authority"));
-		ServerRPC_CycleBuildingMesh();
-	}
-}
-
-void APixelCodeCharacter::CycleBuildingMesh()
-{
-	if (bInBuildMode && Builder)
-	{
- 
-		Builder->CycleMesh();
-	}
-}
-
-void APixelCodeCharacter::ServerRPC_CycleBuildingMesh_Implementation()
-{
-	CycleBuildingMesh();
-	ClientRPC_CycleBuildingMesh();
-}
-
-void APixelCodeCharacter::NetMulticastRPC_CycleBuildingMesh_Implementation(UStaticMesh* newMesh)
-{
-	CycleBuildingMesh();
-
-}
-
-void APixelCodeCharacter::ClientRPC_CycleBuildingMesh_Implementation()
-{
-	CycleBuildingMesh();
-}
-
-										//------------------------------------Spawn Building Network
-
-void APixelCodeCharacter::OnSpawnBuildingPressed()
-{
-	
-
-	if (HasAuthority())
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SpawnBuilding : authority"));
-		SpawnBuilding();
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SpawnBuilding : no authority"));
-		ServerRPC_SpawnBuilding();
-	}
-}
-
-void APixelCodeCharacter::SpawnBuilding()
-{
-	
-
-	if (bInBuildMode && Builder)
-	{
-		Builder->SpawnBuilding();
-	}
-}
-
-void APixelCodeCharacter::ServerRPC_SpawnBuilding_Implementation()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("------------------SpawnBuilding : Server"));
-	SpawnBuilding();
-}
-
-void APixelCodeCharacter::NetMulticastRPC_SpawnBuilding_Implementation(const FBuildingSocketData& BuildingSocketData, EBuildType BuildType, FTransform Transf)
-{
-
-	//UE_LOG(LogTemp, Warning, TEXT("%f : %f"), Transf.GetLocation().X, BuildingSocketData.SocketTransform.GetLocation().X);
-	//UE_LOG(LogTemp, Warning, TEXT("%f : %f"), Transf.GetLocation().Y, BuildingSocketData.SocketTransform.GetLocation().Y);
-	//UE_LOG(LogTemp, Warning, TEXT("%f : %f"), Transf.GetLocation().Z, BuildingSocketData.SocketTransform.GetLocation().Z);
-// 	if (Building)
-// 	{
-// 		switch (BuildType)
-// 		{
-// 		case EBuildType::Base:
-// 			Building->BaseInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->BaseInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Wall:
-// 			Building->WallInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->WallInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Ceiling:
-// 			Building->CeilingInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->CeilingInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Roof:
-// 			Building->RoofInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->RoofInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Gable:
-// 			Building->GableInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->GableInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Stairs:
-// 			Building->StairsInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->StairsInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Window:
-// 			Building->WindowInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->WindowInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Arch:
-// 			Building->ArchInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->ArchInstancedMesh;
-// 			break;
-// 
-// 		case EBuildType::Floor:
-// 			Building->FloorInstancedMesh->AddInstance(BuildingSocketData.SocketTransform, true);
-// 			InstMeshComp = Building->FloorInstancedMesh;
-// 			break;
-// 
-// 		default:
-// 			break;
-// 		}
-
- 	if (Building)
- 	{
- 		switch (BuildType)
- 		{
- 		case EBuildType::Base:
- 			Building->BaseInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->BaseInstancedMesh;
- 			break;
- 
- 		case EBuildType::Wall:
- 			Building->WallInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->WallInstancedMesh;
- 			break;
- 
- 		case EBuildType::Ceiling:
- 			Building->CeilingInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->CeilingInstancedMesh;
- 			break;
- 
- 		case EBuildType::Roof:
- 			Building->RoofInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->RoofInstancedMesh;
- 			break;
- 
- 		case EBuildType::Gable:
- 			Building->GableInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->GableInstancedMesh;
- 			break;
- 
- 		case EBuildType::Stairs:
- 			Building->StairsInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->StairsInstancedMesh;
- 			break;
- 
- 		case EBuildType::Window:
- 			Building->WindowInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->WindowInstancedMesh;
- 			break;
- 
- 		case EBuildType::Arch:
- 			Building->ArchInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->ArchInstancedMesh;
- 			break;
- 
- 		case EBuildType::Floor:
- 			Building->FloorInstancedMesh->AddInstance(Transf, true);
- 			InstMeshComp = Building->FloorInstancedMesh;
- 			break;
- 
- 		default:
- 			break;
- 		}
-
-		UPCodeSaveGame* castSave = Cast<UPCodeSaveGame>(UGameplayStatics::CreateSaveGameObject(UPCodeSaveGame::StaticClass()));
-
-		UPCodeSaveGame* castLoad = Cast<UPCodeSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("BuildingiNSTDataStorage"), 0));
-
-		if (castLoad)
-		{
-
-			int32 arrnum = castLoad->SavedInstances.Num();
-			//UE_LOG(LogTemp, Warning, TEXT("-------------INST Load :: %d "), arrnum);
-
-			FBuildingInstanceData BuildingInstData;
-			BuildingInstData.InstancedComponent = InstMeshComp;
-			BuildingInstData.InstTransform = Transf;
-
-			castLoad->SavedInstances.Add(BuildingInstData);
-			UGameplayStatics::SaveGameToSlot(castLoad, TEXT("BuildingiNSTDataStorage"), 0);
-			//UE_LOG(LogTemp, Warning, TEXT("-------------INST Load :: %d "), arrnum);
-
-		}
-
-		else if (castSave)
-		{
-			int32 arrnum = castSave->SavedInstances.Num();
-			//UE_LOG(LogTemp, Warning, TEXT("-------------INST Cast :: %d "), arrnum);
-
-			FBuildingInstanceData BuildingInstData;
-			BuildingInstData.InstancedComponent = InstMeshComp;
-			BuildingInstData.InstTransform = Transf;
-
-			castSave->SavedInstances.Add(BuildingInstData);
-			UGameplayStatics::SaveGameToSlot(castSave, TEXT("BuildingiNSTDataStorage"), 0);
-
-			//UE_LOG(LogTemp, Warning, TEXT("-------------INST Cast :: %d "), arrnum);
-
-		}
-	}
-}
-
-//------------------------------------Destroy Building Network
-
-void APixelCodeCharacter::OnDestroyBuildingPressed()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("------------------Destroy Pressed"));
-
-	if (HasAuthority())
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SpawnBuilding : authority"));
-		DestroyBuildingInstance();
-	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("------------------SpawnBuilding : no authority"));
-		ServerRPC_DestroyBuildingInstance();
-	}
-}
-
-void APixelCodeCharacter::DestroyBuildingInstance()
-{
-	if (bInBuildMode && Builder)
-	{
-		Builder->DestroyInstance(PerformLineTrace());
-	}
-}
-
-void APixelCodeCharacter::ServerRPC_DestroyBuildingInstance_Implementation()
-{
-	NetMulticastRPC_DestroyBuildingInstance();
-}
-
- void APixelCodeCharacter::NetMulticastRPC_DestroyBuildingInstance_Implementation(/*const FBuildingSocketData& BuildingSocketData*/)
- {
-	 DestroyBuildingInstance();
- }
-
- //------------------------------------Remove Foliage Network
-
-void APixelCodeCharacter::OnRemoveFoliagePressed()
-{
-	//ServerRPC_RemoveFoliage();
-
-	//SeverRPC_RemoveFoliage(PerformLineTrace());
-}
-
-void APixelCodeCharacter::RemoveFoliage(const FHitResult& HitResult)
-{
-	if(HitResult.bBlockingHit)
-	{
-		UFoliageInstancedStaticMeshComponent* FoliageInstance = Cast< UFoliageInstancedStaticMeshComponent>(HitResult.GetComponent());
-		if(FoliageInstance)
-		{
-			FoliageInstance->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupWood, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-	//NetMulticastRPC_RemoveFoliage(HitResult);
-}
-
-void APixelCodeCharacter::SeverRPC_RemoveFoliage_Implementation(const FHitResult& HitResult)
-{
-	MultiRPC_RemoveFoliage(HitResult);
-}
-
-void APixelCodeCharacter::MultiRPC_RemoveFoliage_Implementation(const FHitResult& HitResult)
-{
-	if (HitResult.bBlockingHit)
-	{
-		UISMTreeFoliage* TreeComp = Cast< UISMTreeFoliage>(HitResult.GetComponent());
-		if (TreeComp && TreeComp->ComponentTags.Contains(TEXT("Tree")))
-		{
-			TreeComp->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupWood, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-}
-
-
-
-void APixelCodeCharacter::SeverRPC_RemoveRock_Implementation(const FHitResult& HitResult)
-{
-	MultiRPC_RemoveRock(HitResult);
-}
-
-void APixelCodeCharacter::MultiRPC_RemoveRock_Implementation(const FHitResult& HitResult)
-{
-	if (HitResult.bBlockingHit)
-	{
-		
-		UISMRockFoliage* RockComp = Cast<UISMRockFoliage>(HitResult.GetComponent());
-		
-		if (RockComp && RockComp->ComponentTags.Contains(TEXT("Rock")))
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Remove Rock"));
-
-			RockComp->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupRock, HitResult.ImpactPoint, GetActorRotation());
-
-			//GetWorld()->SpawnActor<APickup>(pickupRock, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-}
-//---------------------------------------------------------------------------------------------------------------------------Farm Metal
-void APixelCodeCharacter::SeverRPC_RemoveMetal_Implementation(const FHitResult& HitResult)
-{
-	MultiRPC_RemoveMetal(HitResult);
-}
-
-void APixelCodeCharacter::MultiRPC_RemoveMetal_Implementation(const FHitResult& HitResult)
-{
-	if (HitResult.bBlockingHit)
-	{
-		UISMMetalFoliage* MetalComp = Cast<UISMMetalFoliage>(HitResult.GetComponent());
-
-		if (MetalComp && MetalComp->ComponentTags.Contains(TEXT("Metal")))
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Remove Metal"));
-
-			MetalComp->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupMetal, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-}
-//---------------------------------------------------------------------------------------------------------------------------Farm Metal
-
-
-void APixelCodeCharacter::OnRemoveStonePressed()
-{
-	SeverRPC_RemoveStone(PerformLineTrace(1000, true));
-}
-
-void APixelCodeCharacter::SeverRPC_RemoveStone_Implementation(const FHitResult& HitResult)
-{
-	MultiRPC_RemoveStone(HitResult);
-}
-
-void APixelCodeCharacter::MultiRPC_RemoveStone_Implementation(const FHitResult& HitResult)
-{
-	if (HitResult.bBlockingHit)
-	{
-		UISMStoneFoliage* StoneComp = Cast<UISMStoneFoliage>(HitResult.GetComponent());
-
-		if (StoneComp && StoneComp->ComponentTags.Contains(TEXT("Stone")))
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Remove Stone"));
-
-			StoneComp->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupStone, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-}
-
-void APixelCodeCharacter::OnRemoveBushPressed()
-{
-	SeverRPC_RemoveBush(PerformLineTrace(1000, true));
-}
-
-void APixelCodeCharacter::SeverRPC_RemoveBush_Implementation(const FHitResult& HitResult)
-{
-	MultiRPC_RemoveBush(HitResult);
-}
-
-void APixelCodeCharacter::MultiRPC_RemoveBush_Implementation(const FHitResult& HitResult)
-{
-	if (HitResult.bBlockingHit)
-	{
-		UISMBushFoliage* BushComp = Cast<UISMBushFoliage>(HitResult.GetComponent());
-
-		if (BushComp && BushComp->ComponentTags.Contains(TEXT("Bush")))
-		{
-			//UE_LOG(LogTemp, Warning, TEXT("Remove Bush"));
-
-			BushComp->RemoveInstance(HitResult.Item);
-			GetWorld()->SpawnActor<APickup>(pickupTwig, HitResult.ImpactPoint, GetActorRotation());
-		}
-	}
-}
-	
- void APixelCodeCharacter::OnCheatMode(const FInputActionValue& value)
- {
- 	bool Val = value.Get<bool>();
- 
- 	if (Val)
- 	{
- 		Builder->bItemQuantityValid = !Builder->bItemQuantityValid;
- 	}
- 	
- // 	if (Val)
- // 	{
- // 		Builder->bItemQuantityValid = true;
- // 	}
- // 	else
- // 	{
- // 		Builder->bItemQuantityValid = false;
- // 	}
- 
- }
-
-// 서휘-----------------------------------------------------------------------------------------------------끝
 
 void APixelCodeCharacter::ServerRPC_Interact_Implementation()
 {
@@ -1388,23 +379,6 @@ float APixelCodeCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Da
 	
 
 	return 0.0f;
-}
-
-
-void APixelCodeCharacter::InitMainUI()
-{
-	/*FString netMode = GetNetMode() == ENetMode::NM_ListenServer ? TEXT("Server") : TEXT("Client");
-	FString hasController = Controller ? TEXT("HasCont") : TEXT("NoCont");
-
-	UE_LOG(LogTemp, Warning, TEXT("[%s] %s - InitMainUI"), *netMode, *hasController);
-	Pc = Cast<APCodePlayerController>(Controller);
-	if (IsLocallyControlled() && Pc->NormallyWidgetClass)
-	{
-
-		Pc->PlayerStartWidget();
-
-		NormallyWidget = Pc->NormallyWidget;
-	}*/
 }
 
 void APixelCodeCharacter::ServerRPC_Die_Implementation()
@@ -1462,34 +436,6 @@ void APixelCodeCharacter::DieFunction()
 	Super::DieFunction();
 }
 
-//void APixelCodeCharacter::PossessedBy(AController* NewController)
-//{
-//	Super::PossessedBy(NewController);
-//
-//	//Pc = Cast<APCodePlayerController>(NewController);
-//	////Pc->StatComponent = this->stateComp;
-//
-//	//
-//	////Pc->bPossess = false;
-//
-//	//FString netMode = GetNetMode() == ENetMode::NM_ListenServer ? TEXT("Server") : TEXT("Client");
-//	//FString hasController = Controller ? TEXT("HasCont") : TEXT("NoCont");
-//
-//	//UE_LOG(LogTemp, Warning, TEXT("[%s] %s - PossessedBy"), *netMode, *hasController);
-//	
-//
-//	//Pc->ClientRPC_PlayerStartWidget();
-//
-//
-//	// 내가 로컬이라면
-//	//if (IsLocallyControlled())
-//	//{ 
-//		//InitMainUI(); //나중에 활성화?
-//	//	UE_LOG(LogTemp, Warning, TEXT("Normal2"));
-//	//}
-//
-//
-//}
 
 void APixelCodeCharacter::CreateInventory()
 {
@@ -1509,12 +455,7 @@ void APixelCodeCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 
 	DOREPLIFETIME(APixelCodeCharacter, InteractionData);
 	DOREPLIFETIME(APixelCodeCharacter, TargetInteractable);
-	DOREPLIFETIME(APixelCodeCharacter, BuildingClass);
-	DOREPLIFETIME(APixelCodeCharacter, Builder);
-	DOREPLIFETIME(APixelCodeCharacter, Building); 
-	// DOREPLIFETIME(APixelCodeCharacter, bInBuildMode); 
 	DOREPLIFETIME(APixelCodeCharacter, RollAnim);
-	DOREPLIFETIME(APixelCodeCharacter, Iteminfos);
 	DOREPLIFETIME(APixelCodeCharacter, bPoss);
 	DOREPLIFETIME(APixelCodeCharacter, AM_DeathMontage);
 }
@@ -1524,7 +465,7 @@ void APixelCodeCharacter::UpdateInteractionWidget() const
 {
 	if (IsValid(TargetInteractable.GetObject()))
 	{
-		HUD->UpdateInteractionWidget(TargetInteractable->InteractableData); // 포인터(*)확인해볼것
+		HUD->UpdateInteractionWidget(TargetInteractable->InteractableData); 
 	}
 }
 
@@ -1542,9 +483,6 @@ void APixelCodeCharacter::DropItem(UItemBase* ItemToDrop, const int32 QuantityTo
 		// 수량제거
 		const int32 RemoveQuantity = PlayerInventory->RemoveAmountOfItem(ItemToDrop, QuantityToDrop);
 
-		//Pickup = GetWorld()->SpawnActor<APickup>(APickup::StaticClass(), SpawnTransform, SpawnParams);
-		//Pickup->InitializeDrop(ItemToDrop, RemoveQuantity);
-
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.bNoFail = true;
@@ -1560,21 +498,6 @@ void APixelCodeCharacter::DropItem(UItemBase* ItemToDrop, const int32 QuantityTo
 			//UE_LOG(LogTemp, Warning, TEXT("Item to drop was Some how null"));
 		}
 }
-	
-void APixelCodeCharacter::NetMulticastRPC_DropItem_Implementation(const FTransform ASpawnTransform, UItemBase* ItemToDrop, int32 RemoveQuantity)
-{
-	// 인벤토리 null이 아니라면
-	
-
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.Owner = this;
-	SpawnParams.bNoFail = true;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-
-	
-	Pickup = GetWorld()->SpawnActor<APickup>(APickup::StaticClass(), ASpawnTransform, SpawnParams);
-
-}
 
 void APixelCodeCharacter::ToggleMenu()
 {
@@ -1588,39 +511,6 @@ void APixelCodeCharacter::StatMenu()
 {
 	Pc->PlayerStatWidget();
 }
-
-
-//void APixelCodeCharacter::DropItem(UItemBase* ItemToDrop, const int32 QuantityToDrop)
-//{
-////{
-////	// 인벤토리 null이 아니라면
-////	if (PlayerInventory->FindMatchingItem(ItemToDrop))
-////	{
-////		FActorSpawnParameters SpawnParams;
-////		SpawnParams.Owner = this;
-////		SpawnParams.bNoFail = true;
-////		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
-////
-////		// 캐릭터 50앞방향에서 생성됨
-////		const FVector SpawnLocation{ GetActorLocation() + (GetActorForwardVector() * 50.0f) };
-////
-////		const FTransform SpawnTransform(GetActorRotation(), SpawnLocation);
-////
-////		// 수량제거
-////		const int32 RemoveQuantity = PlayerInventory->RemoveAmountOfItem(ItemToDrop, QuantityToDrop);
-////
-////		APickup* Pickup = GetWorld()->SpawnActor<APickup>(APickup::StaticClass(), SpawnTransform, SpawnParams);
-////
-////		Pickup->InitializeDrop(ItemToDrop, RemoveQuantity);
-////	}
-////	else
-////	{
-////		UE_LOG(LogTemp, Warning, TEXT("Item to drop was Some how null"));
-////	}
-////
-////	//ServerRPC_DropItem();
-//}
-
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -1666,9 +556,6 @@ void APixelCodeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 			EnhancedInputComponent->BindAction(IA_RollandRun, ETriggerEvent::Ongoing, this, &APixelCodeCharacter::PlayerRun);
 			EnhancedInputComponent->BindAction(IA_RollandRun, ETriggerEvent::Completed, this, &APixelCodeCharacter::PlayerRunEnd);
 
-			// 요한 ==================
-			EnhancedInputComponent->BindAction(IA_Crafting, ETriggerEvent::Started, this, &APixelCodeCharacter::OnCraftingPressed);
-
 			// 플레이어 스킬
 			EnhancedInputComponent->BindAction(IA_SkillQ, ETriggerEvent::Started, this, &APixelCodeCharacter::SkillQ);
 			EnhancedInputComponent->BindAction(IA_SkillE, ETriggerEvent::Started, this, &APixelCodeCharacter::SkillE);
@@ -1676,11 +563,6 @@ void APixelCodeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 			EnhancedInputComponent->BindAction(IA_SkillZ, ETriggerEvent::Started, this, &APixelCodeCharacter::SkillZ);
 			EnhancedInputComponent->BindAction(IA_Skill_RightMouse, ETriggerEvent::Started, this, &APixelCodeCharacter::SkillRightMouse);
 
-			EnhancedInputComponent->BindAction(IA_SetBuildMode, ETriggerEvent::Started, this, &APixelCodeCharacter::OnSetBuildModePressed);
-			EnhancedInputComponent->BindAction(IA_RemoveFoliage, ETriggerEvent::Started, this, &APixelCodeCharacter::OnRemoveFoliagePressed);
-			EnhancedInputComponent->BindAction(IA_SpawnBuilding, ETriggerEvent::Started, this, &APixelCodeCharacter::OnSpawnBuildingPressed);
-			EnhancedInputComponent->BindAction(IA_CycleMesh, ETriggerEvent::Started, this, &APixelCodeCharacter::OnCycleMeshPressed);
-			EnhancedInputComponent->BindAction(IA_DestroyBuilding, ETriggerEvent::Started, this, &APixelCodeCharacter::OnDestroyBuildingPressed);
 
 			EnhancedInputComponent->BindAction(IA_Weapon, ETriggerEvent::Started, this, &APixelCodeCharacter::switchWeapon);
 			EnhancedInputComponent->BindAction(IA_Weapon2, ETriggerEvent::Started, this, &APixelCodeCharacter::switchWeapon2);
@@ -1690,13 +572,6 @@ void APixelCodeCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 			EnhancedInputComponent->BindAction(IA_ExpUp, ETriggerEvent::Started, this, &APixelCodeCharacter::PlayerExpUp);
 			
 			EnhancedInputComponent->BindAction(IA_StopWidget, ETriggerEvent::Started, this, &APixelCodeCharacter::StopWidget);
-			
-			
-			EnhancedInputComponent->BindAction(IA_Build, ETriggerEvent::Started, this, &APixelCodeCharacter::OnBuildUI);
-	/*		EnhancedInputComponent->BindAction(IA_Cheat, ETriggerEvent::Started, this, &APixelCodeCharacter::OnCheatMode);*/
-
-
-
 		}
 
 	}
@@ -2144,10 +1019,10 @@ void APixelCodeCharacter::SeverRPC_mageRightAttackSpawn_Implementation()
 void APixelCodeCharacter::MultiRPC_mageRightAttackSpawn_Implementation()
 {
 	FActorSpawnParameters SpawnParams;
-	FVector LeftSpawnLocation = GetActorLocation() - GetActorRightVector() * 300.f; // 플레이어의 왼쪽으로 500 단위만큼 이동
-	FVector LeftTopSpawnLocation = GetActorLocation() + GetActorUpVector() * 200.f - GetActorRightVector() * 300.f; // 플레이어의 왼쪽 위로 200 단위만큼 이동
-	FVector RightSpawnLocation = GetActorLocation() + GetActorRightVector() * 300.f; // 플레이어의 오른쪽으로 500 단위만큼 이동
-	FVector RightTopSpawnLocation = GetActorLocation() + GetActorUpVector() * 200.f + GetActorRightVector() * 300.f; // 플레이어의 오른쪽 위로 200 단위만큼 이동
+	FVector LeftSpawnLocation = GetActorLocation() - GetActorRightVector() * 300.f; 
+	FVector LeftTopSpawnLocation = GetActorLocation() + GetActorUpVector() * 200.f - GetActorRightVector() * 300.f;
+	FVector RightSpawnLocation = GetActorLocation() + GetActorRightVector() * 300.f; 
+	FVector RightTopSpawnLocation = GetActorLocation() + GetActorUpVector() * 200.f + GetActorRightVector() * 300.f; 
 	GetWorld()->SpawnActor<APlayerMageRightAttackSpawnActor>(mageRightAttackSpawn, LeftSpawnLocation, GetActorRotation(), SpawnParams);
 	GetWorld()->SpawnActor<APlayerMageRightAttackSpawnActor>(mageRightAttackSpawn, LeftTopSpawnLocation, GetActorRotation(), SpawnParams);
 	GetWorld()->SpawnActor<APlayerMageRightAttackSpawnActor>(mageRightAttackSpawn, RightSpawnLocation, GetActorRotation(), SpawnParams);
@@ -2339,22 +1214,18 @@ void APixelCodeCharacter::StopWidget()
 }
 
 // 플레이어 사운드
-
-
 void APixelCodeCharacter::Soundcollection()
 {
 	if (bSwordOutSound)
 	{
 		ServerRPC_PlayerSwordOutSound();
 		bSwordOutSound = false;
-		//UE_LOG(LogTemp, Warning, TEXT("PlayerOut"));
 	}
 
 	if (bSwordInSound)
 	{
 		ServerRPC_PlayerSwordInSound();
 		bSwordInSound = false;
-		//UE_LOG(LogTemp, Warning, TEXT("PlayerIn"));
 	}
 
 	if (bBaseSwordSound1)
@@ -2990,27 +1861,7 @@ void APixelCodeCharacter::Tick(float DeltaTime)
 		PrintInfo();
 	}
 
-	// 서휘-----------------------------------------------------------------------------------------------------
-	if (bInBuildMode && Builder)
-	{
-		Builder->SetBuildPosition(PerformLineTrace(2000.0f));
-	}
-	// 서휘-----------------------------------------------------------------------------------------------------끝
-
-	if (bFarmFoliage)
-	{
-		SeverRPC_RemoveFoliage(PerformLineTrace());
-		bFarmFoliage = false;
-	}
-
-	if (bMine)
-	{
-		SeverRPC_RemoveRock(PerformLineTrace(1000));
-		SeverRPC_RemoveMetal(PerformLineTrace(1000));
-		bMine = false;
-	}
-
-	// 지논------------------------------------------------------------------------------------------------------
+	// 진원------------------------------------------------------------------------------------------------------
 	if (bRoll)
 	{
 		RollTime += DeltaTime;
@@ -3042,7 +1893,6 @@ void APixelCodeCharacter::Tick(float DeltaTime)
 		SeverRPC_mageRightAttackSpawn();
 
 		bmageRightAttack = false;
-		//UE_LOG(LogTemp,Warning,TEXT("magerightattack"));
 	}
 
 	if (bmageQAttack)
@@ -3063,12 +1913,6 @@ void APixelCodeCharacter::Tick(float DeltaTime)
 		bmageRAttack = false;
 	}
 
-	/*
-	if ()
-	{
-
-	}*/
-
 	if (stateComp->currentMP / stateComp->MaxMP <= 1)
 	{
 		MPRegen += DeltaTime;
@@ -3083,14 +1927,12 @@ void APixelCodeCharacter::Tick(float DeltaTime)
 	{
 		SPRegenTime = FMath::Clamp(SPRegenTime, 0, 3);
 		SPRegenTime -= DeltaTime;
-		//UE_LOG(LogTemp, Warning, TEXT("SPRegenTime : %f"), SPRegenTime);
 		if (SPRegenTime <= 0.0f)
 		{
 			SPRegen += DeltaTime;
 			if (SPRegen >= 1.0f)
 			{
 				stateComp->currentSP += 3.0f;
-				//stateComp->currentSP = FMath::Lerp(stateComp->currentSP, stateComp->currentSP += 3.0f, DeltaTime);
 				SPRegen = 0.0f;
 			}
 		}
@@ -3100,13 +1942,11 @@ void APixelCodeCharacter::Tick(float DeltaTime)
 	{
 		EnableInput(Pc);
 		this->SetOwner(Pc);
-		//FollowCamera->PostProcessSettings.ColorSaturation = FVector4(1, 1, 0, 0);
-		//UE_LOG(LogTemp,Warning,TEXT("bPoss!!"));
 		bPoss = false;
 	}
 
 	Soundcollection();
-	// 지논------------------------------------------------------------------------------------------------------
+	// 진원 ------------------------------------------------------------------------------------------------------
 
 }
 

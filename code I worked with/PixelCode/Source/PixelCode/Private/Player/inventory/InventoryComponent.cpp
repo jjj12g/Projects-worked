@@ -13,7 +13,7 @@ UInventoryComponent::UInventoryComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	// ...
+
 }
 
 
@@ -21,8 +21,6 @@ void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-		// ...
 	//UE_LOG(LogTemp, Warning, TEXT("UInventoryComponent GetIsReplicated() : %s"), GetIsReplicated() ? TEXT("TRUE") : TEXT("FALSE"));
 	if (GetIsReplicated() != true)
 	{
@@ -44,7 +42,7 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+
 }
 
 UItemBase* UInventoryComponent::FindMatchingItem(UItemBase* ItemIn) const
@@ -173,10 +171,8 @@ int32 UInventoryComponent::HandleStackableItems(UItemBase* ItemIn, int32 Request
 
 	int32 AmountToDistribute = RequestedAddAmount; // 인벤토리에 넣기위한 남은자리
 
-	// check if the input item already exists in the inventory and is not a full stack 항목스텍 항목이 이미 인벤토리에 있는지 확인하고
 	UItemBase* ExistingItemStack = FindNextPartialStack(ItemIn); // 아이템 id 비교하여 동일한 종류의 항목인지 확인
 
-	// distribute item stack over existing stacks; 스텍쌓임
 	while (ExistingItemStack) // Loop를 사용하는데 null이 들어옴
 	{
 		// 남은 무게나 스택 둘다 계산
@@ -197,7 +193,6 @@ int32 UInventoryComponent::HandleStackableItems(UItemBase* ItemIn, int32 Request
 
 			ItemIn->SetQuantity(AmountToDistribute);
 
-			// TODO: Refine this logic since going over weight capacity should not ever be possible
 			// 이제 최대 무게에 가까워졌기때문에 루프 계속 실행할필요 x
 			if (InventoryTotalWeight >= InventoryWeightCapacity) 
 			{
@@ -209,9 +204,7 @@ int32 UInventoryComponent::HandleStackableItems(UItemBase* ItemIn, int32 Request
 		{
 			if (AmountToDistribute != RequestedAddAmount)
 			{
-				// 여러 스택에 항목을 배포하면 이 블록에 도달합니다.
-				// 그 과정에서 체중 제한은 그의 것입니다
-
+				// 여러 스택에 항목을 배포하면 이 블록에 도달
 				OnInventoryUpdated.Broadcast();
 				return RequestedAddAmount - AmountToDistribute;
 			}
@@ -220,7 +213,7 @@ int32 UInventoryComponent::HandleStackableItems(UItemBase* ItemIn, int32 Request
 		}
 		if (AmountToDistribute <= 0) // 마지막으로 배포할 금액이 0보다 작거나 같은경우, 모든것 배포. 위에는 코드는 일부배포
 		{
-			// all of the input item was distributed across existing stacks 기존 스텍에 분산되어서 더이상 배포할 항목이 없으므로
+			//기존 스텍에 분산되어서 더이상 배포할 항목이 없으므로
 			OnInventoryUpdated.Broadcast();
 			return RequestedAddAmount;
 		}
@@ -228,7 +221,7 @@ int32 UInventoryComponent::HandleStackableItems(UItemBase* ItemIn, int32 Request
 		ExistingItemStack = FindNextPartialStack(ItemIn);
 	}
 
-	// no more partial stacks found. check if a new stack can be added 더 이상 부분스택 발견x  새 스택 바로 추가할 수 있는지 확인
+	// 더 이상 부분스택 발견x  새 스택 바로 추가할 수 있는지 확인
 	if (InventoryContents.Num() + 1 <= InventorySlotsCapacity) // 콘텐츠의 번호 +1이 슬롯 용량보다 작거나 같은경우
 	{
 		// 따라서 우리는 이미 남은 항목 수량에서 재고 용량에 맞을 수 있는 만큼 추가
@@ -262,17 +255,10 @@ FItemAddResult UInventoryComponent::HandleAddItem(UItemBase* InputItem)
 	if (GetOwner())
 	{
 		const int32 InitialRequestedAddAmount = InputItem->Quantity;
-		//UItemBase *TempInfo = InputItem;
-		// handle non-stackable items
 		if (!InputItem->NumericData.bisStackable)
 		{
 			return HandleNonStackableItems(InputItem);
-			//TempInfo->Quantity -= 1;
 		}
-		/*else
-		{
-			Char->DropedItem(TempInfo);
-		}*/
 
 		// handle stakckable 값 추가
 		const int32 StackableAmountAdded = HandleStackableItems(InputItem, InitialRequestedAddAmount);

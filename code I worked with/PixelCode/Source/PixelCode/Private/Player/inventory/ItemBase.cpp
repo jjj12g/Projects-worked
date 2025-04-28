@@ -81,15 +81,4 @@ void UItemBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	/*DOREPLIFETIME(UItemBase, Quantity);
-	DOREPLIFETIME(UItemBase, ID);
-	DOREPLIFETIME(UItemBase, ItemType);
-	DOREPLIFETIME(UItemBase, ItemQuality);
-	DOREPLIFETIME(UItemBase, ItemName);
-	DOREPLIFETIME(UItemBase, ItemStatistics);
-	DOREPLIFETIME(UItemBase, TextData);
-	DOREPLIFETIME(UItemBase, NumericData);
-	DOREPLIFETIME(UItemBase, AssetData);
-	DOREPLIFETIME(UItemBase, CraftItemData);
-	DOREPLIFETIME(UItemBase, Crafting);*/
 }

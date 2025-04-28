@@ -50,9 +50,6 @@ void APlayerMageRightAttackSpawnActor::BeginPlay()
 	
 	FVector PlayerLocation = GetActorLocation(); // 플레이어 위치
 
-	// 발사 위치를 계산합니다.
-	
-
 	// 각 위치에서 스피어컬리전을 발사합니다.
 	SphereComp1->SetWorldLocation(PlayerLocation);
 
@@ -64,9 +61,6 @@ void APlayerMageRightAttackSpawnActor::BeginPlay()
 void APlayerMageRightAttackSpawnActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-
-	//FVector NewLocation = GetActorLocation() + GetActorForwardVector() * Speed * DeltaTime; // Speed는 앞으로 이동할 속도
 	
 	// 플레이어 이동 로직
 	GetTargetEnemyLocation();
@@ -96,9 +90,6 @@ void APlayerMageRightAttackSpawnActor::Tick(float DeltaTime)
 			Destroy();
 		}
 	}
-
-	//CheckForEnemiesAndAttack();
-
 }
 
 FVector APlayerMageRightAttackSpawnActor::GetTargetEnemyLocation()

@@ -50,7 +50,6 @@ void UInventoryTooltip::NativeConstruct()
 	ItemDescription->SetText(ItemBeingHovered->TextData.Description);
 	StackWeight->SetText(FText::AsNumber(ItemBeingHovered->GetItemStackWeight()));
 
-	// 부동소수점 표시
 	const FString WeightInfo =
 	{ "Weight: " + FString::SanitizeFloat(ItemBeingHovered->GetItemStackWeight()) };
 

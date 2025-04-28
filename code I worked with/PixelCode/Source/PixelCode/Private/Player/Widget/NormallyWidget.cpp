@@ -33,7 +33,7 @@ void UNormallyWidget::NativeConstruct()
 
 	BaseMaterial = LoadObject<UMaterial>(nullptr, TEXT("/Script/Engine.Material'/Game/Player/PlayerWidget/M_RoundProgressbar.M_RoundProgressbar'_C"));
 
-	//UMaterialInstanceDynamic를 생성합니다.
+	//UMaterialInstanceDynamic를 생성
 	QDynamicMaterial = UMaterialInstanceDynamic::Create(BaseMaterial, this);
 	EDynamicMaterial = UMaterialInstanceDynamic::Create(BaseMaterial, this);
 	RDynamicMaterial = UMaterialInstanceDynamic::Create(BaseMaterial, this);
@@ -275,25 +275,11 @@ void UNormallyWidget::OnMyButtonRespawn()
 		pc->SetInputMode(FInputModeGameOnly());
 		pc->SetShowMouseCursor(false);
 		pc->DeleteCharacter(Player, Player->GetActorLocation());
-		//pc->ServerRPC_ChangeSpectator();
 	}
-	
-
-	//if (pc)
-	//{
-	//	auto charTemp = pc->GetPawn();
-
-	//	if (auto charCheck = Cast<APixelCodeCharacter>(charTemp))
-	//	{
-	//		pc->PlayerRespawn();
-	//	}
-	//}
 }
 
 void UNormallyWidget::OnMyButtonQuit()
 {
-	//UKismetSystemLibrary::QuitGame(GetWorld(), nullptr, EQuitPreference::Quit, false);
-
 	auto* gi = Cast<UPCodeGameInstance>(GetWorld()->GetGameInstance());
 	if (gi)
 	{

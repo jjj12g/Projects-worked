@@ -70,7 +70,6 @@ void APlayerMageESkillSpawnActor::Tick(float DeltaTime)
 
 void APlayerMageESkillSpawnActor::OnOverlapEnemy(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-
 	ABossApernia* boss = Cast<ABossApernia>(OtherActor);
 	ADemonSword* demonSword = Cast<ADemonSword>(OtherActor);
 	AGrux* grux = Cast<AGrux>(OtherActor);

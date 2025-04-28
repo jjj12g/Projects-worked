@@ -23,20 +23,11 @@ APlayerMageQSkillSpawnActor::APlayerMageQSkillSpawnActor()
 	boxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("boxComp"));
 	boxComp->SetupAttachment(RootComponent);
 
-	//boxComp2 = CreateDefaultSubobject<UBoxComponent>(TEXT("boxComp2"));
-	//boxComp2->SetupAttachment(RootComponent);
-
-	//boxComp3 = CreateDefaultSubobject<UBoxComponent>(TEXT("boxComp3"));
-	//boxComp3->SetupAttachment(RootComponent);
-
 	boxComp->SetGenerateOverlapEvents(true);
 
 	NA_MageQSkillComp = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleComp"));
 	NA_MageQSkillComp->SetupAttachment(RootComponent);
 
-	// 초기 값 설정
-	//InitialScale = FVector(4.f, 6.f, 2.3f);
-	//boxComp->SetWorldScale3D(InitialScale);
 
 	// 초기 값 설정
 	InitialScale = FVector(4.f, 8.f, 2.3f);
@@ -80,7 +71,6 @@ void APlayerMageQSkillSpawnActor::Tick(float DeltaTime)
 	{
 		Destroy();
 	}
-
 }
 
 void APlayerMageQSkillSpawnActor::OnOverlapEnemy(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -107,11 +97,6 @@ void APlayerMageQSkillSpawnActor::OnOverlapEnemy(UPrimitiveComponent* Overlapped
 		dogBart->DogBartTakeDamage(DamageAmount);
 	}
 
-
-
 	UParticleSystemComponent* SpawnedParticleSystem = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), NA_MageQSkillHit, GetActorLocation(), GetActorRotation());
-	
-	
-
 }
 

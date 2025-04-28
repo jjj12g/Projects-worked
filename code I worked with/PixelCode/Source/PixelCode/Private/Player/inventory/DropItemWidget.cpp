@@ -16,13 +16,5 @@ bool UDropItemWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropE
 			return false;
 	}
 
-	/*const FVector2D DragWindowOffSet = InGeometry.AbsoluteToLocal(InDragDropEvent.GetScreenSpacePosition());
-	const FVector2D DragWindowOffSetResult = DragWindowOffSet - DragWidgetResult->DragOffset;
-
-	DragWidgetResult->WidgetReference->AddToViewport();
-	DragWidgetResult->WidgetReference->SetVisibility(ESlateVisibility::Visible);
-	DragWidgetResult->WidgetReference->SetPositionInViewport(DragWindowOffSetResult, false);*/
-
-
 	return true;
 }

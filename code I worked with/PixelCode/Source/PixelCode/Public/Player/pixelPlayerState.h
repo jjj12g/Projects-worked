@@ -15,17 +15,6 @@ class UPlayerStatWidget;
 /**
  * 
  */
-// struct ApixelPlayerState : public FTableRowBase
-//{
-//	GENERATED_BODY()
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EXP")
-//	float MAXEXP;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EXP")
-//	int32 PlayerLevel;
-//};
-
 
 
 UCLASS()

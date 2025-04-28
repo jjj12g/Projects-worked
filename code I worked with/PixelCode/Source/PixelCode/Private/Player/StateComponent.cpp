@@ -12,11 +12,9 @@
 // Sets default values for this component's properties
 UStateComponent::UStateComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+
 }
 
 
@@ -25,29 +23,16 @@ void UStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	character = GetOwner<APlayerOrganism>();
 	Pc = Cast<APCodePlayerController>(GetWorld()->GetFirstPlayerController());
 
-	//NormallyWidget->firstUpdate();
-		
-	//UE_LOG(LogTemp, Warning, TEXT("StateComp GetIsReplicated() : %s"), GetIsReplicated() ? TEXT("TRUE") : TEXT("FALSE"));
 	if (GetIsReplicated() != true)
 	{
 
 		SetIsReplicated(true);
 	}
 
-	//UE_LOG(LogTemp, Warning, TEXT("StateComp GetIsReplicated() : %s"), GetIsReplicated() ? TEXT("TRUE") : TEXT("FALSE"));
-	//if (GetIsReplicated() != true)
-	//{
-
-	//	SetIsReplicated(true);
-	//}
-	// ...
-
 	
-
 }
 
 
@@ -56,8 +41,6 @@ void UStateComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-
-	// ...
 }
 
 void UStateComponent::InitStat()
@@ -187,18 +170,6 @@ void UStateComponent::NetMulticastRPC_SetStatePoint_Implementation(EStateType st
 
 void UStateComponent::UpdateStat()
 {
-	// 이거 말고 일단 데이터테이블 하나 파자
-	//auto characterCheck = Cast<ADungeonOrganism>(GetOwner());
-	//if (characterCheck != nullptr)
-	//{
-	//	if (characterCheck->characterType == ECharacterType::PlayerCharacter)
-	//	{
-
-	//	}
-	//}
-
-	//UE_LOG(LogTemp,Warning,TEXT("updateStat"));
-	// 이후 장비에 있는 스탯을 여기에 추가해줘야 함
 	MaxHP = stat.MaxHP;
 	MaxSP = stat.MaxSP;
 	MaxMP = stat.MaxMP;

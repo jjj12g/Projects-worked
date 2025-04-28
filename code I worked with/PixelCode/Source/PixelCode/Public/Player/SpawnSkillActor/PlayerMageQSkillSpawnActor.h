@@ -36,12 +36,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Components");
 	UBoxComponent* boxComp;
 
-	//UPROPERTY(EditAnywhere, Category = "Components");
-	//UBoxComponent* boxComp2;
-
-	//UPROPERTY(EditAnywhere, Category = "Components");
-	//UBoxComponent* boxComp3;
-
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* NA_MageQSkill;
 

@@ -59,8 +59,7 @@ struct FInteractableData
 };
 
 
-// InteractionInterface 상호작용 인터페이스
-// This class does not need to be modified.
+// 상호작용 인터페이스
 UINTERFACE(MinimalAPI)
 class UInteractionInterface : public UInterface // 맨밑 UE인터페이스로 제작
 {
@@ -74,8 +73,6 @@ class PIXELCODE_API IInteractionInterface
 {
 	GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
-// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual void BeginFocus(); // 함수가 하위 클래스에 의해 재정의 될 수 있음을 설정
 	virtual void EndFocus();

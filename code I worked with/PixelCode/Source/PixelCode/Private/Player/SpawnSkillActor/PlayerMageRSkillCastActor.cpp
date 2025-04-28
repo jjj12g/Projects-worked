@@ -42,15 +42,8 @@ void APlayerMageRSkillCastActor::BeginPlay()
     FVector LaunchDirection = GetActorRotation().Vector();
     CollisionSphere->AddImpulse(LaunchDirection * 2000);
 
-    //NiagaraComp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), NS_Meteor, GetActorLocation());
-   
-
     // OnActorHit 이벤트에 핸들러 함수를 바인딩
     OnActorHit.AddDynamic(this, &APlayerMageRSkillCastActor::OnMeteorHit);
-
-
-   
-
 }
 
 // Called every frame
@@ -70,22 +63,18 @@ void APlayerMageRSkillCastActor::OnMeteorHit(AActor* SelfActor, AActor* OtherAct
         dogBart = Cast<ADogBart>(OtherActor);
 
         //.Add 메서드를 사용하면 동적으로 배열의 크기 조절, 초기에 배열의 크기를 정하지 않고 필요할 때마다 요소를 추가 가능.
-         // 적이 감지되면 해당 적을 배열에 추가하고 데미지 적용 타이머를 시작합니다.
+        // 적이 감지되면 해당 적을 배열에 추가하고 데미지 적용 타이머를 시작.
        
-            // 충돌 지점에 스폰할 액터를 생성
-            FActorSpawnParameters SpawnParams;
-            SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-            APlayerMageRSkillSpawnActor* SpawnedActor = GetWorld()->SpawnActor<APlayerMageRSkillSpawnActor>(ActorToSpawn, Hit.ImpactPoint, FRotator::ZeroRotator, SpawnParams);
+        // 충돌 지점에 스폰할 액터를 생성
+        FActorSpawnParameters SpawnParams;
+        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        APlayerMageRSkillSpawnActor* SpawnedActor = GetWorld()->SpawnActor<APlayerMageRSkillSpawnActor>(ActorToSpawn, Hit.ImpactPoint, FRotator::ZeroRotator, SpawnParams);
 
-            if (SpawnedActor)
-            {
-                Destroy();
-            }
-        
-       
+        if (SpawnedActor)
+        {
+            Destroy();
+        }
     }
-    
-     
 }
 
 
