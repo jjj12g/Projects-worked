@@ -21,13 +21,6 @@ AStageGameModeBase::AStageGameModeBase()
 
     DefaultPawnClass = nullptr;
 
-    //// set default pawn class to our Blueprinted character
-    //static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
-    //if (PlayerPawnBPClass.Class != nullptr)
-    //{
-    //	DefaultPawnClass = PlayerPawnBPClass.Class;
-    //}
-
     // set default controller to our Blueprinted controller
     static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownPlayerController"));
     if (PlayerControllerBPClass.Class != NULL)
@@ -50,7 +43,7 @@ void AStageGameModeBase::BeginPlay()
     UWorld* World = GetWorld();
     if (!World) return;
 
-    // 1. GridManager 설정
+    // GridManager 설정
     GridManager = Cast<AGridManager>(UGameplayStatics::GetActorOfClass(World, AGridManager::StaticClass()));
     if (!GridManager)
     {
@@ -72,15 +65,12 @@ void AStageGameModeBase::BeginPlay()
 
 
     // 배치 UI를 열기
-    if (PlacementWidgetClass)  // UPROPERTY(EditAnywhere)로 블루프린트 지정
+    if (PlacementWidgetClass)
     {
         PlacementUI = CreateWidget<UPlacementWidget>(GetWorld(), PlacementWidgetClass);
         if (PlacementUI)
         {
             PlacementUI->AddToViewport(0);
-
-            // 필요하면, PlacementUI->AvailableCharacters 에 
-            // [늑대, 토끼, ...] 클래스를 채워넣을 수도 있음
         }
     }
     else
@@ -89,7 +79,7 @@ void AStageGameModeBase::BeginPlay()
     }
 }
 
-// GridManager 참조를 반환
+// GridManager 참조 반환
 AGridManager* AStageGameModeBase::GetGridManager() const
 {
     if (GridManager)
@@ -166,7 +156,7 @@ void AStageGameModeBase::OnPlacementFinished()
     AProjectKLBPlayerController* APC = Cast<AProjectKLBPlayerController>(GetWorld()->GetFirstPlayerController());
 
 
-    // 2. TurnManager 초기화 (필요 시)
+    // TurnManager 초기화
     TurnManagerInstance = NewObject<UTurnManager>(this);
     if (TurnManagerInstance)
     {
@@ -184,12 +174,4 @@ void AStageGameModeBase::OnPlacementFinished()
     }
 
     UE_LOG(LogTemp, Log, TEXT("Placement finished. Game start logic here."));
-
-    //// 모든 캐릭터가 배치 완료된 시점
- //   // → 이제 TurnManager 시작, 혹은 전투/게임 시작
- //if (TurnManagerInstance)
- //{
- //    TurnManagerInstance->InitializeTurnQueue();
- //    TurnManagerInstance->ProcessNextTurn();
- //}
 }

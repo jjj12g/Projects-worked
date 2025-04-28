@@ -22,15 +22,15 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Stats")
     virtual void InitializeStats();
 
-    // 캐릭터 스탯 (데이터 테이블에서 가져온 값)
+    // 캐릭터 스탯 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
     struct FCharacterStat CharacterStats;
 
-    // NPC가 사용할 StatComponent (스탯 데이터를 관리)
+    // NPC가 사용할 StatComponent
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
     class UCharacterStatComponent* StatComponent;
 
-    // NPC 이름(데이터 테이블 행의 키로 사용)
+    // NPC 이름
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC")
     FName StatRowName;
 
@@ -46,11 +46,11 @@ public:
 protected:
     virtual void BeginPlay() override;
 
-    // NPC 이름 및 기본 대사 정보 (추후 애니메이션, AI 등과 연동 가능)
+    // NPC 이름 및 기본 대사 정보 (추후 애니메이션, AI 등과 연동)
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC")
     FText NPCName;
 
-    // 대화 데이터 테이블 (호감도에 따른 대사 데이터를 참조할 수 있음)
+    // 대화 데이터 테이블 (호감도에 따른 대사 데이터 참조 가능)
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue")
     class UDataTable* DialogueDataTable;
 

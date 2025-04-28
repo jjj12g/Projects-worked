@@ -28,7 +28,7 @@ void UDataGameInstance::ShuffleCards()
         {
             if (Card)
             {
-                AllCards.Add(*Card); // 값 복사
+                AllCards.Add(*Card); 
             }
         }
 
@@ -103,7 +103,7 @@ void UDataGameInstance::LoadCharacterStats()
 
     if (CharacterStatsTable)
     {
-        // 특정 행을 가져옴 (예: 플레이어)
+        // 특정 행을 가져옴 
         FCharacterStat* PlayerStats = CharacterStatsTable->FindRow<FCharacterStat>(TEXT("Player"), ContextString);
         if (PlayerStats)
         {

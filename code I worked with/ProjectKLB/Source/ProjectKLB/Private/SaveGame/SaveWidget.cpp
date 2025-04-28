@@ -38,24 +38,23 @@ void USaveWidget::OnSlotButton3Clicked()
 
 void USaveWidget::LoadGameSlot(int32 SlotIndex)
 {
-    // 슬롯 이름은 "SaveSlot1", "SaveSlot2", "SaveSlot3" 등으로 구성합니다.
     FString SlotName = FString::Printf(TEXT("SaveSlot%d"), SlotIndex);
 
-    // 저장 데이터가 존재하는지 확인합니다.
+    // 저장 데이터가 존재하는지 확인
     if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
     {
-        // 저장된 데이터가 있을 경우 로드합니다.
+        // 저장된 데이터가 있을 경우 로드
         UPlayerSaveGame* LoadedGame = Cast<UPlayerSaveGame>(UGameplayStatics::LoadGameFromSlot(SlotName, 0));
         if (LoadedGame)
         {
-            // 저장된 데이터에 있는 레벨로 이동합니다.
+            // 저장된 데이터에 있는 레벨로 이동
             FName LevelToLoad = FName(*LoadedGame->SavedLevelName);
             UGameplayStatics::OpenLevel(GetWorld(), LevelToLoad);
         }
     }
     else
     {
-        // 저장 데이터가 없으면 첫 게임으로 간주하고 새 게임 레벨로 이동합니다.
+        // 저장 데이터가 없으면 첫 게임으로 간주하고 새 게임 레벨로 이동
         UGameplayStatics::OpenLevel(GetWorld(), TEXT("testMap2"));
     }
 }

@@ -25,7 +25,7 @@ public:
     FPlacementTileData TileData;
 
 protected:
-    // 타일 위젯 내부에 배치된 Image(“Is Variable” 체크) 
+    // 타일 위젯 내부에 배치된 Image
     UPROPERTY(meta = (BindWidget))
     UImage* OccupantImage;
 

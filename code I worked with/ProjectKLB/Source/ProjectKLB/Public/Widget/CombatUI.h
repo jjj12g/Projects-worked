@@ -38,7 +38,7 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	class UInventory* InventoryWidget;
 
-	// 인벤토리 위젯
+	// 장비창 위젯
 	UPROPERTY(meta = (BindWidget))
 	class UEquipment* EquipmentWidget;
 
@@ -69,8 +69,5 @@ protected:
 	UFUNCTION()
 	void HandleInventoryChanged(const TArray<FItemData>& UpdatedInventory);
 
-
-
-	//CharacterListVerticalBox
 
 };

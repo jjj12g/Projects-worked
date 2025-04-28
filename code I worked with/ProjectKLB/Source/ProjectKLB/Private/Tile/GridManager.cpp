@@ -26,7 +26,6 @@ AGridManager::AGridManager()
 }
 
 
-// Called when the game starts or when spawned
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
@@ -36,7 +35,6 @@ void AGridManager::BeginPlay()
     {
         GenerateGrid();
         bIsGridGenerated = true;
-        //UE_LOG(LogTemp, Warning, TEXT("GenerateHexGrid called by: %s"), *GetName());
     }
     else
     {
@@ -58,9 +56,6 @@ void AGridManager::BeginPlay()
     {
         //UE_LOG(LogTemp, Warning, TEXT("EnemySpawner not found in the level!"));
     }
-
-    //UE_LOG(LogTemp, Warning, TEXT("2"));
-
 }
 
 // Called every frame
@@ -199,7 +194,6 @@ FVector AGridManager::GetTilePosition(int32 Q, int32 R) const
 
 
          // 원하는 만큼 원점(0,0)을 중앙에 맞추기 위해 추가 보정
-         //예: (HexRadius * 0.75f * HexWidth)만큼 왼쪽/위로 이동
          float CenterOffsetX = -(0.75f * HexWidth * HexRadius);
          float CenterOffsetY = -(HexHeight * HexRadius);
 
@@ -277,11 +271,6 @@ ATile* AGridManager::GetTileAtLocation(const FVector& Location) const
         }
     }
     return nullptr;
-    //// 월드 좌표를 기반으로 Q, R 좌표 계산
-    //FIntPoint TileCoords = GetTileCoordinatesFromPosition(Location);
-
-    //// 계산된 Q, R 좌표를 사용하여 타일 반환
-    //return GetTileAt(TileCoords.X, TileCoords.Y);
 }
 
 void AGridManager::HighlightValidTiles(const TArray<FIntPoint>& ValidTiles)
@@ -419,7 +408,6 @@ TArray<ATile*> AGridManager::GetNeighboringTiles(ATile* CurrentTile)
     {
 
         // Pointy-Top Axial에서의 이웃 오프셋
-        // (q+1,r), (q-1,r), (q,r+1), (q,r-1), (q+1,r-1), (q-1,r+1)
         static TArray<FIntPoint> AxialOffsets = {
             {+1,  0},
             {-1,  0},

@@ -28,10 +28,6 @@ public:
 
     AGridManager* GetGridManager() const;
 
-    //// 플레이어 캐릭터를 스폰할 때 사용할 클래스
-    //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawning")
-    //TSubclassOf<class AProjectKLBCharacter> PlayerCharacterClass;
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spawning")
     TArray<TSubclassOf<class AProjectKLBCharacter>> PlayerCharacterClasses;
 

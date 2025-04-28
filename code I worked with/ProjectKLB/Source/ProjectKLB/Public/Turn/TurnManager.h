@@ -8,10 +8,10 @@
 #include "TurnManager.generated.h"
 
 /**
- * 
+ * 턴 관리 시스템
  */
 
- // 턴 관리 시스템
+
 class UDataGameInstance;
 class AProjectKLBPlayerController;
 class AProjectKLBCharacter;

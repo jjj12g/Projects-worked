@@ -22,7 +22,7 @@ class PROJECTKLB_API UCharacterIconWidget : public UUserWidget
 public:
     virtual void NativeConstruct() override;
 
-    // 어떤 캐릭터 클래스를 나타내는지 (늑대, 토끼 등)
+    // 어떤 캐릭터 클래스를 나타내는지
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placement")
     TSubclassOf<class AProjectKLBCharacter> CharacterClass;
 

@@ -28,5 +28,5 @@ public:
 
     // 추가적으로 필요한 데이터
     UPROPERTY(BlueprintReadWrite, Category = "Drag and Drop")
-    FVector2D DragOffset;  // 드래그 시작 위치의 오프셋
+    FVector2D DragOffset;  
 };

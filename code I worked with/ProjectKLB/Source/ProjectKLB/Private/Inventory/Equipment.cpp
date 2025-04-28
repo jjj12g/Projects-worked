@@ -19,7 +19,7 @@ void UEquipment::InitializeEquipment(AProjectKLBCharacter* InCharacter)
     }
 
     // 각 슬롯에 해당하는 장비 데이터를 전달합니다.
-    // 예시: AProjectKLBCharacter 클래스에 각 슬롯에 대한 변수(Weapon, Helmet, Chest, Legs)가 있다고 가정합니다.
+    // AProjectKLBCharacter 클래스에 각 슬롯에 대한 변수(Weapon, Helmet, Chest, Legs)가 있다고 가정
     if (WeaponSlot)
     {
         WeaponSlot->InitializeEquipmentSlot(InCharacter->StatComponent->Weapon,0);
@@ -36,12 +36,6 @@ void UEquipment::InitializeEquipment(AProjectKLBCharacter* InCharacter)
     {
         LegSlot->InitializeEquipmentSlot(InCharacter->StatComponent->Legs,3);
     }
-
-
-   /* if (InCharacter->StatComponent)
-    {
-        CharNameText->SetText(FText::FromName(InCharacter->StatComponent->BaseStats.Name));
-    }*/
 
 
     CharHealthText->SetText(FText::AsNumber(InCharacter->CurrentHP));

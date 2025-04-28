@@ -31,8 +31,7 @@ class UTutorialStageClearUI;
 
 enum class ERelativeDirection { TwoOClock, TwelveOClock, TenOClock };
 
-/**
- * AProjectKLBPlayerController
+/*
  * - 플레이어 입력 처리
  * - 캐릭터 이동 및 공격 처리
  * - UI와의 상호작용 관리
@@ -52,48 +51,48 @@ class AProjectKLBPlayerController : public APlayerController
 public:
 	AProjectKLBPlayerController();
 
-    /** BeginPlay 호출 시 초기화 */
+    // BeginPlay 호출 시 초기화 
     virtual void BeginPlay() override;
 
     virtual void Tick(float DeltaTime) override;
 
-    /** 입력 매핑 설정 */
+    // 입력 매핑 설정 
     virtual void SetupInputComponent() override;
 
-    /** 플레이어 턴 시작 */
+    // 플레이어 턴 시작 
     UFUNCTION(BlueprintCallable, Category = "Turn Management")
     void StartTurn();
 
     UFUNCTION(BlueprintCallable, Category = "Turn Management")
     void PlayerTurn();
 
-    /** 카드를 UI에 표시 */
+    // 카드를 UI에 표시
     UFUNCTION(BlueprintCallable, Category = "UI")
     void DisplayCardsOnUI();
 
-    /** 카드 사용 */
+    // 카드 사용 
     UFUNCTION(BlueprintCallable, Category = "Card")
     void UseCard(const FCardData& CardData);
 
-    /** 타일 클릭 처리 */
+    // 타일 클릭 처리 
     UFUNCTION()
     void HandleTileClick(ATile* ClickedTile);
 
-    /** 캐릭터를 타일로 이동 */
+    // 캐릭터를 타일로 이동 
     UFUNCTION(BlueprintCallable, Category = "Movement")
     void MoveCharacterToTile(ATile* TargetTile);
 
-    /** 적을 공격 */
+    // 적을 공격 
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void AttackEnemy();
 
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void AttackSpecificEnemy(AEnemy* TargetEnemy);
 
-    /** 마우스 클릭 처리 */
+    // 마우스 클릭 처리 
     void HandleClickAction();
 
-    /** ESC 설정창 처리 */
+    // ESC 설정창 처리 
     void TogglePauseMenu();
 
     //AI컨트롤러
@@ -124,8 +123,6 @@ public:
     void AddDiagonalTiles_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles);
     void AddKnightMoves_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles);
     void AddLostMoves_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles);
-
-
 
 
 
@@ -220,11 +217,11 @@ private:
     TArray<ATile*> MovePath;        // 계산된 이동 경로
     int32 CurrentPathIndex = 0;     // 현재 경로상의 인덱스
     FTimerHandle MoveTimerHandle;   // 이동 타이머 핸들
-    float StepDelay = 0.5f;         // 각 칸 사이 이동 지연 시간 (초)
+    float StepDelay = 0.5f;         // 각 칸 사이 이동 지연 시간 
 
     // 부드러운 이동 관련 변수
-    float MoveProgress = 0.0f;           // 현재 보간 진행도 (0.0 ~ 1.0)
-    float MoveUpdateInterval = 0.02f;    // 위치 갱신 간격 (초)
+    float MoveProgress = 0.0f;           // 현재 보간 진행도
+    float MoveUpdateInterval = 0.02f;    // 위치 갱신 간격 
     FVector StartLocation;               // 현재 이동 시작 위치
     FVector EndLocation;                 // 현재 이동 목표 위치
 
@@ -234,7 +231,7 @@ private:
     int32 CurrentRotationStep = 0;       // 현재 회전 단계 인덱스
     FRotator TargetRotation;             // 목표 회전 각도
     FTimerHandle RotationTimerHandle;    // 회전 타이머 핸들
-    float RotationSpeed = 180.0f;        // 회전 속도 (도/초)
+    float RotationSpeed = 180.0f;        // 회전 속도 
 
 
     // 이동 및 회전 함수

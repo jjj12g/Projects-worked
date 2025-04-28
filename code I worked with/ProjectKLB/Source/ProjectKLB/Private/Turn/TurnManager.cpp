@@ -22,7 +22,7 @@ UTurnManager::UTurnManager()
 {
     // 기본 값 설정
     ElapsedTimeDuringTurn = 0.0f;
-    //TurnDuration = 10.0f;  // 기본 턴 지속 시간 (10초 예시)
+    //TurnDuration = 10.0f; 
 
    
 }
@@ -155,15 +155,6 @@ void UTurnManager::CardUsed(const FString& CardName)
         if (GameInstance)
         {
             EndTurn();
-            //// 턴 지속 시간 초과 시 턴 종료
-            //if (ElapsedTimeDuringTurn >= TurnDuration)
-            //{
-            //    
-            //}
-            //else
-            //{
-            //    UE_LOG(LogTemp, Warning, TEXT("Card '%s' not found or invalid speed."), *CardName);
-            //}
         }
     }
 }
@@ -221,7 +212,7 @@ void UTurnManager::InitializeTurnQueue()
         }
         else if (AEnemy* EnemyChar = Cast<AEnemy>(Character))
         {
-            // 적 캐릭터는 기존 방식(또는 동일한 시스템 적용)
+            // 적 캐릭터는 기존 방식
             ActorSpeed = EnemyChar->CharacterStats.Speed;
             UE_LOG(LogTemp, Log, TEXT("Enemy %s speed: %f"), *EnemyChar->GetName(), ActorSpeed);
         }
@@ -229,8 +220,6 @@ void UTurnManager::InitializeTurnQueue()
         {
             UE_LOG(LogTemp, Warning, TEXT("Character %s is neither PlayerChar nor Enemy."), *Character->GetName());
         }
-
-       
 
         // 턴 엔트리 생성 및 초기화
         FTurnEntry Entry;
@@ -277,7 +266,7 @@ void UTurnManager::ProcessNextTurn()
     ExecuteTurnForActor(NextTurn.Actor);
 
     // 턴 후 업데이트: 다음 턴 시간 계산
-    // 만약 Actor가 이미 파괴되어 있다면 Speed 값이 0이 될 수 있으므로, 조건문을 추가
+    // 만약 Actor가 이미 파괴되어 있다면 Speed 값이 0이 될 수 있으므로, 조건문 추가
     if (NextTurn.Speed > 0.0f)
     {
         NextTurn.NextTurnTime += 100.0f / NextTurn.Speed;
@@ -296,7 +285,7 @@ void UTurnManager::ProcessNextTurn()
 
 void UTurnManager::ExecuteTurnForActor(AActor* Actor)
 {
-    // 유효성 검사: Actor가 유효하지 않으면 아무것도 수행하지 않습니다.
+    // Actor가 유효하지 않으면 아무것도 수행하지 않음
     if (!Actor || !IsValid(Actor))
     {
         UE_LOG(LogTemp, Warning, TEXT("ExecuteTurnForActor: Actor is invalid, skipping."));
@@ -333,7 +322,6 @@ void UTurnManager::ExecuteTurnForActor(AActor* Actor)
         UE_LOG(LogTemp, Log, TEXT("Executing turn for enemy: %s"), *EnemyChar->GetName());
         // 적 행동 실행 로직 구현
         StartAITurn();
-        // 예: AIController를 통한 행동 시작
     }
     else
     {
@@ -343,7 +331,7 @@ void UTurnManager::ExecuteTurnForActor(AActor* Actor)
 
 void UTurnManager::StartTurnLoop()
 {
-    // 일정 간격(예: 0.1초)마다 ProcessNextTurn 호출
+    // 일정 간격마다 ProcessNextTurn 호출
     WorldContext->GetTimerManager().SetTimer(TurnTimerHandle, this, &UTurnManager::ProcessNextTurn, 2.0f, true);
 }
 
@@ -374,7 +362,6 @@ void UTurnManager::StartAITurn()
 
     // AI 턴 종료 후 다음 플레이어 턴 시작
     EndTurn();
-    //StartPlayerTurn();
 }
 
 AProjectKLBCharacter* UTurnManager::SwitchToNextPlayer()

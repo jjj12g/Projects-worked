@@ -27,8 +27,7 @@ public:
     void InitializeEquipment(AProjectKLBCharacter* InCharacter);
 
 protected:
-    // 각 장비 슬롯 UI 요소 (예: 이미지, 텍스트 등)
-    // 각 슬롯 위젯을 UMG에서 BindWidget으로 연결
+    // 각 장비 슬롯 UI 요소 
     UPROPERTY(meta = (BindWidget))
     UEquipmentSlot* WeaponSlot;
 
@@ -40,10 +39,6 @@ protected:
 
     UPROPERTY(meta = (BindWidget))
     UEquipmentSlot* LegSlot;
-
-    // 스탯 표기
-    //UPROPERTY(meta = (BindWidget))
-    //UTextBlock* CharNameText;
 
     UPROPERTY(meta = (BindWidget))
     UTextBlock* CharHealthText;

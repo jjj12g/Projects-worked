@@ -41,7 +41,7 @@ void UMainMenuWidget::OnGameStartButtonClicked()
         if (SaveWidget)
         {
             SaveWidget->AddToViewport();
-            // 필요시, 현재 메뉴 위젯은 화면에서 제거할 수 있습니다.
+            // 필요시, 현재 메뉴 위젯은 화면에서 제거
             RemoveFromParent();
         }
     }
@@ -60,7 +60,7 @@ void UMainMenuWidget::OnSettingsButtonClicked()
 {
     if (SettingsWidgetClass)
     {
-        // SettingsWidgetClass는 에디터에서 WBP_SettingsWidget 등으로 지정합니다.
+        // SettingsWidgetClass는 에디터에서 WBP_SettingsWidget 등으로 지정
         USettingsUIManager* SettingsWidget = CreateWidget<USettingsUIManager>(GetWorld(), SettingsWidgetClass);
         if (SettingsWidget)
         {

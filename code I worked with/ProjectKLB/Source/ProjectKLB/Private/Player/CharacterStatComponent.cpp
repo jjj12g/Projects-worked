@@ -10,7 +10,7 @@ UCharacterStatComponent::UCharacterStatComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 
-    // 기본 스탯 초기값 (데이터 테이블에서 불러온 후 덮어씌울 예정)
+    // 기본 스탯 초기값
     BaseStats.Name = FName("");
     BaseStats.Health = 0;
     BaseStats.Attack = 0;
@@ -62,8 +62,8 @@ void UCharacterStatComponent::InitializeBaseStats(const FCharacterStat& InStats)
 void UCharacterStatComponent::RecalculateStats()
 {
     // 예를 들어, 최종 스탯은 기본 스탯에 각 장비 아이템의 보너스를 더해서 계산합니다.
-    // 여기서는 FCharacterStat의 Attack, Defense, Health는 int32, Speed는 float라고 가정하고,
-    // FItemData에서 보너스 값(Attack, Defense, Health, Speed)을 불러와 더합니다.
+    // FCharacterStat의 Attack, Defense, Health는 int32, Speed는 float라고 가정하고,
+    // FItemData에서 보너스 값(Attack, Defense, Health, Speed)을 불러와 더하기
     FinalStats.Attack = BaseStats.Attack +
         static_cast<int32>(Weapon.Attack) +
         static_cast<int32>(Helmet.Attack) +
@@ -88,7 +88,7 @@ void UCharacterStatComponent::RecalculateStats()
         Chest.Speed +
         Legs.Speed;
 
-    // 이름와 특수 능력 설명은 그대로 사용하거나 필요에 따라 수정합니다.
+    // 이름이랑 특수 능력 설명은 그대로 사용하거나 필요에 따라 수정
     FinalStats.Name = BaseStats.Name;
     FinalStats.SpecialAbilityDescription = BaseStats.SpecialAbilityDescription;
 
@@ -104,10 +104,10 @@ void UCharacterStatComponent::RecalculateStats()
 
 void UCharacterStatComponent::IncreaseFavorability(int32 Amount)
 {
-    // FinalStats.Favorability에 Amount를 더하고, 예를 들어 최대 100으로 클램프합니다.
+    // FinalStats.Favorability에 Amount를 더하고, 예를 들어 최대 100으로 클램프
     FinalStats.Favorability = FMath::Clamp(FinalStats.Favorability + Amount, 0, 100);
     UE_LOG(LogTemp, Log, TEXT("Favorability increased to: %d"), FinalStats.Favorability);
 
-    // 스탯 재계산 (필요한 경우 활성화 하기)
+    // 스탯 재계산
     //RecalculateStats();
 }

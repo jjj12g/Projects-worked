@@ -75,7 +75,7 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 
-	// 대화 위젯 클래스 (블루프린트 에셋 할당)
+	// 대화 위젯 클래스 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
 	TSubclassOf<class UDialogueWidget> DialogueWidgetClass;
 	
@@ -95,10 +95,10 @@ public:
 	FRotator TargetRotation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Smooth Movement")
-	float MoveSpeed; // 예: 5.0f
+	float MoveSpeed; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Smooth Movement")
-	float RotateSpeed; // 예: 5.0f
+	float RotateSpeed; 
 
 	// 부드러운 이동을 시작하는 함수
 	UFUNCTION(BlueprintCallable, Category = "Smooth Movement")

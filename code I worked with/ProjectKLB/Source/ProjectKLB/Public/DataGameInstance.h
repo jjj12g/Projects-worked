@@ -74,7 +74,7 @@ private:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Card Data", meta = (AllowPrivateAccess = "true"))
     int32 MaxDisplayCardCount = 4;
 
-    // 표시할 카드 리스트를 갱신
+    // 표시할 카드 리스트 갱신
     void UpdateDisplayedCards();
 
     // 아이템 데이터 테이블

@@ -31,10 +31,6 @@ AEnemy::AEnemy()
     HealthWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen); // 3D로 보이게 설정
     HealthWidgetComponent->SetDrawSize(FVector2D(150.0f, 15.0f)); // 위젯 크기 설정
 
-    // 이동 방향에 따른 자동 회전 비활성화
-    //GetCharacterMovement()->bOrientRotationToMovement = false;
-    //bUseControllerRotationYaw = false; // AIController의 회전도 무시
-
 }
 
 // Called when the game starts or when spawned
@@ -84,11 +80,8 @@ void AEnemy::LookAtPlayer()
         LookAtRotation.Pitch = 0.f;
         LookAtRotation.Roll = 0.f;
 
-        // 스무스 회전 (선택 사항)
+        // 부드럽게 회전
         FRotator SmoothRotation = FMath::RInterpTo(GetActorRotation(), LookAtRotation, GetWorld()->DeltaTimeSeconds, 3.0f);
-
-        // 적 회전 설정
-        //SetActorRotation(FMath::RInterpTo(GetActorRotation(), LookAtRotation, GetWorld()->DeltaTimeSeconds, 10.0f));
 
         UE_LOG(LogTemp, Log, TEXT("Enemy is looking at player: %s"), *TargetPlayer->GetName());
     }
@@ -115,15 +108,8 @@ void AEnemy::Damage(float DamageAmount)
 
         CurrentTile->SetOccupyingEnemy(nullptr);
 
-        
-        
-
 		Destroy();  // 적 오브젝트 제거
 	}
-
-
-
-
 }
 
 
@@ -279,8 +265,6 @@ void AEnemy::PlayAttackAnimation()
     }
 }
 
-
-
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -288,8 +272,7 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-
-// 나중에 노티파이 찍어서 실행
+// 나중에 애니메이션에서 노티파이 찍어서 실행
 //void AEnemyCharacter::OnAttackHit()
 //{
 //    if (TargetPlayer)

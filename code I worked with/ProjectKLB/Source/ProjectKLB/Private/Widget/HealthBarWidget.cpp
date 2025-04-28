@@ -23,11 +23,3 @@ void UHealthBarWidget::UpdateHealthBar(float HealthPercent)
     UE_LOG(LogTemp, Warning, TEXT("UpdateHealthBar Current Health : %f"), HealthPercent);
 }
 
-
-//void UHealthBarWidget::UpdatePlayerName(const FString& NewName)
-//{
-//    if (PlayerName)
-//    {
-//        PlayerName->SetText(FText::FromString(NewName));
-//    }
-//}

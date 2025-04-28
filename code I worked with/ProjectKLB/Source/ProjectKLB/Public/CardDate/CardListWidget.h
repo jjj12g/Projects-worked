@@ -37,10 +37,6 @@ private:
     UPROPERTY(meta = (BindWidget))
     UHorizontalBox* CardContainer;
 
-    // 드롭 영역
-    //UPROPERTY(meta = (BindWidget))
-    //UDropZoneWidget* DropZone;
-
     // 카드 위젯 클래스
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Card UI", meta = (AllowPrivateAccess = "true"))
     TSubclassOf<class UCardWidget> CardWidgetClass;

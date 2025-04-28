@@ -59,7 +59,6 @@ public:
     void OnPlacementFinished();
 
 private:
-    // 생성된 GridManager 참조
     AGridManager* GridManager;
 
 };

@@ -6,20 +6,16 @@
 #include "ProjectKLBPlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "HUD/UIHUD.h"
-#include "Kismet/GameplayStatics.h"         // 레벨 전환 기능
-#include "Kismet/KismetSystemLibrary.h"     // 게임 종료 기능
-#include "UObject/NameTypes.h"              // FName 클래스
+#include "Kismet/GameplayStatics.h"         
+#include "Kismet/KismetSystemLibrary.h"     
+#include "UObject/NameTypes.h"              
 
 
-// 나중에 저장함수 별도 저장
-// 나중에 메인메뉴 레벨 이름 바꿔주기
 
 void UPauseWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
-    // 위젯이 포커스를 받을 수 있도록 설정
-    //bIsFocusable = true;
 
     // 버튼 이벤트 바인딩
     if (SettingsButton)

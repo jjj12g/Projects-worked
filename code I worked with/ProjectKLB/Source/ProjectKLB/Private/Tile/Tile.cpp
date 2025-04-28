@@ -37,14 +37,12 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// 타일의 회전 (회전이 필요할 경우)
+	// 타일의 회전 
 	if (IsPointyTop)
 	{
 		SetActorRotation(FRotator(0, 90, 0)); // 원하는 각도로 회전
 	}
 
-	// 텍스트 업데이트
-	//UpdateTileText();
 
 	EnableInput(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 

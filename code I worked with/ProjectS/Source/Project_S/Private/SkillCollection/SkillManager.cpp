@@ -16,7 +16,7 @@ void USkillManager::Initialize(FSubsystemCollectionBase& Collection)
     Super::Initialize(Collection);
 
     // 필요 시 JSON 데이터를 불러오거나, DataTable에서 초기 스킬 데이터를 로드
-      // DataTable 에셋 경로 (프로젝트 경로에 맞게 수정)
+      // DataTable 에셋 경로
     FString DataTablePath = TEXT("DataTable'/Game/Project/SkillData/DT_SkillData.DT_SkillData'");
     UDataTable* SkillDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
 
@@ -27,7 +27,7 @@ void USkillManager::Initialize(FSubsystemCollectionBase& Collection)
         TArray<FSkillData*> AllSkillRows;
         SkillDataTable->GetAllRows<FSkillData>(ContextString, AllSkillRows);
 
-        // 각 행을 CachedSkillData에 추가합니다.
+        // 각 행을 CachedSkillData에 추가
         for (FSkillData* SkillRow : AllSkillRows)
         {
             if (SkillRow)

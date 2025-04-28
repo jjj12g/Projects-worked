@@ -7,7 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BlackboardData.h"
 #include "Enemy/Enemy.h"
-#include "Kismet/GameplayStatics.h"         // 플레이어 캐릭터 가져오기
+#include "Kismet/GameplayStatics.h"      
 #include "ProjectKLBCharacter.h"
 
 
@@ -102,7 +102,7 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 
     if (Blackboard)
     {
-        // 가장 가까운 플레이어를 찾습니다.
+        // 가장 가까운 플레이어를 찾기
         AProjectKLBCharacter* ClosestPlayer = AEnemyAIController::GetClosestPlayer(GetWorld(), InPawn);
         if (ClosestPlayer)
         {
@@ -123,7 +123,7 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 
 void AEnemyAIController::AttackPlayer()
 {
-    // 공격 로직 구현
+    // 공격 로직 구현 할 부분
     UE_LOG(LogTemp, Log, TEXT("Enemy attacks the player!"));
 }
 

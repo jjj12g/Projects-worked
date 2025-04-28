@@ -22,17 +22,17 @@ class PROJECTKLB_API UVirtualJoystickWidget : public UUserWidget
 	
 
 public:
-    // 터치 중에 업데이트된 이동 벡터 (정규화된 값)
+    // 터치 중에 업데이트된 이동 벡터 
     UPROPERTY(BlueprintAssignable, Category = "Joystick")
     FOnMovementUpdated OnMovementUpdated;
 
 
-    // 최대 이동 반지름 (픽셀 단위)
+    // 최대 이동 반지름 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Joystick")
     float MaxDistance = 100.0f;
 
 
-    // 터치 이벤트 처리 (블루프린트에서 Override 가능)
+    // 터치 이벤트 처리 
     UFUNCTION(BlueprintCallable, Category = "Joystick")
     void HandleTouchStarted(FVector2D TouchPosition);
 
@@ -51,14 +51,14 @@ protected:
     bool bIsTouching = false;
 
 
-    // 터치 시작 시의 중심 위치 (위젯 내 좌표)
+    // 터치 시작 시의 중심 위치 
     FVector2D JoystickCenter;
 
     // 현재 터치 위치
     FVector2D CurrentTouchLocation;
 
 
-    // 아래 위젯 변수들은 UMG 에디터에서 바인딩됩니다.
+    // 아래 위젯 변수들은 UMG 에디터에서 바인딩
     UPROPERTY(meta = (BindWidget))
     UImage* JoystickBaseImage;
 

@@ -66,7 +66,7 @@ public:
     UPROPERTY(EditAnywhere, Category = "Grid")
     float HexSize = 100.0f; // 육각형 크기
 
-    // 맵의 "반지름" 크기 (전체 육각형 크기 결정)
+    // 맵의 "반지름" 크기 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grid")
     int32 HexRadius;
 

@@ -90,11 +90,12 @@ void AEnemySpawner::OnEnemyDestroyed()
 
 }
 
+// 여기서 UI 위젯을 생성하거나, 블루프린트 이벤트를 호출하여 UI를 표시
 void AEnemySpawner::ShowAllEnemiesDefeatedUI()
 {
     AProjectKLBPlayerController* PC = Cast<AProjectKLBPlayerController>(GetWorld()->GetFirstPlayerController());
     PC->UpdateTutorialStageClearUI();
     UE_LOG(LogTemp, Log, TEXT("All enemies have been defeated. Showing UI."));
-    // 여기서 UI 위젯을 생성하거나, 블루프린트 이벤트를 호출하여 UI를 표시합니다.
+   
 }
 

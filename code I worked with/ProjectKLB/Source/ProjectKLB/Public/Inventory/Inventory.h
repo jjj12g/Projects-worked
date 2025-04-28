@@ -35,6 +35,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Inventory", meta = (AllowPrivateAccess = "true"))
     TSubclassOf<UInventorySlot> InventorySlotClass;
 
-    //bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation);
+
 
 };

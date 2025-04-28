@@ -42,10 +42,6 @@ EBTNodeResult::Type UBTTask_LookAtPlayer::ExecuteTask(UBehaviorTreeComponent& Ow
     LookAtRotation.Pitch = 0.f;
     LookAtRotation.Roll = 0.f;
 
-    // 즉시 회전 (회전 속도를 조절하려면 RInterpTo 사용 가능)
-    /*FRotator CurrentRotation = EnemyCharacter->GetActorRotation();
-    FRotator SmoothRotation = FMath::RInterpTo(CurrentRotation, LookAtRotation, GetWorld()->DeltaTimeSeconds, 0.5f);
-    EnemyCharacter->SetActorRotation(SmoothRotation);*/
     EnemyCharacter->SetActorRotation(LookAtRotation);
 
     UE_LOG(LogTemp, Log, TEXT("Enemy rotated to look at player: %s"), *TargetPlayer->GetName());

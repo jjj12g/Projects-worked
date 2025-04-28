@@ -50,43 +50,6 @@ void UEquipmentSlot::InitializeEquipmentSlot(const FItemData& InEquipmentData, i
             ItemNameText->SetVisibility(ESlateVisibility::Hidden);
         }
     }
-
- /*   EquipmentData = InEquipmentData;
-    SlotIndex = InSlotIndex;*/
-
-
-    // 예) SlotType = EEquipmentType::Weapon;  // 슬롯의 타입을 Weapon으로 설정 (필요시)
-    // 만약 인벤토리 위젯에서 슬롯 인덱스를 전달한다면, 그 값을 SlotIndex에 저장합니다.
-    // SlotIndex = 전달받은 인덱스;  (예를 들어, 파라미터로 추가하거나 별도로 설정)
-
-   //  UI 업데이트: 장비 아이콘, 이름 등을 설정
-   // if (EquipmentIcon)
-   // {
-   //     if (InEquipmentData.ItemIcon)
-   //     {
-   //         EquipmentIcon->SetBrushFromTexture(InEquipmentData.ItemIcon);
-   //         EquipmentIcon->SetVisibility(ESlateVisibility::Visible);
-   //     }
-   //     else
-   //     {
-   //         EquipmentIcon->SetBrushFromTexture(nullptr);
-   //         EquipmentIcon->SetVisibility(ESlateVisibility::Hidden);
-   //     }
-   // }
-   // if (EquipmentNameText)
-   // {
-   //     if (!InEquipmentData.ItemName.IsEmpty())
-   //     {
-   //         EquipmentNameText->SetText(FText::FromString(InEquipmentData.ItemName));
-   //         EquipmentNameText->SetVisibility(ESlateVisibility::Visible);
-   //     }
-   //     else
-   //     {
-   //         EquipmentNameText->SetText(FText::FromString(""));
-   //         EquipmentNameText->SetVisibility(ESlateVisibility::Hidden);
-   //     }
-   // }*/
-
 }
 
 FItemData UEquipmentSlot::GetCurrentEquippedItem() const
@@ -119,7 +82,7 @@ void UEquipmentSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
         return; // 아이템이 없으면 드래그를 시작하지 않음.
     }
 
-    // 드래그 시작 시점의 아이템 정보를 로그로 출력합니다.
+    // 드래그 시작 시점의 아이템 정보를 로그로 출력
     UE_LOG(LogTemp, Log, TEXT("Drag start - Slot %d, Dragged Item: %s, Quantity: %d"),
         GetSlotIndex(), *CurrentItem.ItemName, CurrentItem.Quantity);
 
@@ -133,7 +96,7 @@ void UEquipmentSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 
     OutOperation = DragOp;
 
-    // 드래그 중에는 슬롯 위젯의 Visibility를 투명하게 만듦(클릭 감지만 되도록)
+    // 드래그 중에는 슬롯 위젯의 Visibility를 투명하게 만듦
     SetVisibility(ESlateVisibility::HitTestInvisible);
 
     UE_LOG(LogTemp, Log, TEXT("EquipmentSlot drag detected for slot index: %d, saved DraggedItemData: %s"),
@@ -157,11 +120,11 @@ bool UEquipmentSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
         UInventoryDragDropOperation* DragOp = Cast<UInventoryDragDropOperation>(InOperation);
         if (DragOp)
         {
-            // 여기서는 인벤토리에서 드래그한 경우를 처리합니다.
+            // 인벤토리에서 드래그한 경우를 처리
             UInventorySlot* InvSlot = Cast<UInventorySlot>(DragOp->Payload);
             if (InvSlot)
             {
-                // 인벤토리 슬롯에서 드래그한 경우, NewItem 데이터를 로컬로 복사합니다.
+                // 인벤토리 슬롯에서 드래그한 경우, NewItem 데이터를 로컬로 복사
                 FItemData NewItem = InvSlot->GetItemData();
                 if (NewItem.ItemName.IsEmpty())
                 {
@@ -225,7 +188,7 @@ bool UEquipmentSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                     UE_LOG(LogTemp, Warning, TEXT("NativeOnDrop: Failed to cast to PlayerController."));
                 }
             }
-            // 만약 Payload가 인벤토리 슬롯 위젯이 아닌 경우 (예: 인벤토리 슬롯 간 교환)
+            // 만약 Payload가 인벤토리 슬롯 위젯이 아닌 경우
             else
             {
                 // 인벤토리 슬롯 간 교환 로직 처리

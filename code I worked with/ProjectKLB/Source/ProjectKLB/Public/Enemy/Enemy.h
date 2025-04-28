@@ -34,7 +34,6 @@ public:
 	// 데미지 받는 함수
 	void Damage(float DamageAmount);
 
-	//AProjectKLBPlayer* Player;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	float Health = 100.0f;
@@ -96,7 +95,7 @@ public:
 	bool bIsMoving = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-	float MovementSpeed = 300.0f; // 초당 이동 속도
+	float MovementSpeed = 300.0f; 
 
 	// 공격 애니메이션
 	void PlayAttackAnimation();

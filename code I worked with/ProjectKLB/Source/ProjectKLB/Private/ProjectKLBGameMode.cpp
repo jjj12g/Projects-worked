@@ -19,14 +19,6 @@ AProjectKLBGameMode::AProjectKLBGameMode()
 
     DefaultPawnClass = nullptr;
 
-	//// set default pawn class to our Blueprinted character
-	//static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
-	//if (PlayerPawnBPClass.Class != nullptr)
-	//{
-	//	DefaultPawnClass = PlayerPawnBPClass.Class;
-	//}
-
-	// set default controller to our Blueprinted controller
 	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownPlayerController"));
 	if(PlayerControllerBPClass.Class != NULL)
 	{
@@ -68,7 +60,7 @@ void AProjectKLBGameMode::BeginPlay()
         UE_LOG(LogTemp, Warning, TEXT("Using existing GridManager: %s"), *GridManager->GetName());
     }
 
-    // 2. TurnManager 초기화 (필요 시)
+    // 2. TurnManager 초기화 
     TurnManagerInstance = NewObject<UTurnManager>(this);
     if (TurnManagerInstance)
     {
@@ -83,18 +75,11 @@ void AProjectKLBGameMode::BeginPlay()
             }, 2.0f, false);
     }
 
-    // 3. 서로 다른 플레이어 캐릭터 클래스를 배열로 준비합니다.
-    //TArray<TSubclassOf<AProjectKLBCharacter>> PlayerCharacterClasses;
-    // 예를 들어, 늑대 캐릭터와 토끼 캐릭터 클래스가 각각 아래와 같이 정의되어 있다고 가정합니다.
     PlayerCharacterClasses.Add(ACombatWolfChar::StaticClass());
-    //PlayerCharacterClasses.Add(ACombatRabbitChar::StaticClass());
-    // 추가 캐릭터가 있다면 더 추가합니다.
 
-    // 4. 플레이어 스폰 좌표 배열 (타일 좌표를 미리 정의)
     TArray<FIntPoint> PlayerSpawnCoordinates;
     PlayerSpawnCoordinates.Add(FIntPoint(0, 0));  // 플레이어 0번 스폰 좌표
-    //PlayerSpawnCoordinates.Add(FIntPoint(0, 1));  // 플레이어 1번 스폰 좌표
-    // 배열의 크기는 PlayerCharacterClasses와 맞춰야 합니다.
+
 
     FRotator SpawnRotation = FRotator::ZeroRotator;
     FActorSpawnParameters SpawnParams;

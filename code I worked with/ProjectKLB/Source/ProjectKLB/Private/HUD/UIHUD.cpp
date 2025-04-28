@@ -33,11 +33,8 @@ void AUIHUD::ShowPauseMenu()
             if (APlayerController* PC = GetOwningPlayerController())
             {
                 FInputModeGameAndUI InputMode;
-                //InputMode.SetWidgetToFocus(PauseWidget->TakeWidget()); // 포커스 설정
-                //InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
                 PC->SetInputMode(InputMode);
 
-                //PC->SetPause(true); // Pause 상태 설정
             }
         }
     }
@@ -63,48 +60,9 @@ void AUIHUD::ShowSettingsMenu()
                 InputMode.SetWidgetToFocus(SettingsWidget->TakeWidget());
                 InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
                 PC->SetInputMode(InputMode);
-               // PC->bShowMouseCursor = true;
             }
         }
     }
 }
 
 
-
-//void APlayerHUD::DisplayMenu()
-//{
-//    if (MainManuWidget)
-//    {
-//        bIsMenuVisible = true;
-//        MainManuWidget->SetVisibility(ESlateVisibility::Visible);
-//    }
-//}
-//
-//void APlayerHUD::HideMenu()
-//{
-//    if (MainManuWidget)
-//    {
-//        bIsMenuVisible = false;
-//        MainManuWidget->SetVisibility(ESlateVisibility::Collapsed);
-//    }
-//}
-//
-//void APlayerHUD::ToggleMenu()
-//{
-//    if (bIsMenuVisible)
-//    {
-//        HideMenu();
-//
-//        const FInputModeGameOnly InputMode; // 게임화면만 클릭하도록 설정
-//        GetOwningPlayerController()->SetInputMode(InputMode);
-//        GetOwningPlayerController()->SetShowMouseCursor(false);
-//    }
-//    else
-//    {
-//        DisplayMenu();
-//
-//        const FInputModeGameAndUI InputMode; // UI만 클릭하도록 설정
-//        GetOwningPlayerController()->SetInputMode(InputMode);
-//        GetOwningPlayerController()->SetShowMouseCursor(true);
-//    }
-//}

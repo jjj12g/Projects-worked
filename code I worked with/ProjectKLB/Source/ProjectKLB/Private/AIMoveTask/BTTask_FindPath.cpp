@@ -93,7 +93,7 @@ TArray<ATile*> UBTTask_FindPath::CalculatePath(AActor* Enemy, AActor* Player)
         return Path;
     }
 
-    // 유효 경로 필터링 (목표 타일은 항상 포함)
+    // 유효 경로 필터링 
     for (ATile* Tile : Path)
     {
         if (Tile == TargetTile || !Tile->OccupyingEnemy)

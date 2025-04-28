@@ -21,11 +21,11 @@ class PROJECTKLB_API UPlacementWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-    // (1) 헥스 반경 (3D와 동일하게 설정)
+    // 헥스 반경 (3D와 동일하게 설정)
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HexGrid")
     int32 HexRadius = 5;
 
-    // (3) 타일을 담을 CanvasPanel (디자이너에서 BindWidget)
+    // 타일을 담을 CanvasPanel 
     UPROPERTY(meta = (BindWidget))
     UCanvasPanel* TileCanvasPanel;
 
@@ -44,7 +44,7 @@ public:
     UPROPERTY()
     TArray<UCharacterIconWidget*> CharacterIcons;
 
-    // 배치할 캐릭터 리스트 (ex: 늑대, 토끼 등) - GameMode나 GameInstance에서 받아온다고 가정
+    // 배치할 캐릭터 리스트
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Placement")
     TArray<TSubclassOf<AProjectKLBCharacter>> AvailableCharacters;
 

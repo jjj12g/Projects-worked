@@ -8,8 +8,8 @@
 #include "Components/Button.h" // 버튼을 사용하기 위해 필요
 #include "Components/TextBlock.h" 
 #include "Components/Widget.h" // 위젯 기본 기능
-#include "Components/CheckBox.h"      // 체크박스를 사용하기 위해 필요
-#include "Kismet/GameplayStatics.h"   // 게임 유틸리티 기능
+#include "Components/CheckBox.h"      
+#include "Kismet/GameplayStatics.h"   
 #include "Kismet/KismetSystemLibrary.h"
 
 
@@ -17,9 +17,6 @@
 void USettingsUIManager::NativeConstruct()
 {
     Super::NativeConstruct();
-
-    // 위젯이 포커스를 받을 수 있도록 설정
-    //bIsFocusable = true;
 
     // 체크박스 바인딩
     AutoSaveToggle = Cast<UCheckBox>(GetWidgetFromName(TEXT("AutoSaveToggle")));
@@ -34,12 +31,12 @@ void USettingsUIManager::NativeConstruct()
         // 체크박스 스타일 정의
         FCheckBoxStyle CheckBoxStyle;
 
-        // 선택되지 않은 상태 (Normal)
+        // 선택되지 않은 상태 
         FSlateBrush UncheckedBrush;
         UncheckedBrush.SetResourceObject(LoadObject<UTexture2D>(nullptr, TEXT("/Script/Engine.Texture2D'/Game/test/Widget/SettingsUIWidget/Ellipse_3__1_.Ellipse_3__1_'"))); // 이미지 경로를 여기에 설정
         CheckBoxStyle.UncheckedImage = UncheckedBrush;
 
-        // 선택된 상태 (Hovered)
+        // 선택된 상태 
         FSlateBrush CheckedBrush;
         CheckedBrush.SetResourceObject(LoadObject<UTexture2D>(nullptr, TEXT("/Script/Engine.Texture2D'/Game/test/Widget/SettingsUIWidget/Group_1__2_.Group_1__2_'"))); // 이미지 경로를 여기에 설정
         CheckBoxStyle.CheckedImage = CheckedBrush;
@@ -57,12 +54,12 @@ void USettingsUIManager::NativeConstruct()
         // 체크박스 스타일 정의
         FCheckBoxStyle CheckBoxStyle;
 
-        // 선택되지 않은 상태 (Normal)
+        // 선택되지 않은 상태 
         FSlateBrush UncheckedBrush;
         UncheckedBrush.SetResourceObject(LoadObject<UTexture2D>(nullptr, TEXT("/Script/Engine.Texture2D'/Game/test/Widget/SettingsUIWidget/Ellipse_3__1_.Ellipse_3__1_'"))); // 이미지 경로를 여기에 설정
         CheckBoxStyle.UncheckedImage = UncheckedBrush;
 
-        // 선택된 상태 (Hovered)
+        // 선택된 상태 
         FSlateBrush CheckedBrush;
         CheckedBrush.SetResourceObject(LoadObject<UTexture2D>(nullptr, TEXT("/Script/Engine.Texture2D'/Game/test/Widget/SettingsUIWidget/Group_1__2_.Group_1__2_'"))); // 이미지 경로를 여기에 설정
         CheckBoxStyle.CheckedImage = CheckedBrush;
@@ -173,8 +170,6 @@ void USettingsUIManager::OnResetClicked()
         UserSettings->ResetToCurrentSettings();
         UserSettings->ApplySettings(false);
 
-        // UI를 업데이트 (기본값으로 복구)
-        //UpdateUI();
     }
 }
 
@@ -229,10 +224,6 @@ void USettingsUIManager::DisplayFullBoxToggled(bool bIsfullChecked)
         }
     }
 }
-
-//ApplySettings(false)
-
-//false를 전달하면 디스플레이 설정이 즉시 적용됩니다.
 
 
 void USettingsUIManager::DisplayWindowBoxToggled(bool bIsWindowChecked)

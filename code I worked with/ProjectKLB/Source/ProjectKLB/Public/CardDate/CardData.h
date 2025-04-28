@@ -31,7 +31,7 @@ struct FCardData : public FTableRowBase
     FString AllowedCharacter;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FName MoveType; // 이동 유형 (e.g., "HexRange", "Knight", etc.)
+    FName MoveType; 
 
 };
 

@@ -20,7 +20,7 @@ AFavorabilityBaseNpcCharacter::AFavorabilityBaseNpcCharacter()
     // StatComponent 생성 및 초기화
     StatComponent = CreateDefaultSubobject<UCharacterStatComponent>(TEXT("StatComponent"));
 
-    // 기본 StatRowName 설정 (하위 클래스나 블루프린트에서 변경 가능)
+    // 기본 StatRowName 설정
     StatRowName = FName("DefaultNPC");
 
 }
@@ -46,7 +46,7 @@ void AFavorabilityBaseNpcCharacter::InitializeStats()
         FCharacterStat* FoundStats = GameInstance->CharacterStatsTable->FindRow<FCharacterStat>(StatRowName, ContextString);
         if (FoundStats)
         {
-            // StatComponent를 통해 스탯을 초기화합니다.
+            // StatComponent를 통해 스탯을 초기화
             StatComponent->InitializeBaseStats(*FoundStats);
             UE_LOG(LogTemp, Log, TEXT("NPC Stats Initialized for %s"), *StatRowName.ToString());
         }
@@ -64,7 +64,7 @@ void AFavorabilityBaseNpcCharacter::InitializeStats()
 
 FText AFavorabilityBaseNpcCharacter::GetDialogueForPlayer(AVillageCharacter* PlayerCharacter) const
 {
-    // 기본 구현: 그냥 기본 대사를 반환합니다.
+    // 기본 대사를 반환.
     return FText::FromString(FString::Printf(TEXT("%s: 기본 대사입니다."), *StatRowName.ToString()));
 }
 

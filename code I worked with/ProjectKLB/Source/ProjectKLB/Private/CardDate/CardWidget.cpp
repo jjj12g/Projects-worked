@@ -29,7 +29,7 @@ void UCardWidget::InitializeCard(const FCardData& InCardData)
         CardIconImage->SetBrushFromTexture(InCardData.CardIcon);
     }
 
-    // 클래스 멤버 변수 CardData에 매개변수 데이터를 할당
+    // 클래스 멤버 변수 CardData에 매개변수 데이터 할당
     CardData = InCardData;
 
 }

@@ -19,7 +19,7 @@ public:
 	UBTService_UpdateTargetPlayer();
 
 protected:
-	// 서비스가 Tick 될 때마다 호출됩니다.
+	// 서비스가 Tick 될 때마다 호출
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 };

@@ -62,7 +62,7 @@ AProjectKLBCharacter::AProjectKLBCharacter()
 	// 스탯 컴포넌트를 생성하고 캐릭터에 부착
 	StatComponent = CreateDefaultSubobject<UCharacterStatComponent>(TEXT("StatComponent"));
 
-	// 기본값을 비워두고, BeginPlay나 자식 클래스에서 설정하도록 함
+	// 기본값을 비워두고, BeginPlay나 자식 클래스에서 설정
 	PlayerName = FName("Default");
 
 }
@@ -161,7 +161,6 @@ void AProjectKLBCharacter::UpdatePlayerStatsFromComponent()
 void AProjectKLBCharacter::ApplyDamage(int32 DamageAmount)
 {
 	// 체력 감소
-	//CurrentHP -= DamageAmount;
 	CurrentHP = FMath::Clamp(CurrentHP - DamageAmount, 0, MaxHP);
 	
 	UE_LOG(LogTemp, Warning, TEXT("Current: %f"), CurrentHP);
@@ -234,7 +233,7 @@ void AProjectKLBCharacter::EquipItemInSlot(EEquipmentType SlotType, const FItemD
 
 		
 
-		// 선택 사항: 장비가 변경되었음을 로그로 출력하거나, 추가적인 처리를 할 수 있습니다.
+		// 장비가 변경되었음을 로그로 출력하거나, 추가적인 처리
 		UE_LOG(LogTemp, Log, TEXT("EquipItemInSlot: Equipped %s in slot type %d"), *NewItem.ItemName, (int32)SlotType);
 	}
 }

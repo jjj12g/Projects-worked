@@ -41,9 +41,6 @@ public:
     UPROPERTY()
     USettingsUIManager* SettingsWidget;
 
-    //// UI 토글 함수
-    //void ToggleSettingsMenu();
-
 
     // Pause Menu와 Settings UI 간 전환 함수
     void ShowPauseMenu();

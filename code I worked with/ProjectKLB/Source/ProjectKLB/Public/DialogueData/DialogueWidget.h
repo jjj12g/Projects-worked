@@ -24,7 +24,7 @@ class PROJECTKLB_API UDialogueWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-    // NPC 참조 (대화 중인 NPC)
+    // NPC 참조 
     UPROPERTY(BlueprintReadWrite, Category = "Dialogue")
     AFavorabilityBaseNpcCharacter* NPCRef;
 	
@@ -32,11 +32,11 @@ public:
     UPROPERTY(meta = (BindWidget))
     UWidgetSwitcher* DialogueSwitcher;
 
-    // 기본 대사 텍스트 (슬롯 0)
+    // 기본 대사 텍스트
     UPROPERTY(meta = (BindWidget))
     UTextBlock* DialogueTextDefault;
 
-    // 업데이트된 대사 텍스트 (슬롯 1)
+    // 업데이트된 대사 텍스트 
     UPROPERTY(meta = (BindWidget))
     UTextBlock* DialogueTextUpdated;
 

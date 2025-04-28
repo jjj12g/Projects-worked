@@ -20,11 +20,11 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool bIsOccupied = false;
 
-    // 배치된 캐릭터 클래스를 저장 (AProjectKLBCharacter 파생 클래스)
+    // 배치된 캐릭터 클래스를 저장 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TSubclassOf<class AProjectKLBCharacter> OccupiedCharacterClass;
 
-    // 해당 타일의 그리드 좌표(혹은 인덱스)
+    // 해당 타일의 그리드 좌표
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 Q;
 

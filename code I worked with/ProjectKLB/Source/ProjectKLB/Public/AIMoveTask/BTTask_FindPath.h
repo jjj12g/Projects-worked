@@ -41,7 +41,7 @@ protected:
     virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-    // A* 알고리즘으로 경로를 계산
+    // A* 알고리즘으로 경로 계산
     TArray<ATile*> CalculatePath(AActor* Enemy, AActor* Player);
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))

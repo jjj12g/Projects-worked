@@ -23,17 +23,10 @@ class PROJECTKLB_API AEnemyAIController : public AAIController
 
 
 public:
-	//UBlackboardComponent* BlackboardComponent;
-
-
-	
-
-	// **비헤이비어 트리와 블랙보드**
+	// 비헤이비어 트리와 블랙보드
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
 	UBehaviorTree* BehaviorTree;
 
-	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-	UBlackboardData* Blackboard;*/
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI", meta = (AllowPrivateAccess = "true"))
 	UBlackboardComponent* BlackboardComponent;

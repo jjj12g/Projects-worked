@@ -35,7 +35,7 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 
-	// 캐릭터 스탯 컴포넌트 (블루프린트에서 볼 수 있도록 VisibleAnywhere)
+	// 캐릭터 스탯 컴포넌트
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
 	UCharacterStatComponent* StatComponent;
 
@@ -53,7 +53,6 @@ public:
 	// 플레이어의 이름
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
 	FName PlayerName;
-
 
 	// AttackMontage
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
@@ -96,7 +95,7 @@ public:
 	ATile* CurrentTile = nullptr;
 
 
-	// 캐릭터 아이콘 텍스처 (에디터에서 기본값 설정하거나, 생성자에서 로드)
+	// 캐릭터 아이콘 텍스처
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
 	UTexture2D* CharacterIcon;
 

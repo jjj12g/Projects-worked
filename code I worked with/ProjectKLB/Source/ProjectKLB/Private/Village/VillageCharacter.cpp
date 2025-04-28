@@ -64,8 +64,6 @@ AVillageCharacter::AVillageCharacter()
 	RotateSpeed = 5.0f;
 
 
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
 void AVillageCharacter::BeginPlay()
@@ -78,23 +76,6 @@ void AVillageCharacter::BeginPlay()
 		AVillagePC = Cast<AVillageController>(Controller);
 	}
 	
-	/*if (VirtualJoystickWidgetClass)
-	{
-		UVirtualJoystickWidget* VirtualJoystickWidget = CreateWidget<UVirtualJoystickWidget>(GetWorld(), VirtualJoystickWidgetClass);
-		if (VirtualJoystickWidget)
-		{
-			APlayerController* PC = GetWorld()->GetFirstPlayerController();
-			if (PC)
-			{
-				FInputModeGameAndUI InputMode;
-				InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-				PC->SetInputMode(InputMode);
-				PC->bShowMouseCursor = true;
-			}
-			VirtualJoystickWidget->AddToViewport();
-			VirtualJoystickWidget->OnMovementUpdated.AddDynamic(this, &AVillageCharacter::OnVirtualJoystickMoved);
-		}
-	}*/
 
 }
 
@@ -236,13 +217,13 @@ void AVillageCharacter::Interact(const FInputActionValue& Value)
 {
 	UE_LOG(LogTemp, Warning, TEXT("InputSpaceBar"));
 
-	// 원하는 인터랙션 범위 (300 cm)
+	// 원하는 인터랙션 범위
 	const float InteractionRange = 300.0f;
 
 	// 상호작용 최대범위
 	const float MaxInteractionRange = 450.0f;
 
-	// 가장 가까운 NPC를 검색합니다.
+	// 가장 가까운 NPC를 검색
 	TArray<AActor*> FoundNPCs;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFavorabilityBaseNpcCharacter::StaticClass(), FoundNPCs);
 
@@ -270,16 +251,16 @@ void AVillageCharacter::Interact(const FInputActionValue& Value)
 		{
 			// NPC와 플레이어 사이의 방향 벡터 계산
 			FVector Direction = (TargetNPC->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-			// NPC를 기준으로 원하는 거리(300cm)만큼 떨어진 위치 계산
+			// NPC를 기준으로 원하는 거리 만큼 떨어진 위치 계산
 			FVector TargetPosition = TargetNPC->GetActorLocation() - Direction * InteractionRange;
-			// 플레이어를 해당 위치로 즉시 이동 (부드러운 이동을 원하면 Lerp나 Timeline 사용 가능)
+			// 플레이어를 해당 위치로 즉시 이동
 			SetActorLocation(TargetPosition);
 			UE_LOG(LogTemp, Warning, TEXT("Player moved to interaction range at: %s"), *TargetPosition.ToString());
 
 			// NPC와 상호작용: NPC의 Interact() 함수를 호출하여 대화 처리
 			TargetNPC->Interact(this);
 
-			// 대화 위젯 생성 예시 (DialogueWidgetClass가 설정되어 있어야 함)
+			// 대화 위젯 생성
 			if (DialogueWidgetClass)
 			{
 				UDialogueWidget* DialogueWidget = CreateWidget<UDialogueWidget>(GetWorld(), DialogueWidgetClass);
@@ -299,74 +280,6 @@ void AVillageCharacter::Interact(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No NPC within interaction range."));
 	}
-
-	// 디버그: 현재 플레이어 위치에 녹색 디버그 스피어 표시
-	DrawDebugSphere(GetWorld(), GetActorLocation(), InteractionRange, 32, FColor::Green, false, 2.0f, 0, 2.0f);
-
-
-	DrawDebugSphere(GetWorld(), GetActorLocation(), MaxInteractionRange, 32, FColor::Red, false, 2.0f, 0, 2.0f);
-
-	//UE_LOG(LogTemp, Warning, TEXT("InputSpaceBar"));
-
-
-	//// 300 범위 안 상호작용
-	//const float InteractionRange = 300.0f;
-
-	//// GetActorLocation()을 중심으로 녹색 디버그 스피어를 영구적으로 표시합니다.
-	//DrawDebugSphere(GetWorld(), GetActorLocation(), InteractionRange, 32, FColor::Green, true, -1.0f, 0, 2.0f);
-
-	//// 가장 가까운 NPC를 검색합니다.
-	//TArray<AActor*> FoundNPCs;
-	//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AFavorabilityBaseNpcCharacter::StaticClass(), FoundNPCs);
-
-	//AFavorabilityBaseNpcCharacter* TargetNPC = nullptr;
-	//for (AActor* Actor : FoundNPCs)
-	//{
-	//	AFavorabilityBaseNpcCharacter* NPC = Cast<AFavorabilityBaseNpcCharacter>(Actor);
-	//	if (NPC)
-	//	{
-	//		float Distance = FVector::Dist(NPC->GetActorLocation(), GetActorLocation());
-	//		if (Distance <= InteractionRange)
-	//		{
-	//			TargetNPC = NPC;
-	//			break; // 가까운 NPC를 찾으면 종료 (또는 조건에 따라 가장 가까운 NPC 선택)
-	//		}
-	//	}
-	//}
-
-	//if (TargetNPC)
-	//{
-	//	// NPC의 Interact 함수를 호출하면 그 안에서 GetDialogueForPlayer()가 실행됩니다.
-	//	TargetNPC->Interact(this);
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("No NPC in interaction range."));
-	//}
-
-	//if (TargetNPC)
-	//{
-	//	// 만약 대화 위젯 클래스가 설정되어 있다면 대화 위젯 생성
-	//	if (DialogueWidgetClass)
-	//	{
-	//		UDialogueWidget* DialogueWidget = CreateWidget<UDialogueWidget>(GetWorld(), DialogueWidgetClass);
-	//		if (DialogueWidget)
-	//		{
-	//			// 대화 위젯에 해당 NPC를 할당합니다.
-	//			DialogueWidget->NPCRef = TargetNPC;
-	//			DialogueWidget->AddToViewport();
-
-	//			AVillagePC->GameAndUIInputMode();
-
-	//			UE_LOG(LogTemp, Log, TEXT("Dialogue widget created for NPC: %s"), *TargetNPC->GetName());
-	//		}
-	//	}
-	//}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("No NPC within %f cm to interact."), InteractionRange);
-	//}
-
 }
 
 void AVillageCharacter::TouchPressed(const FInputActionValue& Value)
@@ -375,8 +288,6 @@ void AVillageCharacter::TouchPressed(const FInputActionValue& Value)
 	FVector2D TouchLocation = Value.Get<FVector2D>();
 	UE_LOG(LogTemp, Warning, TEXT("Touch Pressed at: %s"), *TouchLocation.ToString());
 
-	// 예: 터치 위치를 월드 좌표로 변환 후 라인 트레이스 등을 통해 오브젝트 선택/이동 처리 가능
-
 }
 
 void AVillageCharacter::TouchReleased(const FInputActionValue& Value)
@@ -384,7 +295,7 @@ void AVillageCharacter::TouchReleased(const FInputActionValue& Value)
 	FVector2D TouchLocation = Value.Get<FVector2D>();
 	UE_LOG(LogTemp, Warning, TEXT("Touch Released at: %s"), *TouchLocation.ToString());
 
-	// 터치 종료 후 처리할 로직 구현 (예: 터치 드래그 끝내기 등)
+	// 터치 종료 후 처리할 로직 구현
 
 }
 

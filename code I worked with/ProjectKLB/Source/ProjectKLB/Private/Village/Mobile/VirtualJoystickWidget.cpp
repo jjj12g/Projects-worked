@@ -20,7 +20,7 @@ void UVirtualJoystickWidget::NativeTick(const FGeometry& MyGeometry, float InDel
             Delta = Delta / DeltaSize * MaxDistance;
         }
 
-        // 정규화된 벡터 (0~1 사이의 값)
+        // 백터 정규화
         FVector2D NormalizedVector = Delta / MaxDistance;
         OnMovementUpdated.Broadcast(NormalizedVector);
 

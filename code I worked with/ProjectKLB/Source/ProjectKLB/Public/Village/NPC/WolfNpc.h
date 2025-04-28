@@ -19,7 +19,7 @@ public:
 	AWolfNpc();
 
 
-	// NPC 자신의 대사를 결정하는 함수를 오버라이드
+	// NPC 자신의 대사를 결정하는 함수 오버라이드
 	virtual FText GetDialogueForPlayer(class AVillageCharacter* PlayerCharacter) const override;
 
 	virtual void InitializeStats() override;

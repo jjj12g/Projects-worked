@@ -110,6 +110,7 @@ void UCombatUI::HandleInventoryChanged(const TArray<FItemData>& UpdatedInventory
     }
 }
 
+// 이후 추가내용
 void UCombatUI::UpdateCharacterList(const TArray<AProjectKLBCharacter*>& Characters)
 {
     //if (!CharacterListVerticalBox) return;
@@ -130,9 +131,6 @@ void UCombatUI::UpdateCharacterList(const TArray<AProjectKLBCharacter*>& Charact
     //        CharacterListVerticalBox->AddChildToVerticalBox(CharInfoWidget);
     //    }
     //}
-
-  /*  위 코드에서는 CharacterListVerticalBox는 VerticalBox* 변수로 선언되어 있고, CharacterInfoWidgetClass는 UClass* 또는 TSubclassOf<UWBP_CharacterInfo>로 선언된 변수입니다.또 SetCharacterImage와 SetHealth는 UWBP_CharacterInfo에서 정의한 함수로 가정합니다.*/
-
 
 }
 

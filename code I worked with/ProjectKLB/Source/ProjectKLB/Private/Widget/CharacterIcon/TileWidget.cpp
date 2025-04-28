@@ -28,7 +28,7 @@ bool UTileWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent
 
         UE_LOG(LogTemp, Warning, TEXT("Dropped character on tile (Q=%d, R=%d)"), TileData.Q, TileData.R);
 
-        // (1) 시각적 갱신
+        // 시각적 갱신
         UpdateTileVisual();
 
         return true;

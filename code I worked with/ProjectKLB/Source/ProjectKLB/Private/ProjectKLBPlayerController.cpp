@@ -28,7 +28,7 @@
 #include "ProjectKLBGameMode.h"
 #include "Widget/CombatUI.h"
 #include "Inventory/Inventory.h"
-#include "Inventory/Equipment.h" // 장비창
+#include "Inventory/Equipment.h"
 #include "Player/CharacterStatComponent.h"
 #include "Widget/HealthBarWidget.h"
 #include "TutorialStageClearUI/TutorialStageClearUI.h"
@@ -131,10 +131,8 @@ void AProjectKLBPlayerController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Failed to get GameInstance."));
 	}
 
-	// 초기 인벤토리 설정 (예시)
 
-
-	if (CombatUIClass)  // UPROPERTY(EditDefaultsOnly)로 지정된 CombatUI Blueprint 클래스
+	if (CombatUIClass) 
 	{
 		CombatUI = CreateWidget<UCombatUI>(this, CombatUIClass);
 		if (CombatUI)
@@ -147,11 +145,9 @@ void AProjectKLBPlayerController::BeginPlay()
 		}
 	}
 
-	// UI에서 사용할 총 슬롯 수 (예: 8 * 5 = 40)
+	// UI에서 사용할 인벤토리 슬롯 수
 	const int32 TotalSlots = 40;
 	Inventory.SetNum(TotalSlots);  // Inventory 배열의 크기를 40으로 고정
-
-
 }
 
 void AProjectKLBPlayerController::Tick(float DeltaTime)
@@ -321,8 +317,8 @@ void AProjectKLBPlayerController::HandleTileClick(ATile* ClickedTile)
 // 가장 가까운 거리 말고 UI로 처리, 사람이 플레이어 클릭 했을 때, 타겟지정 나중에 원거리 공격 기능에 사용할 느낌..?
 void AProjectKLBPlayerController::AttackEnemy()
 {
-	// UI 또는 타겟팅 시스템을 통해 공격할 적(TargetEnemy)을 가져온다고 가정합니다.
-	AEnemy* TargetEnemy = nullptr; // 예: 타겟팅 시스템을 통해 할당
+	// UI 또는 타겟팅 시스템을 통해 공격할 적을 가져온다고 가정
+	AEnemy* TargetEnemy = nullptr; // 타겟팅 시스템을 통해 할당
 
 	// 현재 소유한 Pawn(플레이어 캐릭터) 가져오기
 	AProjectKLBCharacter* MyCharacter = Cast<AProjectKLBCharacter>(GetPawn());
@@ -338,8 +334,8 @@ void AProjectKLBPlayerController::AttackEnemy()
 		}
 		else
 		{
-			// 만약 StatComponent가 없으면, 기본값을 사용할 수 있습니다.
-			DamageAmount = AttackDamage; // 예: AttackDamage가 20.0f 등으로 설정되어 있다면.
+			// 만약 StatComponent가 없으면, 기본값을 사용
+			DamageAmount = AttackDamage;
 		}
 
 		// 적에게 데미지 적용 (TargetEnemy->Damage() 함수가 존재한다고 가정)
@@ -410,7 +406,7 @@ void AProjectKLBPlayerController::AttackSpecificEnemy(AEnemy* TargetEnemy)
 		else
 		{
 			// 만약 StatComponent가 없으면, 기본값을 사용할 수 있습니다.
-			DamageAmount = AttackDamage; // 예: AttackDamage가 20.0f 등으로 설정되어 있다면.
+			DamageAmount = AttackDamage; //AttackDamage가 설정되어 있다면.
 		}
 
 		// 적에게 데미지 적용 (TargetEnemy->Damage() 함수가 존재한다고 가정)
@@ -540,8 +536,8 @@ void AProjectKLBPlayerController::OnPossess(APawn* InPawn)
 			EquipmentHandle,
 			this,
 			&AProjectKLBPlayerController::UpdateEquipmentUI,
-			0.1f,    // 0.5초 지연
-			false    // 단 한 번만 호출
+			0.1f,   
+			false    
 		);
 	}
 
@@ -573,8 +569,6 @@ void AProjectKLBPlayerController::OnPossess(APawn* InPawn)
 
 void AProjectKLBPlayerController::MovePlayerUsingCard(const FCardData& CardData)
 {
-	//bCardUsed = true; // 카드 사용 상태 활성화
-
 	if (!GridManager)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("GridManager is not initialized."));
@@ -603,7 +597,6 @@ void AProjectKLBPlayerController::MovePlayerUsingCard(const FCardData& CardData)
 
 	// 맵 형태(직사각형 offset vs Axial) 확인
 	bool bIsOffset = GridManager->bShapedGrid;
-	// (또는 GridManager->GridShape == EGridShape::Rectangular / EGridShape::Hexagonal 식으로)
 
 	// 이동 유형에 따른 분기
 	if (CardData.MoveType == TEXT("HexRange"))
@@ -851,7 +844,6 @@ void AProjectKLBPlayerController::AddLostMoves_Offset(const FIntPoint& Current_T
 void AProjectKLBPlayerController::AddHexRangeTiles_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles)
 {
 	// Axial(Pointy-Top)에서의 6방향 오프셋
-	// (q+1, r), (q-1, r), (q, r+1), (q, r-1), (q+1, r-1), (q-1, r+1)
 	static TArray<FIntPoint> AxialOffsets = {
 		{+1,  0},
 		{-1,  0},
@@ -878,7 +870,7 @@ void AProjectKLBPlayerController::AddHexRangeTiles_Axial(const FIntPoint& Curren
 	}
 }
 
-// (2) Diagonal(3칸 이동) → Axial에서 6방향 * 3
+
 void AProjectKLBPlayerController::AddDiagonalTiles_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles)
 {
 	static TArray<FIntPoint> AxialDirections = {
@@ -907,12 +899,10 @@ void AProjectKLBPlayerController::AddDiagonalTiles_Axial(const FIntPoint& Curren
 	}
 }
 
-// (3) KnightMoves (Axial 버전)
-//   - 예: (±2, ±1), (±1, ±2) 식으로 정의할 수 있음
+
+
 void AProjectKLBPlayerController::AddKnightMoves_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles)
 {
-	// 예시: Axial에서 "나이트"처럼 이동하는 12가지(혹은 6가지) 정의 (게임 규칙에 따라 조정)
-	// 여기서는 (±2, ±1), (±1, ±2) 조합을 모두 넣었다고 가정
 	static TArray<FIntPoint> KnightOffsetsAxial = {
 		{1, 2},   //  왼위 (1,2)
 		{-2, 3},   //   왼 아래 (-2,3)
@@ -920,7 +910,6 @@ void AProjectKLBPlayerController::AddKnightMoves_Axial(const FIntPoint& CurrentT
 		{2, -3},  //   6시 (2,-3)
 		{-1, -2},  //   오른 아래 (-1,-2)
 		{-3, 1}   //   오른 위 (-3,1)
-		// 필요하다면 추가...
 	};
 
 	int32 q = CurrentTileCoord.X;
@@ -939,17 +928,13 @@ void AProjectKLBPlayerController::AddKnightMoves_Axial(const FIntPoint& CurrentT
 	}
 }
 
-// (4) LostMoves (Axial 버전) → 규칙에 따라 정의
+
 void AProjectKLBPlayerController::AddLostMoves_Axial(const FIntPoint& CurrentTileCoord, TArray<FIntPoint>& PossibleTiles)
 {
-	// "Lost" 이동 방향(예: 2시, 10시...)이 무엇인지 정확히 모르나,
-	// 여기서는 임의로 2칸 이동 등등을 Axial로 정의해둔다고 가정
 	static TArray<FIntPoint> LostOffsetsAxial = {
-		// 예: 2칸 위/아래, 1칸 대각 등등
 		{-1, -1},  { -2, 1},
 		{+1, +1}, { 2, -1},
 		{1, -2}, { -1, 2}
-		// 필요하면 추가...
 	};
 
 	int32 q = CurrentTileCoord.X;
@@ -980,7 +965,7 @@ void AProjectKLBPlayerController::SmoothMoveUpdate()
 	if (UWolfAnimInstance* AnimBP = Cast<UWolfAnimInstance>(ControlledCharacter->GetMesh()->GetAnimInstance()))
 	{
 		AnimBP->bShouldMove = true;
-		// 이동 중에는 일정 속도로 설정 (예: 200.0f)
+		// 이동 중에는 일정 속도로 설정 
 		AnimBP->Speed = 500.0f;
 		
 	}
@@ -1030,7 +1015,7 @@ void AProjectKLBPlayerController::StartRotation(float TargetYaw)
 	);
 }
 
-// 회전을 업데이트하는 함수 (타이머 콜백)
+// 회전을 업데이트하는 함수
 void AProjectKLBPlayerController::RotateUpdate()
 {
 	ACharacter* ControlledCharacter = GetCharacter();
@@ -1191,8 +1176,7 @@ void AProjectKLBPlayerController::StartKnightMovement()
 
 void AProjectKLBPlayerController::StartHexRangeMovement()
 {
-	// 12시 방향은 플레이어의 전방을 의미하므로,
-   // ERelativeDirection::TwelveOClock을 사용하여 한 칸 이동
+	// 12시 방향은 플레이어의 전방을 의미
 	MoveOneRelativeStep(ERelativeDirection::TwelveOClock);
 }
 
@@ -1257,11 +1241,11 @@ void AProjectKLBPlayerController::MoveCharacterAlongPath(const TArray<ATile*>& P
 	{
 		StartLostMovement();
 	}
-	// 다른 카드 타입에 대한 처리 추가...
+	// 다른 카드 타입에 대한 처리 추가
 	else
 	{
-		return;
 		// 기본 이동 처리 또는 오류 처리
+		return;
 	}
 }
 
@@ -1347,7 +1331,7 @@ void AProjectKLBPlayerController::MoveToFirstValidTile(const TArray<FIntPoint>& 
 void AProjectKLBPlayerController::EnableCardMovement(const TArray<FIntPoint>& PossibleTiles)
 {
 	ValidTiles.Empty();
-	HighlightedTiles.Empty(); // 추가: 강조된 타일 좌표 초기화
+	HighlightedTiles.Empty(); // 이전에 강조된 타일 좌표 초기화
 
 	for (const FIntPoint& TileCoord : PossibleTiles)
 	{
@@ -1374,7 +1358,6 @@ void AProjectKLBPlayerController::EnableCardMovement(const TArray<FIntPoint>& Po
 
 void AProjectKLBPlayerController::ResetCardMovement()
 {
-	//CardUsed = false; // 카드 사용 상태 비활성화
 	for (ATile* Tile : ValidTiles)
 	{
 		if (Tile)
@@ -1502,7 +1485,7 @@ void AProjectKLBPlayerController::SwapInventoryItems(int32 FromIndex, int32 ToIn
 
 void AProjectKLBPlayerController::UpdateEquipmentUI()
 {
-	// 현재 Possess된 Pawn을 캐스팅해서 캐릭터로 가져옵니다.
+	// 현재 Possess된 Pawn을 캐스팅해서 캐릭터로 가져오기
 	AProjectKLBCharacter* CurrentCharacter = Cast<AProjectKLBCharacter>(GetPawn());
 	if (CurrentCharacter && CombatUI && CombatUI->EquipmentWidget)
 	{
@@ -1551,7 +1534,7 @@ int32 AProjectKLBPlayerController::FindEmptyInventorySlot() const
 
 void AProjectKLBPlayerController::PCUpdateInventoryUI()
 {
-	// UWBP_Inventory 위젯이 있다면 재초기화(예: InitializeInventory 호출)
+	// UWBP_Inventory 위젯이 있다면 재초기화
 	if (CombatUI->InventoryWidget)
 	{
 		CombatUI->InventoryWidget->InitializeInventory(Inventory);
@@ -1585,8 +1568,6 @@ void AProjectKLBPlayerController::PlayerHPUI()
 			UHealthBarWidget* HealthWidget = Cast<UHealthBarWidget>(NewCharacter->HealthWidgetComponent->GetWidget());
 			if (HealthWidget)
 			{
-				//NewCharacter->UpdateHealthBar();
-				
 				 //새 캐릭터의 체력으로 체력바를 초기화
 			float HealthPercent = (NewCharacter->MaxHP > 0) ? (NewCharacter->CurrentHP / NewCharacter->MaxHP) : 0.0f;
 				HealthWidget->UpdateHealthBar(HealthPercent);

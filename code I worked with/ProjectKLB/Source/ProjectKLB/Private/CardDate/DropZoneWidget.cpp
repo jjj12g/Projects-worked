@@ -11,7 +11,7 @@ void UDropZoneWidget::NativeOnDragEnter(const FGeometry& InGeometry, const FDrag
 {
     Super::NativeOnDragEnter(InGeometry, InDragDropEvent, InOperation);
 
-    // 드래그가 영역에 들어왔을 때 처리 (추가 작업 가능)
+    // 드래그가 영역에 들어왔을 때 처리
     UE_LOG(LogTemp, Log, TEXT("Drag entered DropZone"));
 }
 
@@ -19,7 +19,7 @@ void UDropZoneWidget::NativeOnDragLeave(const FDragDropEvent& InDragDropEvent, U
 {
     Super::NativeOnDragLeave(InDragDropEvent, InOperation);
 
-    // 드래그가 영역을 떠났을 때 처리 (추가 작업 가능)
+    // 드래그가 영역을 떠났을 때 처리 
     UE_LOG(LogTemp, Log, TEXT("Drag left DropZone"));
 }
 

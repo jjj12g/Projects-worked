@@ -81,14 +81,13 @@ void UInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 
     UInventoryDragDropOperation* DragOperation = NewObject<UInventoryDragDropOperation>();
     DragOperation->DefaultDragVisual = this; // 시각적으로 현재 슬롯을 사용
-    DragOperation->Payload = this; // 'this'는 UInventorySlot* 타입, UObject*와 호환됨
+    DragOperation->Payload = this; // 
     DragOperation->FromSlotIndex = SlotIndex; // 드래그된 슬롯 인덱스 설정
 
     OutOperation = DragOperation;
 
     // 드래그 중 아이템을 투명하게 만듦
     SetVisibility(ESlateVisibility::HitTestInvisible);
-    //SetVisibility(ESlateVisibility::Visible);
 
     UE_LOG(LogTemp, Log, TEXT("Drag detected for slot index: %d"), SlotIndex);
 }
@@ -102,7 +101,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
         UInventoryDragDropOperation* DragOp = Cast<UInventoryDragDropOperation>(InOperation);
         if (DragOp)
         {
-            // 먼저, Payload가 장비 슬롯 위젯(UEquipmentSlot)인지 확인합니다.
+            // Payload가 장비 슬롯 위젯(UEquipmentSlot)인지 확인
             UEquipmentSlot* EquipSlot = Cast<UEquipmentSlot>(DragOp->Payload);
             if (EquipSlot)
             {
@@ -120,7 +119,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                     return false;
                 }
 
-                // 장비 슬롯에서 드래그한 아이템 데이터(로컬 복사본)
+                // 장비 슬롯에서 드래그한 아이템 데이터
                 FItemData DraggedItem = DragOp->DraggedItemData;
                 if (DraggedItem.ItemName.IsEmpty())
                 {
@@ -128,7 +127,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                     return false;
                 }
 
-                // 현재 드롭 대상 인벤토리 슬롯(this)의 데이터를 확인합니다.
+                // 현재 드롭 대상 인벤토리 슬롯의 데이터를 확인
                 FItemData CurrentSlotItem = GetItemData();
                 int32 TargetIndex = -1;
                 if (CurrentSlotItem.ItemName.IsEmpty())
@@ -139,13 +138,13 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                 }
                 else
                 {
-                    // 이미 아이템이 있는 경우, 스왑을 진행합니다.
+                    // 이미 아이템이 있는 경우, 스왑을 진행
                     TargetIndex = SlotIndex;  // 타겟 슬롯의 인덱스를 사용 (스왑 처리)
                     UE_LOG(LogTemp, Log, TEXT("Target inventory slot %d is occupied; swapping items."), TargetIndex);
                 }
 
-                // 두 경우 모두, 이제 스왑 또는 이동 처리를 진행합니다.
-                // 인벤토리 슬롯의 아이템(InventoryItem)을 가져옵니다.
+                // 두 경우 모두, 이제 스왑 또는 이동 처리를 진행
+                // 인벤토리 슬롯의 아이템(InventoryItem)을 가져옵니다
                 FItemData InventoryItem = GetItemData();
 
                 if (InventoryItem.ItemName.IsEmpty())
@@ -158,7 +157,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                 else
                 {
                     // 스왑 처리: 타겟 슬롯에 DraggedItem을 저장하고,
-                    // 인벤토리에서 원래 있던 아이템(InventoryItem)을 장비 슬롯으로 이동합니다.
+                    // 인벤토리에서 원래 있던 아이템(InventoryItem)을 장비 슬롯으로 이동
                     PC->Inventory[TargetIndex] = DraggedItem;
                     UE_LOG(LogTemp, Log, TEXT("Swapped: Moved equipment item (%s) to inventory slot %d"),
                         *DraggedItem.ItemName, TargetIndex);
@@ -172,8 +171,7 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
                     EquipSlot->InitializeEquipmentSlot(InventoryItem, EquipSlot->GetSlotIndex());
                 }
 
-                // 이제, 장비 슬롯에서 드래그한 아이템을 제거하여 빈 상태로 만듭니다.
-                // (장비 → 인벤토리로 이동 후, 해당 장비 슬롯은 빈 상태로 업데이트)
+                // 이제, 장비 슬롯에서 드래그한 아이템을 제거하여 빈 상태로 만들기
                 if (InventoryItem.ItemName.IsEmpty())
                 {
                     // 만약 스왑 처리 없이 단순 이동인 경우, 드래그한 아이템이 장비 슬롯의 기존 아이템과 동일하므로

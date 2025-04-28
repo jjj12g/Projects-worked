@@ -50,7 +50,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Enemy")
     void OnEnemyDestroyed();
 
-    // 모든 에너미가 사망했을 때 UI를 띄우는 함수 (예: Delegate 호출 등)
+    // 모든 에너미가 사망했을 때 UI를 띄우는 함수 
     UFUNCTION(BlueprintCallable, Category = "Enemy")
     void ShowAllEnemiesDefeatedUI();
 

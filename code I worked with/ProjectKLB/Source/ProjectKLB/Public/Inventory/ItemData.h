@@ -10,7 +10,6 @@
  * 
  */
 
- //Row Name: 각 행의 Row Name은 고유해야 함. 중복될 경우 에셋 로드 시 충돌
 
  // 장비 종류를 나타내는 Enum
 UENUM(BlueprintType)
@@ -21,7 +20,7 @@ enum class EEquipmentType : uint8
     Legs      UMETA(DisplayName = "Legs"),
     Helmet    UMETA(DisplayName = "Helmet"),
 
-    // 기타 아이템 유형(예: Consumable)도 추가할 수 있음
+    // 기타 아이템 유형
     Consumable UMETA(DisplayName = "Consumable")
 };
 

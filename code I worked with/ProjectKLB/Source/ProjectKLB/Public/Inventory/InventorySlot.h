@@ -34,7 +34,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     int32 GetSlotIndex() const { return SlotIndex; }
 
-    // 슬롯 간 아이템 교환을 위한 함수 (필요 시 추가)
+    // 슬롯 간 아이템 교환을 위한 함수 
     UFUNCTION(BlueprintCallable, Category = "Inventory")
     void SetItemData(const FItemData& NewItemData) { ItemData = NewItemData; }
 
@@ -57,7 +57,7 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UTextBlock* ItemNameText;
 
-    // 슬롯에 표시할 아이템 수량 (필요 시 추가) 나중에 호감도 아이템?
+    // 슬롯에 표시할 아이템 수량, 나중에 호감도 아이템?
     UPROPERTY(meta = (BindWidget))
     UTextBlock* ItemQuantityText;
 

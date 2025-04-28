@@ -32,11 +32,8 @@ public:
     
 
 protected:
-    // UMG에서 참조할 수 있도록 바인딩된 ProgressBar와 TextBlock
     UPROPERTY(meta = (BindWidget))
     UProgressBar* HealthBar;
 
-  /*  UPROPERTY(meta = (BindWidgetOptional))
-      UTextBlock* PlayerName;*/
 
 };

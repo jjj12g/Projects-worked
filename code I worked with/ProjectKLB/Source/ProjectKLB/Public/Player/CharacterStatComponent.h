@@ -27,15 +27,15 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 
-    /** 기본 스탯 (데이터 테이블에서 불러온 값) */
+    // 기본 스탯 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
     FCharacterStat BaseStats;
 
-    /** 최종 스탯 (장비 보너스가 적용된 값) */
+    // 최종 스탯 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Stats")
     FCharacterStat FinalStats;
 
-    /** 장비 슬롯에 장착된 아이템 (각 슬롯 보너스 값이 들어 있음) */
+    // 장비 슬롯에 장착된 아이템
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
     FItemData Weapon;
 
@@ -49,11 +49,11 @@ public:
     FItemData Legs;
 
 
-    /** 데이터 테이블에서 불러온 기본 스탯으로 초기화 */
+    // 데이터 테이블에서 불러온 기본 스탯으로 초기화 
     UFUNCTION(BlueprintCallable, Category = "Stats")
     void InitializeBaseStats(const FCharacterStat& InStats);
 
-    /** 장비 보너스를 적용하여 최종 스탯을 재계산 */
+    // 장비 보너스를 적용하여 최종 스탯을 재계산 
     UFUNCTION(BlueprintCallable, Category = "Stats")
     void RecalculateStats();
 
