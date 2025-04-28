@@ -153,10 +153,8 @@ struct FSkillData : public FTableRowBase
     bool bTracking;
 
 };
-//    // 충돌 크기: 스피어일 경우 반지름, 박스일 경우 X,Y 반치(여기서는 단순화를 위해 하나의 값 사용)
-//    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
-//    float Size;
-//
+
+// 나중 추가 예정
 //    // 스킬 지속 시간 (초 단위)
 //    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 //    float LifeSpan;

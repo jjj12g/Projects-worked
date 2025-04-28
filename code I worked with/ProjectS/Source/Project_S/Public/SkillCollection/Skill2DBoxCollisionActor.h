@@ -23,19 +23,16 @@ public:
     // 데이터 테이블 값에 따라 박스 컴포넌트를 초기화하는 함수
     virtual void InitializeCollision(const FSkillData& InSkillData) override;
 
-    // Called every frame
     virtual void Tick(float DeltaTime) override;
 
-    bool bss = true;
+    bool bDebugBox = true;
 
-    //FVector BoxExtent;
 
 protected:
-    // 박스 충돌 컴포넌트
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collision")
     UBoxComponent* CollisionBox;
 
-    // 디버그 시각화 (박스)
+    // 디버그 시각화
     virtual void DrawCollisionDebug() override;
 
 };

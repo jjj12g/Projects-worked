@@ -19,15 +19,11 @@ class PROJECT_S_API ABaseCharacters : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ABaseCharacters();
 
-	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
-	/** Returns TopDownCameraComponent subobject **/
 	FORCEINLINE UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
-	/** Returns CameraBoom subobject **/
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 
@@ -38,7 +34,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UCharacterStatComponent* StatComponent;
 
-	// 플레이어의 스탯 RowName (예: "Warrior", "Mage" 등)
+	// 플레이어의 스탯
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character")
 	FName PlayerName;
 
@@ -66,6 +62,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Collision2D")
 	float CollisionRadius2D = 40;
 
+	// 스킬사용
 	void UseSkill(int32 SkillID);
 
 	UFUNCTION()
@@ -74,23 +71,17 @@ public:
 	UFUNCTION()
 	void SpawnSkillCollision(int32 SkillID);
 
-	//=============================  진원
+	//=============================  진원 끝
 private:
-	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* TopDownCameraComponent;
 
-	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
 
-	//=============================  진원
 
 
-
-	//=============================  진원
 protected:
-	// To add mapping context
 	virtual void BeginPlay();
 
 

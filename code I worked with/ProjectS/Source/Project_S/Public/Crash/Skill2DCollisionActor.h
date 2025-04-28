@@ -15,13 +15,11 @@ class PROJECT_S_API ASkill2DCollisionActor : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ASkill2DCollisionActor();
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// 하위 클래스에서 각 충돌 컴포넌트를 초기화하기 위한 가상 함수.
+	// 하위 클래스에서 각 충돌 컴포넌트를 초기화하기 위한 가상함수
 	virtual void InitializeCollision(const FSkillData& InSkillData) PURE_VIRTUAL(ASkill2DCollisionActor::InitializeCollision, );
 
 	// 데이터 테이블로부터 읽은 스킬 데이터를 저장
@@ -30,10 +28,9 @@ public:
 
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// 디버그 시각화를 위한 가상 함수 (옵션)
+	// 디버그 시각화
 	virtual void DrawCollisionDebug() PURE_VIRTUAL(ASkill2DCollisionActor::DrawCollisionDebug, );
 
 };

@@ -77,7 +77,6 @@ void ABasePlayerController::SetupInputComponent()
 		EnhancedInputComponent->BindAction(SetWSkillAction, ETriggerEvent::Started, this, &ABasePlayerController::OnWSkillActionPressed);
 		EnhancedInputComponent->BindAction(SetESkillAction, ETriggerEvent::Started, this, &ABasePlayerController::OnESkillActionPressed);
 		
-		
 	}
 	else
 	{
@@ -156,9 +155,7 @@ void ABasePlayerController::OnSideRightViewPressed()
 	if (BasePlayer != nullptr)
 	{
 		BasePlayer->OnSideRightViewPressed();
-		//UE_LOG(LogTemp, Warning, TEXT("OnSideViewPressed"));
 	}
-	//UE_LOG(LogTemp,Warning,TEXT("Player SideView"));
 }
 
 void ABasePlayerController::OnSideLeftViewPressed()
@@ -175,12 +172,13 @@ void ABasePlayerController::PlayerMoveForward()
 	APawn* ControlledPawn = GetPawn();
 	if (ControlledPawn)
 	{
-		// Pawn의 현재 앞방향(월드 공간)으로 이동 입력을 줍니다.
+		// Pawn의 현재 앞방향으로 이동 입력을 줍니다.
 		ControlledPawn->AddMovementInput(ControlledPawn->GetActorForwardVector(), 1.0f);
 	}
 }
 
 
+// 키맵핑
 void ABasePlayerController::OnQSkillActionPressed()
 {
 	if (BasePlayer != nullptr)

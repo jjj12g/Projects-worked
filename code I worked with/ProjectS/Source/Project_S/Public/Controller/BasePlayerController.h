@@ -41,6 +41,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SetDestinationTouchAction;
 
+	//=============================  진원
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SetCamaraSideRightMoveAction;
 
@@ -59,13 +60,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SetESkillAction;
 
-	//=============================  진원
+
 	UPROPERTY()
 	ABaseCharacters* BasePlayer;
 
-
-
 	//=============================  진원
+
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -96,13 +97,13 @@ protected:
 	void OnWSkillActionPressed();
 	void OnESkillActionPressed();
 
-
-
 	//=============================  진원
+
+
 private:
 	FVector CachedDestination;
 
-	bool bIsTouch; // Is it a touch device
-	float FollowTime; // For how long it has been pressed
+	bool bIsTouch; 
+	float FollowTime; 
 
 };

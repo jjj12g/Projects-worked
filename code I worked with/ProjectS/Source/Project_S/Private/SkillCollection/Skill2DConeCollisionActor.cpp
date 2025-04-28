@@ -19,22 +19,20 @@ ASkill2DConeCollisionActor::ASkill2DConeCollisionActor()
 	// 기본 값 설정 (필요에 따라 조정)
 	ConeRange = 500.f;     // 최대 500cm까지 충돌 판정
 	ConeAngle = 60.f;      // 전체 60도 (반각 30도)
-	// 기본적으로 액터의 Forward를 사용하되, 나중에 InitializeCollision이나 Tick에서 재설정할 수 있습니다.
+	
 	ConeDirection = GetActorForwardVector();
 
 }
 
 void ASkill2DConeCollisionActor::InitializeCollision(const FSkillData& InSkillData)
 {
-	// 예제에서는 SkillData.Size 값을 ConeRange로 사용하고, 각도는 기본값 유지합니다.
-     // 예시: ConeRange는 Range 필드를 사용하고, ConeAngle은 ShapeParam2로 사용합니다.
     ConeRange = InSkillData.Range;                      // 예: 최대 길이
     ConeAngle = InSkillData.ShapeParam2;                // 예: 전체 각도 (도 단위)
 
-    // 필요하다면 ConeDirection도 업데이트 (대부분 액터의 Forward Vector를 사용)
+    
     ConeDirection = GetActorForwardVector();
 
-	UE_LOG(LogTemp, Log, TEXT("Initialized Cone Collision: Range = %f, Angle = %f"), ConeRange, ConeAngle);
+	//UE_LOG(LogTemp, Log, TEXT("Initialized Cone Collision: Range = %f, Angle = %f"), ConeRange, ConeAngle);
 }
 
 
@@ -47,7 +45,7 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
     // ConeDirection을 정규화
     FVector NormDir = ConeDirection.GetSafeNormal();
 
-    // 원뿔의 반각 (라디안)
+    // 원뿔의 반각
     float HalfAngleRad = FMath::DegreesToRadians(ConeAngle * 0.5f);
 
     DrawDebugCone(
@@ -59,16 +57,15 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
         HalfAngleRad,
         16,
         FColor::Yellow,
-        false,      // PersistentLines: true
-        5.f,       // Duration: 5초 동안 표시
+        false,      
+        5.f,       
         0,
-        2.f       // 선 두께
+        2.f     
     );
     
     //DrawDebugPoint(GetWorld(), Apex, 10.f, FColor::Red, true, 5.f);
 
-    // 이제 바닥 기준 2D 충돌 판정을 실시합니다.
-    // 여기서는 원뿔의 방향을 ConeDirection (이미 설정됨)으로 사용합니다.
+
     // 플레이어(ABaseCharacters)를 찾습니다.
     TArray<AActor*> FoundPlayers;
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacters::StaticClass(), FoundPlayers);
@@ -78,14 +75,12 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
         ABaseCharacters* Player = Cast<ABaseCharacters>(Actor);
         if (!Player)
             continue;
-        //UE_LOG(LogTemp, Warning, TEXT("1"));
         FVector TargetLocation = Player->GetActorLocation();
 
         // 먼저, Z축 차이를 확인하여 너무 높거나 낮으면 무시
         float ZDiff = FMath::Abs(Apex.Z - TargetLocation.Z);
         if (ZDiff >= 300.f)
             continue;
-        //UE_LOG(LogTemp, Warning, TEXT("2"));
         // X-Y 평면 기준 거리(예: 플레이어 중심과 원뿔의 apex 사이의 2D 거리)
         FVector2D Apex2D(Apex.X, Apex.Y);
         FVector2D Target2D(TargetLocation.X, TargetLocation.Y);
@@ -94,7 +89,6 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
         // 만약 2D 거리보다 Target이 가까우면서, 원뿔 방향과 타겟으로 향하는 벡터의 각도를 체크합니다.
         if (Distance2D > ConeRange)
             continue; // 범위 밖
-        //UE_LOG(LogTemp, Warning, TEXT("3"));
         // 원뿔 중심 방향과 플레이어까지의 벡터를 각각 2D (혹은 전체 3D)에서 비교합니다.
         FVector ToTarget = (TargetLocation - Apex).GetSafeNormal();
         float DotVal = FVector::DotProduct(ConeDirection.GetSafeNormal(), ToTarget);
@@ -108,7 +102,6 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
 
             // 중간 지점 또는 플레이어 위치에 디버그 구체 표시
             DrawDebugSphere(GetWorld(), TargetLocation, 15.f, 16, FColor::Red, false, 2.f, 0, 2.f);
-            //UE_LOG(LogTemp, Warning, TEXT("4"));
         }
     }
 
@@ -117,11 +110,6 @@ void ASkill2DConeCollisionActor::Tick(float DeltaTime)
 
 void ASkill2DConeCollisionActor::DrawCollisionDebug()
 {
-    //Bso = true;
-    // DrawDebugCone는 원뿔의 apex, 방향, 길이, 반각(라디안) 등으로 원뿔을 그립니다.
-    //FVector Apex = GetActorLocation(); // 원뿔의 시작점(액터 위치)
-    //float HalfAngleRad = FMath::DegreesToRadians(ConeAngle * 0.5f);
-
     //DrawDebugCone(
     //    GetWorld(),
     //    Apex,                          // 원뿔 시작점

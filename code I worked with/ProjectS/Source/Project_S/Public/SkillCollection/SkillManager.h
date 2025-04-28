@@ -21,7 +21,7 @@ class PROJECT_S_API USkillManager : public UGameInstanceSubsystem
 	GENERATED_BODY()
 	
 public:
-    // UGameInstanceSubsystem 오버라이드: 초기화, 해제
+    // UGameInstanceSubsystem 초기화와 해제
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Deinitialize() override;
 
@@ -31,9 +31,11 @@ public:
      * @param SpawnTransform - 스폰 위치 및 회전
      * @return 생성된 스킬 충돌 액터. 실패 시 nullptr.
      */
+
     UFUNCTION(BlueprintCallable, Category = "Skill")
     ASkill2DCollisionActor* SpawnSkillCollisionActor(const FSkillData& SkillData, const FTransform& SpawnTransform);
 
+    // 나중에 JSON으로 받을 때, 사용
     /**
      * JSON 파일 경로를 받아 스킬 데이터를 로드하여 CachedSkillData에 저장합니다.
      * 이후 필요 시 스폰할 때 사용할 수 있습니다.

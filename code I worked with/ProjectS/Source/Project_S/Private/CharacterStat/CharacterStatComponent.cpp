@@ -10,7 +10,7 @@ UCharacterStatComponent::UCharacterStatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false;
 
-	// ...
+
 }
 
 
@@ -20,19 +20,11 @@ void UCharacterStatComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-    // 게임 시작 시 데이터 테이블에서 스탯을 로드합니다.
+    // 게임 시작 시 데이터 테이블에서 스탯 로드
     LoadStatsFromDataTable();
 }
 
 
-//// Called every frame
-//void UCharacterStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//
-//	// ...
-//}
 
 
 void UCharacterStatComponent::LoadStatsFromDataTable()

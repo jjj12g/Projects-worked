@@ -18,9 +18,6 @@ class PROJECT_S_API UCharacterStatComponent : public UActorComponent
 public:
     UCharacterStatComponent();
 
-    //// Called every frame
-    //virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
     // 데이터 테이블
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
     UDataTable* CharacterStatsDataTable;

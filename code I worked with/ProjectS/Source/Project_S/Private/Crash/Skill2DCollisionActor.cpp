@@ -60,8 +60,5 @@ void ASkill2DCollisionActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	// 매 Tick마다 디버그 시각화 호출
-	//DrawCollisionDebug();
-
   
 }

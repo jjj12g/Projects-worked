@@ -25,9 +25,6 @@ ASkill2DSphereCollisionActor::ASkill2DSphereCollisionActor()
 
 void ASkill2DSphereCollisionActor::InitializeCollision(const FSkillData& InSkillData)
 {
-    // 데이터 테이블의 Size 값을 반지름으로 설정
-    //UE_LOG(LogTemp, Warning, TEXT("SkillData Size: %f"), SkillData.Size);
-
     float NewRadius = InSkillData.ShapeParam1; // 이 값이 300이어야 함.
     CollisionSphere->InitSphereRadius(NewRadius);
     UE_LOG(LogTemp, Log, TEXT("Initialized Sphere Radius: %f"), NewRadius);
@@ -40,16 +37,16 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
 
     FVector Apex = GetActorLocation();
 
-    if (bs)
+    if (bDebugSphere)
     {
         DrawCollisionDebug();
-        bs = false;
+        bDebugSphere = false;
     }
 
-    // 1) 스킬의 2D 반경 (CollisionSphere->GetScaledSphereRadius() 사용)
+    // 스킬의 2D 반경 (CollisionSphere->GetScaledSphereRadius() 사용)
     float MySkillRadius2D = CollisionSphere->GetScaledSphereRadius();
 
-    // 2) 월드에서 플레이어(ABaseCharacters)를 전부 찾아옴
+    // 월드에서 플레이어(ABaseCharacters)를 전부 찾아옴
     TArray<AActor*> FoundPlayers;
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacters::StaticClass(), FoundPlayers);
 
@@ -63,9 +60,9 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
         FVector MyLocation = GetActorLocation();
         FVector PlayerLocation = Player->GetActorLocation();
 
-        // Z축 차이를 계산합니다.
+        // Z축 차이를 계산
         float ZDiff = FMath::Abs(MyLocation.Z - PlayerLocation.Z);
-        // Z축 차이가 100 이상이면 충돌 판정을 하지 않습니다.
+        // Z축 차이가 300 이상이면 충돌 판정을 하지않음.
         if (ZDiff >= 300.f)
         {
             ProcessedOverlaps.Remove(Player);
@@ -77,12 +74,12 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
 
         float Distance2D = FVector2D::Distance(My2D, Player2D);
 
-        // 플레이어의 2D 충돌 반경 (직접 만든 변수나 CapsuleComponent에서 가져와도 됨)
+        // 플레이어의 2D 충돌 반경
         float PlayerRadius2D = Player->CollisionRadius2D;
 
         float CombinedRadius = MySkillRadius2D + PlayerRadius2D;
 
-        // 4) 2D 충돌 판정
+        // 2D 충돌 판정
         if (Distance2D <= CombinedRadius)
         {
             // 아직 처리되지 않은 플레이어라면 처리
@@ -90,7 +87,7 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
             {
                 ProcessedOverlaps.Add(Player);
                 
-          // 여기서 충돌 처리 (데미지 적용, 사운드 재생 등)
+          // 충돌 처리 
           UE_LOG(LogTemp, Warning, TEXT("ASkill2DSphereCollisionActor: 2D Overlap with %s (ZDiff=%.1f)"), *Player->GetName(), ZDiff);
           // 두 액터의 중간 지점을 충돌 지점으로 가정
             FVector CollisionPoint = (MyLocation + PlayerLocation) * 0.5f;
@@ -105,7 +102,7 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
                 }
             }
 
-            // 충돌 지점에 디버그 구체 표시 (빨간색, 반지름 15)
+            // 충돌 지점에 디버그 구체 표시
             DrawDebugSphere(
                 GetWorld(),
                 CollisionPoint,
@@ -113,7 +110,7 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
                 16,
                 FColor::Red,
                 false,
-                2.f,  // 2초 동안 표시
+                2.f, 
                 0,
                 2.f
             );
@@ -126,9 +123,8 @@ void ASkill2DSphereCollisionActor::Tick(float DeltaTime)
 
 void ASkill2DSphereCollisionActor::DrawCollisionDebug()
 {
-    bs = true;
-    // 데이터 테이블의 Size 값을 반지름으로 적용
- 
+    bDebugSphere = true;
+
     if (CollisionSphere)
     {
         DrawDebugSphere(GetWorld(),
@@ -136,8 +132,8 @@ void ASkill2DSphereCollisionActor::DrawCollisionDebug()
             CollisionSphere->GetScaledSphereRadius(),
             32,
             FColor::Green,
-            false,       // persistent: true로 하면 계속 남아 있음
-            3.f,        // 5초 동안 표시 (persistent일 경우에도 시간 지정 가능)
+            false,      
+            3.f,        
             0,
             2.f);
     }

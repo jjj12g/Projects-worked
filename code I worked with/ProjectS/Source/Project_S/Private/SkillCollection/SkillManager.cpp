@@ -15,9 +15,7 @@ void USkillManager::Initialize(FSubsystemCollectionBase& Collection)
 {
     Super::Initialize(Collection);
 
-    // 필요 시 JSON 데이터를 불러오거나, DataTable에서 초기 스킬 데이터를 로드합니다.
-    // 예시: LoadSkillDataFromJson(FPaths::ProjectContentDir() + TEXT("Data/SkillData.json"));
-
+    // 필요 시 JSON 데이터를 불러오거나, DataTable에서 초기 스킬 데이터를 로드
       // DataTable 에셋 경로 (프로젝트 경로에 맞게 수정)
     FString DataTablePath = TEXT("DataTable'/Game/Project/SkillData/DT_SkillData.DT_SkillData'");
     UDataTable* SkillDataTable = LoadObject<UDataTable>(nullptr, *DataTablePath);
@@ -115,7 +113,7 @@ void USkillManager::LoadSkillDataFromJson(const FString& FilePath)
         return;
     }
 
-    // 예를 들어, JSON 파일이 배열 형식으로 스킬 데이터를 포함하고 있다고 가정합니다.
+    // 예를 들어, JSON 파일이 배열 형식으로 스킬 데이터를 포함하고 있다고 가정
     const TArray<TSharedPtr<FJsonValue>>* SkillArray;
     if (RootObject->TryGetArrayField(TEXT("Skills"), SkillArray))
     {
