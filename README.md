@@ -8,7 +8,8 @@ C++과 Unreal Engine을 기반으로 게임을 만들고, 문제를 해결하며
 ---
 
 ## 🎓 학력 및 교육
-- **수명고등학교 졸업** (2014.03 ~ 2017.02)  
+- **수명고등학교 졸업** (2014.03 ~ 2017.02)
+- **신안산대학교 경호경찰학과 졸업** (2017.03 ~ 2019.02)    
 - **메타버스 아카데미 2기 수료 예정** (2024.01 ~ 2024.08)  
   - 팀 프로젝트 중심의 게임 개발 경험
   - 언리얼 기반 실습 및 협업 능력 향상
@@ -17,13 +18,13 @@ C++과 Unreal Engine을 기반으로 게임을 만들고, 문제를 해결하며
 
 ## 🔧 기술 스택
 
-| 분야 | 상세 |
-|------|------|
-| **언어** | C++ (객체지향 설계, 상속/다형성/추상화 등) |
-| **엔진** | Unreal Engine 5 (C++ 및 블루프린트 연동, Listen 서버 경험, Post Process, Input Mapping 등) |
-| **툴** | Visual Studio, GitHub, Blender(기본) |
-| **UI** | Widget Blueprint, Animation Blueprint 구현 경험 |
-| **기타** | DataTable 기반 캐릭터 설정, Sequence/Material/StatComponent 활용 등 |
+![C++](https://img.shields.io/badge/-C++-00599C?style=flat-square&logo=c)
+![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91?style=flat-square&logo=visual-studio&logoColor=white)
+![Blender](https://img.shields.io/badge/Blender-F5792A?style=flat-square&logo=blender&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-white?style=flat-square&logo=google-cloud)
+![Git](https://img.shields.io/badge/-Git-white?style=flat-square&logo=git)
+![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)
+![GitLab](https://img.shields.io/badge/-GitLab-FCA121?style=flat-square&logo=gitlab)
 
 ---
 
@@ -31,7 +32,7 @@ C++과 Unreal Engine을 기반으로 게임을 만들고, 문제를 해결하며
 
 ### 🔹 Project S (창작, 진행 중)
 - **기간**: 2025.04.01 ~  
-- **인원**: 10명  
+- **인원**: 1명  
 - **기여**:
   - 스킬 툴 제작 (DataTable 기반)
   - 스킬 매니저 클래스 제작
